@@ -1,0 +1,94 @@
+.dataCell {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 100%;
+border-bottom-width: 1px;
+border-bottom-style: solid;
+border-bottom-color: #cccccc;
+padding: 3px 5px 3px 5px;
+}
+.table4 {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 95%;
+border-top-width: 2px;
+border-bottom-width: 2px;
+border-top-style: solid;
+border-bottom-style: solid;
+border-top-color: #154360;
+border-bottom-color: #154360;
+}
+tr.spaceUnder>td {
+  padding-bottom: 1em;
+}
+tr.spaceOver>td {
+  padding-top: 1em;
+}
+.block h3 {
+    font-size: 1.3em;
+    padding: 0 0px;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.4em;
+}
+table, td, th {
+    vertical-align: middle;
+}
+strong, dfn, caption, th {
+    font-weight: 700;
+}
+
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
