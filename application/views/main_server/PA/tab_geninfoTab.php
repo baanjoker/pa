@@ -26,14 +26,12 @@ $data_legisbuffer = array(
     'type' => 'text',
     'placeholder'=>'Buffer Zone (has.)',
 	'onkeyup'=>'run(this)');
-
 $data_legispdf = array(
     'name' => 'picture',
     'id'   => 'picture',
     'class'=> 'form-control',
     'type' => 'file',
     'placeholder'=>'PDF File');
-
 $data_longdegree = array(
     'name' => 'longdegree',
     'id'   => 'longdegree',
@@ -76,7 +74,6 @@ $data_latsecond = array(
     'type' => 'text',
     'placeholder'=>'Second',
 	'onkeyup'=>'run(this)');
-
 $data_boundary = array(
     'name' => 'boundary',
     'id'   => 'boundary',
