@@ -140,34 +140,55 @@
                                         <div class="col-xs-12 col-lg-12">
                                             <div class="col-xs-12 col-lg-3">
                                                 <ul><li>
-                                                    <?= form_label('First name').form_input('cofname','','id="cofname"') ?>
+                                                    <?= form_label('First Name').form_input('cofname','','id="cofname"') ?>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3">
+                                                <ul><li>
+                                                    <?= form_label('Middle Name').form_input('comname','','id="comname"') ?>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3">
+                                                <ul><li>
+                                                    <?= form_label('Last Name').form_input('colname','','id="colname"') ?>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3">
+                                                <ul><li>
+                                                    <?= form_label('Suffix').form_input('cosuffix','','id="cosuffix"') ?>
                                                 </li></ul>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-lg-12">
-                                            <div class="col-xs-12 col-lg-3">
+                                            <div class="col-xs-12 col-lg-12 tooltip">
                                                 <ul><li>
-                                                    <?= form_label('Middle name').form_input('comname','','id="comname"') ?>
+                                                    <?= form_label('Designation/Position','','').form_input('coposition','','placeholder="ex. Chairman, Vice Chairman, Member" id="coposition"');?>
+                                                    <span class="tooltiptext">Select designation/position</span>
                                                 </li></ul>
                                             </div>
-                                        </div>
-                                        <div class="col-xs-12 col-lg-12">
-                                            <div class="col-xs-12 col-lg-3">
+                                            <div class="col-xs-12 col-lg-3 tooltip">
                                                 <ul><li>
-                                                    <?= form_label('Last name').form_input('colname','','id="colname"') ?>
+                                                    <?= form_label('Sex','','for="cosex"').form_dropdown('cosex',$sexList,'',' id="cosex"');?>
+                                                    <span class="tooltiptext">Select sex</span>
                                                 </li></ul>
                                             </div>
-                                        </div>
-                                        <div class="col-xs-12 col-lg-12">
-                                            <div class="col-xs-12 col-lg-3">
+                                             <div class="col-xs-12 col-lg-3 tooltip">
+                                                <ul><li>                                    
+                                                    <?= form_label('Landline no.','','for="colandline"').form_input('colandline','','data-inputmask="&quot;mask&quot;: &quot;(99) 999-9999&quot;" data-mask="" id="colandline"') ?>
+                                                    <span class="tooltiptext">Input landline number</span>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3 tooltip">
                                                 <ul><li>
-                                                    <?= form_label('Suffix').form_input('cosname','','id="cosname"') ?>
+                                                    <?= form_label('Mobile no.','','for="comobile"').form_input('comobile','','data-inputmask="&quot;mask&quot;: &quot;+(99) 999-9999-999&quot;" data-mask="" id="comobile"') ?>
+                                                    <span class="tooltiptext">Input mobile number</span>
                                                 </li></ul>
                                             </div>
                                         </div>
                                     </fieldset>
                                 </div>
                                 <fieldset>
+                                    <legend>Alternate Representative</legend>
                                     <div class="col-xs-12 col-lg-6 tooltip">
                                         <ul><li>
                                         <?= form_label('Name of alternate representative','','for="alternateofficials"').form_input('alternateofficials','','placeholder="Name of altenate representative" id="alternateofficials"');?>
