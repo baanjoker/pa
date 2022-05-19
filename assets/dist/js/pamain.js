@@ -3594,6 +3594,22 @@ function mychkcochair() {
   }
 }
 
+function mychkcochairedit() {
+  // Get the checkbox
+  var checkBox = document.getElementById("edit-appointchkcochair");
+  // Get the output text
+  var text = document.getElementById("edit-cochairdiv");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "block";
+    // document.getElementById('twgname').value="";
+  } else {
+    text.style.display = "none";
+    // document.getElementById('twgname').value="";
+  }
+}
+
 function mychktwgEdit() {
   // Get the checkbox
   var checkBox = document.getElementById("edit-twgchck");
@@ -17210,6 +17226,14 @@ $(function(){
             document.getElementById('othertechcom').value = "";
             document.getElementById('aoposition').value = "";
             document.getElementById('twgname').value = "";
+            document.getElementById('cofname').value = "";
+            document.getElementById('comname').value = "";
+            document.getElementById('colname').value = "";
+            document.getElementById('cosuffix').value = "";
+            document.getElementById('coposition').value = "";
+            document.getElementById('colandline').value = "";
+            document.getElementById('comobile').value = "";
+            $("#cosex")[0].selectedIndex = 0;
             $("#techcomname")[0].selectedIndex = 0;
             $("#aosex")[0].selectedIndex = 0;
             $("#aoamonth")[0].selectedIndex = 0;
@@ -23661,6 +23685,7 @@ function edit_services(elem){
     var x7 = $('#ttw7'+ct).val();
     var x8 = $('#ttw8'+ct).val();
     var x9 = $('#ttw9'+ct).val();
+    var x10 = $('#ttw10'+ct).val();
     var output = $('#edit-appointmentsub');
     for(var i = 1; i < table.rows.length; i++)
     {
@@ -23688,6 +23713,21 @@ function edit_services(elem){
             document.getElementById("edit-alternateofficials").value = this.cells[26].innerHTML;
             document.getElementById("edit-aoposition").value = this.cells[27].innerHTML;
             document.getElementById("edit-pamb_suffix").value = this.cells[33].innerHTML;
+            
+            if (x10 == 1) {
+              document.getElementById('edit-appointchkcochair').checked = true;
+              document.getElementById('edit-cofname').value = this.cells[34].innerHTML;
+              document.getElementById('edit-comname').value = this.cells[35].innerHTML;
+              document.getElementById('edit-colname').value = this.cells[36].innerHTML;
+              document.getElementById('edit-cosuffix').value = this.cells[37].innerHTML;
+              document.getElementById('edit-coposition').value = this.cells[38].innerHTML;
+              document.getElementById('edit-cosex').value = this.cells[39].innerHTML;
+              document.getElementById('edit-colandline').value = this.cells[40].innerHTML;
+              document.getElementById('edit-comobile').value = this.cells[41].innerHTML;
+              document.getElementById("edit-cochairdiv").style.display="block";
+            }else{
+              document.getElementById("edit-cochairdiv").style.display="none";
+            }
             if (x8 =="") {
               document.getElementById("ser-gencode2").value = makeidpambs(8);
             }else{

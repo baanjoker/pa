@@ -965,6 +965,15 @@ public function insertIPAFdisburement()
             'alternateofficial_appoint_year' => $this->input->post('aoaday',true),
             'alternateofficial_postition' => $this->input->post('aoayear',true),
             'name_twg' => $this->input->post('twgname',true),
+            'cofname' => $this->input->post('cofname',true),
+            'comname' => $this->input->post('comname',true),
+            'colname' => $this->input->post('colname',true),
+            'cosuffix' => $this->input->post('cosuffix',true),
+            'coposition' => $this->input->post('coposition',true),
+            'cosex' => $this->input->post('cosex',true),
+            'colandline' => $this->input->post('colandline',true),
+            'comobile' => $this->input->post('comobile',true),
+            'cochair' => $this->input->post('appointchkcochair',true)==null?0:1,
             // 'name_techcom' => $this->input->post('techcomname',true),
             'techcomm_other' => $this->input->post('othertechcom',true),
             'date_created' => $now,
@@ -9152,6 +9161,16 @@ public function insertvegetativecover()
                     <?php endif; endforeach;?>
                 </td>
                 <td class="hide"><?php echo $row->pamb_suffix; ?></td>
+                <td class="hide"><?php echo $row->cofname; ?></td>
+                <td class="hide"><?php echo $row->comname; ?></td>
+                <td class="hide"><?php echo $row->colname; ?></td>
+                <td class="hide"><?php echo $row->cosuffix; ?></td>
+                <td class="hide"><?php echo $row->coposition; ?></td>
+                <td class="hide"><?php echo $row->cosex; ?></td>
+                <td class="hide"><?php echo $row->colandline; ?></td>
+                <td class="hide"><?php echo $row->comobile; ?></td>
+                <td class="hide"><?php echo $row->cochair; ?></td>
+
                 <input type="hidden" id="cap22<?php echo $row->id_pambmember;?>" value="<?php echo $row->appointment ?>" />
                 <input type="hidden" id="cap222<?php echo $row->id_pambmember;?>" value="<?php echo $row->sub_appointment ?>" />
                 <input type="hidden" id="csex3<?php echo $row->id_pambmember;?>" value="<?php echo $row->sex ?>" />
@@ -9167,6 +9186,7 @@ public function insertvegetativecover()
                 <input type="hidden" id="ttw7<?php echo $row->id_pambmember;?>" value="<?php echo $row->name_techcom ?>" />
                 <input type="hidden" id="ttw8<?php echo $row->id_pambmember;?>" value="<?php echo $row->pamb_codegen ?>" />
                 <input type="hidden" id="ttw9<?php echo $row->id_pambmember;?>" value="<?php echo $row->status ?>" />
+                <input type="hidden" id="ttw10<?php echo $row->id_pambmember;?>" value="<?php echo $row->cochair ?>" />
             </tr>
             <?php
         }
@@ -21367,6 +21387,15 @@ public function insertvegetativecover()
                                 'name_techcom' => $this->input->post('edit-techcomname',true),
                                 'techcomm_other' => $this->input->post('edit-othertechcom',true),
                                 'pamb_codegen' => $this->input->post('ser-gencode2',true),
+                                'cofname' => $this->input->post('edit-cofname',true),
+                                'comname' => $this->input->post('edit-comname',true),
+                                'colname' => $this->input->post('edit-colname',true),
+                                'cosuffix' => $this->input->post('edit-cosuffix',true),
+                                'coposition' => $this->input->post('edit-coposition',true),
+                                'cosex' => $this->input->post('edit-cosex',true),
+                                'colandline' => $this->input->post('edit-colandline',true),
+                                'comobile' => $this->input->post('edit-comobile',true),
+                                'cochair' => $this->input->post('edit-appointchkcochair',true)==null?0:1,
                                 'pamb_file_appt' => (empty($this->input->post('edit-pambfile_appt_span'))?$this->input->post('edit-pambfile_appt_old'):$this->input->post('edit-pambfile_appt_span'))
 
                             );

@@ -768,38 +768,97 @@
                                 </li></ul>
                             </div>
                             <div class="col-xs-12" id="edit-exofficiotab" style="display: none">
-                                <div class="col-xs-12 col-lg-6 ">
-                                    <ul><li>
-                                    <?= form_label('Name of alternate representative','','for="edit-alternateofficials"').form_input('edit-alternateofficials','','placeholder="Name of altenate representative" id="edit-alternateofficials"');?>
-                                    </li></ul>
+                                <div class="col-xs-12 col-lg-12" style="margin-left: 10px;">
+                                    <?php echo form_checkbox('edit-appointchkcochair','','','id="edit-appointchkcochair" onclick="mychkcochairedit();"').form_label('Co-Chairman','','for="edit-appointchkcochair"') ?>                                
+                                </div> 
+                                <div class="col-xs-12" id="edit-cochairdiv" style="display: none">
+                                    <fieldset>
+                                        <legend>Co-Chairman</legend>
+                                        <div class="col-xs-12 col-lg-12">
+                                            <div class="col-xs-12 col-lg-3">
+                                                <ul><li>
+                                                    <?= form_label('First Name').form_input('edit-cofname','','id="edit-cofname"') ?>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3">
+                                                <ul><li>
+                                                    <?= form_label('Middle Name').form_input('edit-comname','','id="edit-comname"') ?>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3">
+                                                <ul><li>
+                                                    <?= form_label('Last Name').form_input('edit-colname','','id="edit-colname"') ?>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3">
+                                                <ul><li>
+                                                    <?= form_label('Suffix').form_input('edit-cosuffix','','id="edit-cosuffix"') ?>
+                                                </li></ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-lg-12">
+                                            <div class="col-xs-12 col-lg-12 tooltip">
+                                                <ul><li>
+                                                    <?= form_label('Designation/Position','','').form_input('edit-coposition','','placeholder="ex. Chairman, Vice Chairman, Member" id="edit-coposition"');?>
+                                                    <span class="tooltiptext">Select designation/position</span>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3 tooltip">
+                                                <ul><li>
+                                                    <?= form_label('Sex','','for="edit-cosex"').form_dropdown('edit-cosex',$sexList,'',' id="edit-cosex"');?>
+                                                    <span class="tooltiptext">Select sex</span>
+                                                </li></ul>
+                                            </div>
+                                             <div class="col-xs-12 col-lg-3 tooltip">
+                                                <ul><li>                                    
+                                                    <?= form_label('Landline no.','','for="edit-colandline"').form_input('edit-colandline','','data-inputmask="&quot;mask&quot;: &quot;(99) 999-9999&quot;" data-mask="" id="edit-colandline"') ?>
+                                                    <span class="tooltiptext">Input landline number</span>
+                                                </li></ul>
+                                            </div>
+                                            <div class="col-xs-12 col-lg-3 tooltip">
+                                                <ul><li>
+                                                    <?= form_label('Mobile no.','','for="edit-comobile"').form_input('edit-comobile','','data-inputmask="&quot;mask&quot;: &quot;+(99) 999-9999-999&quot;" data-mask="" id="edit-comobile"') ?>
+                                                    <span class="tooltiptext">Input mobile number</span>
+                                                </li></ul>
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                 </div>
-                                <div class="col-xs-12 col-lg-6 ">
-                                    <ul><li>
-                                    <?= form_label('Position','','for="edit-aoposition"').form_input('edit-aoposition','','placeholder="Name of altenate representative" id="edit-aoposition"');?>
-                                    </li></ul>
-                                </div>
-                                <div class="col-xs-6 col-lg-3">
-                                    <ul><li>
-                                        <?= form_label('Sex','','for="edit-aosex"').form_dropdown('edit-aosex',$sexList,'',' id="edit-aosex" required');?>
-                                    </li></ul>
-                                </div>
-                                <div class="col-xs-12 col-lg-9">
-                                    <div class="col-xs-4 col-lg-4">
+                                <fieldset>
+                                    <legend>Alternate Representative</legend>
+                                    <div class="col-xs-12 col-lg-6 ">
                                         <ul><li>
-                                            <?php echo form_label('Date of appointment').form_dropdown('edit-aoamonth',$monthList,'',' id="edit-aoamonth"') ?>
+                                        <?= form_label('Name of alternate representative','','for="edit-alternateofficials"').form_input('edit-alternateofficials','','placeholder="Name of altenate representative" id="edit-alternateofficials"');?>
                                         </li></ul>
                                     </div>
-                                    <div class="col-xs-4 col-lg-4">
+                                    <div class="col-xs-12 col-lg-6 ">
                                         <ul><li>
-                                            <?php echo form_label('&nbsp;').form_dropdown('edit-aoaday',$dayList,'',' id="edit-aoaday"') ?>
+                                        <?= form_label('Position','','for="edit-aoposition"').form_input('edit-aoposition','','placeholder="Name of altenate representative" id="edit-aoposition"');?>
                                         </li></ul>
                                     </div>
-                                    <div class="col-xs-4 col-lg-4">
+                                    <div class="col-xs-6 col-lg-3">
                                         <ul><li>
-                                            <?php echo form_label('&nbsp;').form_dropdown('edit-aoayear',$yearListed,'',' id="edit-aoayear"') ?>
+                                            <?= form_label('Sex','','for="edit-aosex"').form_dropdown('edit-aosex',$sexList,'',' id="edit-aosex" required');?>
                                         </li></ul>
                                     </div>
-                                </div>
+                                    <div class="col-xs-12 col-lg-9">
+                                        <div class="col-xs-4 col-lg-4">
+                                            <ul><li>
+                                                <?php echo form_label('Date of appointment').form_dropdown('edit-aoamonth',$monthList,'',' id="edit-aoamonth"') ?>
+                                            </li></ul>
+                                        </div>
+                                        <div class="col-xs-4 col-lg-4">
+                                            <ul><li>
+                                                <?php echo form_label('&nbsp;').form_dropdown('edit-aoaday',$dayList,'',' id="edit-aoaday"') ?>
+                                            </li></ul>
+                                        </div>
+                                        <div class="col-xs-4 col-lg-4">
+                                            <ul><li>
+                                                <?php echo form_label('&nbsp;').form_dropdown('edit-aoayear',$yearListed,'',' id="edit-aoayear"') ?>
+                                            </li></ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div>
                         </fieldset>
                         </div>
