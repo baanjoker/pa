@@ -31,32 +31,24 @@ $data_archeology = array(
 				<div class="panel-heading"><div class="panel-title"><i class="fas fa-handshake"></i> ANTROPOLOGY</div></div>
 				<div class="panel-body">
 				    <div class="col-md-12">
-				    	<div class="row">
-		          			<div class="col-md-12">
-		          				<div class="form-group">
-						          	<div class="col-md-6">
-						          		<label for="inputClassification" class="control-label">Cultural Resource</label>
-						          		<?= form_textarea($data_culturalresource,$pamain->cultural_resource) ?>
-						          	</div>
-						          	<div class="col-md-6">
-						          		<label for="inputClassification" class="control-label">Politics</label>
-						          		<?= form_textarea($data_politics,$pamain->politics) ?>
-						          	</div>
-			                  	</div>
-		          			</div>
-		          			<div class="col-md-12">
-		          				<div class="form-group">
-						          	<div class="col-md-6">
-						          		<label for="inputClassification" class="control-label">Custom Belief</label>
-						          		<?= form_textarea($data_belief,$pamain->belief) ?>
-						          	</div>
-						          	<div class="col-md-6">
-						          		<label for="inputClassification" class="control-label">Archeology</label>
-						          		<?= form_textarea($data_archeology,$pamain->archeology) ?>
-						          	</div>
-			                  	</div>
-		          			</div>
-		          		</div>
+				    	<table width="100%" border="0" cellpadding="3" cellspacing="1" class="table4">
+				    		<tr valign="top" class="spaceUnder spaceOver">
+				    			<!-- <td style="width: 150px">Cultural Resource</td> -->
+				    			<td>Cultural Resource<?= form_textarea($data_culturalresource,$pamain->cultural_resource) ?></td>
+				    		</tr>
+				    		<tr valign="top" class="spaceUnder">
+				    			<!-- <td>Politics</td> -->
+				    			<td>Politics<?= form_textarea($data_politics,$pamain->politics) ?></td>
+				    		</tr>
+				    		<tr valign="top" class="spaceUnder">
+				    			<!-- <td>Custom Belief</td> -->
+				    			<td>Custom Belief<?= form_textarea($data_belief,$pamain->belief) ?></td>
+				    		</tr>
+				    		<tr valign="top" class="spaceUnder">
+				    			<!-- <td>Archeology</td> -->
+				    			<td>Archeology<?= form_textarea($data_archeology,$pamain->archeology) ?></td>
+				    		</tr>
+				    	</table>
 		          	</div>
 		        </div>
 		    </div>

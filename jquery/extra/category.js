@@ -2,40 +2,77 @@
 //							BIOGEOLOCATION					 		 //
 // ================================================================= //
 
+// $(document).ready(function() {
+// 	fetch();
+// 	$(document).on('click', '.btn-deletecat', function(){
+// 		var id = $(this).data('id');
+// 		swal({
+// 		  	title: 'Are you sure?',
+// 		  	text: "You won't be able to revert this!",
+// 		  	type: 'warning',
+// 		  	showCancelButton: true,
+// 		  	confirmButtonColor: '#3085d6',
+// 		  	cancelButtonColor: '#d33',
+// 		  	confirmButtonText: 'Yes, delete it!',
+// 		}).then((result) => {
+// 		  	if (result.value){
+// 		  		$.ajax({
+// 			   		url: BASE_URL+'/main_server/library/delete_cat/'+id,
+// 			    	type: 'POST',
+// 			       	data: 'id='+id,
+// 			       	dataType: 'json'
+// 			    })
+// 			    .done(function(response){
+// 			     	swal('Deleted!', response.message, response.status);
+// 					  $('#tablecat').DataTable().ajax.reload();
+
+// 			    })
+// 			    .fail(function(){
+// 			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
+// 			    });
+// 		  	}
+
+// 		})
+
+// 	});
+// });
+
 $(document).ready(function() {
-	fetch();
-	$(document).on('click', '.btn-deletecat', function(){
-		var id = $(this).data('id');
-		swal({
-		  	title: 'Are you sure?',
-		  	text: "You won't be able to revert this!",
-		  	type: 'warning',
-		  	showCancelButton: true,
-		  	confirmButtonColor: '#3085d6',
-		  	cancelButtonColor: '#d33',
-		  	confirmButtonText: 'Yes, delete it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/library/delete_cat/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Deleted!', response.message, response.status);
-					  $('#tablecat').DataTable().ajax.reload();
-
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
-
-		})
-
-	});
+fetch();
+    $(document).on('click', '.btn-deletecat', function(){
+    var id = $(this).data('id');
+    swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        },
+            function() {
+            $.ajax({
+              
+              data : 'id='+id,
+              url: BASE_URL+'/main_server/library/delete_cat/'+id,
+              type:'post',
+              crossOrigin: false,
+              dataType: 'JSON',
+              success : function(result){
+                // console.log(data.check)
+                if (result.status == "success") {
+                  swal('Deleted!', result.message, result.status);
+                  $('#tablecat').DataTable().ajax.reload();
+                }else{
+                  swal('Oops...', 'Something went wrong with ajax !', 'error');
+                }
+              }
+            });
+            }
+        );
+  });
 });
+
 function fetch(){
 var t = $('#tablecat').DataTable({
 		"columnDefs": [{

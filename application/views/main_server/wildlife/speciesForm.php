@@ -21,6 +21,18 @@ $input_scientificname = array(
 	'type'	=>	'text',
 	'placeholder'	=>	'Input Scientific Name'
 );
+$input_iucn = array(
+	'name'	=>	'iucnid',
+	'class'	=>	'form-control'
+);
+$input_residency = array(
+	'name'	=>	'residency',
+	'class'	=>	'form-control'
+);
+$input_paname = array(
+	'name'	=>	'paname',
+	'class'	=>	'form-control'
+);
 ?>
 <section class="content">
 	<div class="row">
@@ -38,7 +50,7 @@ $input_scientificname = array(
 							<span style="color:#fff" id="messagespecies"></span>								
 						</div>
 						<div class="col-md-12">
-					     <?php echo form_open('','class="form-horizontal" id="speciesForm"');
+					     <?php echo form_open_multipart('','class="form-horizontal" id="speciesForm"');
 					     if (!empty($wspecies->id_genus)){
 						 echo form_hidden('id_genus',$wspecies->id_genus);
 						 } else {
@@ -51,10 +63,6 @@ $input_scientificname = array(
 									<td><?= form_dropdown($input_family,$family,$wspecies->family_id) ?><span class="error"></span></td>
 								</tr>
 								<tr valign="top" class="spaceUnder">
-									<td>Species Code</td>
-									<td><?= form_input($input_speciescode,$wspecies->speciesCode) ?></td>
-								</tr>
-								<tr valign="top" class="spaceUnder">
 									<td>Common Name</td>
 									<td><?= form_input($input_commonname,$wspecies->commonNameSpecies) ?></td>
 								</tr>
@@ -62,15 +70,31 @@ $input_scientificname = array(
 									<td>Scientific Name</td>
 									<td><?= form_input($input_scientificname,$wspecies->scientificName_genus) ?></td>
 								</tr>
+								<tr valign="top" class="spaceUnder spaceOver">
+									<td style="width: 100px">Conservation Status</td>
+									<td><?= form_dropdown($input_iucn,$iucn,$wspecies->status) ?><span class="error"></span></td>
+								</tr>
+								<tr valign="top" class="spaceUnder spaceOver">
+									<td style="width: 100px">Residency Status</td>
+									<td><?= form_dropdown($input_residency,$residency_list_status,$wspecies->residency_status) ?><span class="error"></span></td>
+								</tr>
+								<tr valign="top" class="spaceUnder spaceOver hide">
+									<td style="width: 100px">Name of Protected Area</td>
+									<td><?= form_dropdown($input_paname,$panames,$wspecies->generatedcode) ?><span class="error"></span></td>
+								</tr>
+								<tr>
+									<td>Image Edit</td>
+									<td>
+										<img width="200px" height="180px" id="img_wildlife" src="<?php echo (!empty($wspecies->image)?base_url('bmb_assets2/upload/wildlife_img/').$wspecies->image :base_url("bmb_assets2/upload/wildlife_img/nophoto.jpg")) ?>" alt="your image" /><br>
+										<input type="file" name="picture" id="picture" onchange="readURLWild(this);"/>
+										<input type="hidden" name="old_picture ?>"> 			 				
+									</td>
+								</tr>
 							<?php else: ?>
 								<tr valign="top" class="spaceUnder spaceOver">
 									<td style="width: 100px">Family Name</td>
 									<td><?= form_dropdown($input_family,$family) ?><span class="error"></span></td>
-								</tr>
-								<tr valign="top" class="spaceUnder">
-									<td>Species Code</td>
-									<td><?= form_input($input_speciescode) ?></td>
-								</tr>
+								</tr>								
 								<tr valign="top" class="spaceUnder">
 									<td>Common Name</td>
 									<td><?= form_input($input_commonname) ?></td>
@@ -79,6 +103,27 @@ $input_scientificname = array(
 									<td>Scientific Name</td>
 									<td><?= form_input($input_scientificname) ?></td>
 								</tr>
+								<tr valign="top" class="spaceUnder spaceOver">
+									<td style="width: 100px">Conservation Status</td>
+									<td><?= form_dropdown($input_iucn,$iucn) ?><span class="error"></span></td>
+								</tr>
+								<tr valign="top" class="spaceUnder spaceOver">
+									<td style="width: 100px">Residency Status</td>
+									<td><?= form_dropdown($input_residency,$residency_list_status) ?><span class="error"></span></td>
+								</tr>
+								<tr valign="top" class="spaceUnder spaceOver hide">
+									<td style="width: 100px">Name of Protected Area</td>
+									<td><?= form_dropdown($input_paname,$panames) ?><span class="error"></span></td>
+								</tr>
+								<tr>
+									<td>Image New</td>
+									<td>
+										<img width="200px" height="180px" id="img_wildlife" src="<?php echo (!empty($wspecies->image)?base_url('bmb_assets2/upload/wildlife_img/').$wspecies->image :base_url("bmb_assets2/upload/wildlife_img/nophoto.jpg")) ?>" alt="your image" /><br>
+										<input type="file" name="picture" id="picture" onchange="readURLWild(this);" />
+										<input type="hidden" name="old_picture"> 				
+																			
+									</td>
+								</tr>
 							<?php endif; ?>
 						</table>
 							<?php echo form_close(); ?>
@@ -86,12 +131,8 @@ $input_scientificname = array(
 					</div>
 					<div class="box-footer" >
 						<div class="col-md-12">	
-							<div class="form-group">
-								<?php if (!empty($wspecies->id_genus)): ?>
-									<button class="btn btn-success btn-flat" id="save_species"><i class="fa fa-save"> UPDATE</i></button>
-								<?php else: ?>
-									<button class="btn btn-info btn-flat" id="save_species"><i class="fa fa-save"> SAVE</i></button>
-								<?php endif ?>	
+							<div class="form-group">								
+									<a class="btn btn-success btn-flat" id="save_speciess"><i class="fa fa-save"> CONFIRM</i></a>								
 								<a class="btn btn-danger btn-flat pull-right" href="<?= base_url('main_server/wildlife/species') ?>"><i class="fa fa-list"> List of Species Genus</i></a>							
 							</div>
 						</div>
@@ -101,3 +142,14 @@ $input_scientificname = array(
 	</div>
 </section>
 <script type="text/javascript" src="<?php echo base_url("jquery/species.js") ?>"></script>
+<script type="text/javascript">
+function readURLWild(input) {
+    if (input.files && input.files[0]) {
+      	var reader = new FileReader();
+      		reader.onload = function (e) {
+      			$('#img_wildlife').attr('src', e.target.result);
+      		}
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>

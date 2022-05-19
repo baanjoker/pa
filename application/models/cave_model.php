@@ -130,6 +130,29 @@ class Cave_model extends CI_Model {
 		->row();
 	}
 
+	public function get_all_regions() 
+    { 
+        return $this->db->select('tblpacategory.categoryName,COUNT(pacategory_id) as total')
+        				->join('tblpacategory','tblpamain.pacategory_id = tblpacategory.id_cat','LEFT')
+        				->group_by('tblpamain.pacategory_id')
+        				->get('tblpamain')->result(); 
+    } 
+
+    public function get_by_classification() 
+    { 
+        return $this->db->select('tblnip.nipDesc,COUNT(nip_id) as total')
+        				->join('tblnip','tblpamain.nip_id = tblnip.id_nip','LEFT')
+        				->group_by('tblpamain.nip_id')
+        				->get('tblpamain')->result(); 
+    } 
+
+	public function get_by_cpa() 
+    { 
+        return $this->db->select('tblpacareadesc.CPABIdesc,COUNT(cpabi_id) as total')
+        				->join('tblpacareadesc','tblpamain.cpabi_id = tblpacareadesc.id_pac','LEFT')
+        				->group_by('tblpamain.cpabi_id')
+        				->get('tblpamain')->result(); 
+    } 
 	public function caveData()
 	{
 		return $this->db->select("*")
@@ -270,7 +293,7 @@ class Cave_model extends CI_Model {
 	// 	}		
 	//  	}
 	
-	function check_caveName($id_cave = '', $cave_name) {
+	function check_caveName($id_cave,$cave_name) {
         $this->db->where('cave_name', $cave_name);
         if($id_cave) {
             $this->db->where_not_in('id_cave', $id_cave);

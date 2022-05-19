@@ -60,10 +60,9 @@ $pambMember_officeaddress = array(
             	<div class="panel-heading"><div class="panel-title"><i class="fas fa-odnoklassniki-square"></i> PAMB MEMBER INFORMATION</div></div>
             	<div class="panel-body">
 	                <div class="col-md-12">
-
 	                	<div id="responseDivPAMB" class="alert text-center" style="display:none;">
 			    			<button type="button" class="close" id="clearMsg"><span aria-hidden="true">&times;</span></button>
-			    				<span style="color:#000" id="messagepamb"></span>								
+			    			<span style="color:#000" id="messagepamb"></span>								
 			    		</div>
 
 	                  	<div class="form-group">

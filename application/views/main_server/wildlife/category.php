@@ -7,7 +7,7 @@
 				</div>
 				<div class="col-md-12">
 	                <div class="form-group"><br>
-						<a href="<?php echo base_url('main_server/wildlife/categoryform'); ?>" class="btn btn-info btn-flat" ><i class="fa fa-plus" name="add"></i> ADD CATEGORY</a>
+						<a href="<?php echo base_url('main_server/wildlife/categoryform'); ?>" class="btn btn-info btn-flat" ><i class="fa fa-plus" name="add"></i> ADD SPECIES CATEGORY</a>
 					</div>
 				</div>
 				<div class="panel-body">
@@ -17,7 +17,7 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>CODE</th>
+										<!-- <th>CODE</th> -->
                     					<th>DESCRIPTION</th>
 										<th>OPTION</th>
 									</tr>

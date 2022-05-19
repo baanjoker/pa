@@ -12,6 +12,7 @@ class psgc_locations extends CI_Controller
 		$this->load->model([
 			'psgc_model',
             'cave_model',
+            
 		]);
 
 		if ($this->session->userdata('isLogIn') == false

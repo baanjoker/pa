@@ -30,7 +30,7 @@ class wildlife_model extends CI_Model {
         ->update($this->table1,$data);       
     }
 
-    function check_Code($id = '', $wcode) {
+    function check_Code($id, $wcode) {
         $this->db->where('wcode', $wcode);
         if($id) {
             $this->db->where_not_in('id', $id);
@@ -38,7 +38,7 @@ class wildlife_model extends CI_Model {
         return $this->db->get($this->table1)->num_rows();
     }
 
-    function check_Name($id = '', $wdesc) {
+    function check_Name($id, $wdesc) {
         $this->db->where('wdesc', $wdesc);
         if($id) {
             $this->db->where_not_in('id', $id);
@@ -73,10 +73,62 @@ class wildlife_model extends CI_Model {
         ->from('tblwcategory')
         ->get()
         ->result();
-        $list[''] = "SELECT CATEGORY";
+        $list[''] = "SELECT SPECIES CATEGORY";
         if (!empty($result)){ 
             foreach ($result as $value) {
-                $list[$value->id] = strtoupper($value->wdesc);
+                $list[$value->id] = ucwords($value->wdesc);
+            }
+            return $list;
+        } else {
+            return false;
+        }
+    }
+
+    public function iucnList()
+    {
+        $result = $this->db->select("*")
+        ->from('tbliucncode')
+        ->get()
+        ->result();
+        $list[''] = "SELECT IUCN STATUS";
+        if (!empty($result)){ 
+            foreach ($result as $value) {
+                $list[$value->id] = ucwords($value->description);
+            }
+            return $list;
+        } else {
+            return false;
+        }
+    }
+
+    public function residency_status()
+    {
+        $result = $this->db->select("*")
+        ->from('tblpamainbiological_residency')
+        ->get()
+        ->result();
+        $list[''] = "Select";
+        if (!empty($result)){ 
+            foreach ($result as $value) {
+                $list[$value->id_residency] = ucwords($value->residency_desc);
+            }
+            return $list;
+        } else {
+            return false;
+        }
+    }
+
+    public function palist()
+    {
+        $result = $this->db->select("*")
+        ->from('tblpamain')
+        ->order_by('pa_name')
+        ->get()
+        ->result();
+        $list[''] = "SELECT PROTECTED AREA";
+        if (!empty($result)){ 
+            foreach ($result as $value) {
+                $list[$value->generatedcode] = ucwords($value->pa_name);
             }
             return $list;
         } else {
@@ -84,7 +136,7 @@ class wildlife_model extends CI_Model {
         }
     }
    
-    function check_cCode($id_c = '', $classcode) {
+    function check_cCode($id_c, $classcode) {
         $this->db->where('ClassCode', $classcode);
         if($id_c) {
             $this->db->where_not_in('id_c', $id_c);
@@ -92,7 +144,7 @@ class wildlife_model extends CI_Model {
         return $this->db->get($this->table2)->num_rows();
     }
 
-    function check_Name_class($id_c = '', $ClassDesc) {
+    function check_Name_class($id_c, $ClassDesc) {
         $this->db->where('ClassDesc', $ClassDesc);
         if($id_c) {
             $this->db->where_not_in('id_c', $id_c);
@@ -122,7 +174,7 @@ class wildlife_model extends CI_Model {
         ->update($this->table3,$data);       
     }
 
-    function check_Code_order($id_family = '', $ordercode) {
+    function check_Code_order($id_family, $ordercode) {
         $this->db->where('OrderCode', $ordercode);
         if($id_family) {
             $this->db->where_not_in('id_family', $id_family);
@@ -131,7 +183,7 @@ class wildlife_model extends CI_Model {
     }
 
 
-    function check_Name_order($id = '', $orderdesc) {
+    function check_Name_order($id, $orderdesc) {
         $this->db->where('OrderDesc', $orderdesc);
         if($id) {
             $this->db->where_not_in('id_family', $id);
@@ -150,7 +202,7 @@ class wildlife_model extends CI_Model {
                 foreach ($array_keys_values->result() as $row)
                 {
                     $result['']= 'SELECT CLASS';
-                    $result[$row->id_c]= strtoupper($row->ClassDesc);
+                    $result[$row->id_c]= ucwords($row->ClassDesc);
                 }
          
                 return $result;
@@ -177,7 +229,7 @@ class wildlife_model extends CI_Model {
         ->update($this->table4,$data);       
     }
 
-    function check_familyname($id = '', $scientificname) {
+    function check_familyname($id, $scientificname) {
         $this->db->where('ScientificName', $scientificname);
         if($id) {
             $this->db->where_not_in('id_scientific', $id);
@@ -185,7 +237,7 @@ class wildlife_model extends CI_Model {
         return $this->db->get($this->table4)->num_rows();
     }
 
-    function check_familycode($id = '', $wfamily) {
+    function check_familycode($id, $wfamily) {
         $this->db->where('FamilyCode', $wfamily);
         if($id) {
             $this->db->where_not_in('id_scientific', $id);
@@ -204,7 +256,7 @@ class wildlife_model extends CI_Model {
                 foreach ($array_keys_values->result() as $row)
                 {
                     $result['']= 'SELECT CLASS';
-                    $result[$row->id_c]= strtoupper($row->ClassDesc);
+                    $result[$row->id_c]= ucwords($row->ClassDesc);
                 }
          
                 return $result;
@@ -221,7 +273,7 @@ class wildlife_model extends CI_Model {
                 foreach ($array_keys_values->result() as $row)
                 {
                     $result['']= 'SELECT ORDER';
-                    $result[$row->id_family]= strtoupper($row->OrderDesc);
+                    $result[$row->id_family]= ucwords($row->OrderDesc);
                 }
          
                 return $result;
@@ -246,7 +298,7 @@ class wildlife_model extends CI_Model {
         $list[''] = "SELECT FAMILY NAME";
         if (!empty($result)){ 
             foreach ($result as $value) {
-                $list[$value->id_scientific] = strtoupper($value->ScientificName);
+                $list[$value->id_scientific] = ucwords($value->ScientificName);
             }
             return $list;
         } else {
@@ -266,7 +318,7 @@ class wildlife_model extends CI_Model {
         ->update($this->table5,$data);       
     }
 
-    function check_codeSpecies($id_genus = '', $speciescode) {
+    function check_codeSpecies($id_genus, $speciescode) {
         $this->db->where('speciesCode', $speciescode);
         if($id_genus) {
             $this->db->where_not_in('id_genus', $id_genus);
@@ -274,7 +326,7 @@ class wildlife_model extends CI_Model {
         return $this->db->get($this->table5)->num_rows();
     }
 
-    function check_commonNames($id_genus = '', $commonname) {
+    function check_commonNames($id_genus, $commonname) {
         $this->db->where('commonNameSpecies', $commonname);
         if($id_genus) {
             $this->db->where_not_in('id_genus', $id_genus);
@@ -282,7 +334,7 @@ class wildlife_model extends CI_Model {
         return $this->db->get($this->table5)->num_rows();
     }
 
-    function check_scientificNames($id_genus = '', $scientificname) {
+    function check_scientificNames($id_genus, $scientificname) {
         $this->db->where('scientificName_genus', $scientificname);
         if($id_genus) {
             $this->db->where_not_in('id_genus', $id_genus);

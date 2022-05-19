@@ -24,7 +24,7 @@ class wildlife extends CI_Controller
     // ================================================================= //
     public function category()
     {
-        $data['page_title'] = 'Wildlife Category';
+        $data['page_title'] = 'Wildlife Species Category';
         $data['setting'] = $this->setting_model->read();
 
         $data['content'] = $this->load->view('main_server/wildlife/category',$data,TRUE);
@@ -45,7 +45,7 @@ class wildlife extends CI_Controller
         foreach ($query->result() as $r) {
             $data[] = array(
                 "",//this if for auto number
-               $r->wcode,
+               // $r->wcode,
                $r->wdesc,
                "<a type='button' class='btn btn-flat btn-warning' title='View Class' href='wclass/".$r->id."'><i class='ion ion-eye'></i></a>"." ".
                 "<a type='button' class='btn btn-flat btn-success' href='categoryform/".$r->id."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
@@ -90,7 +90,7 @@ class wildlife extends CI_Controller
     public function categoryform($id_cat=null)
     {
         $data['identifier'] = $this->uri->segment(4);
-        $data['page_title'] = 'Wildlife Category';
+        $data['page_title'] = 'Wildlife Species Category';
         $data['setting'] = $this->setting_model->read();
 
         $data['wcat'] = $this->wildlife_model->getData($id_cat);
@@ -133,19 +133,19 @@ class wildlife extends CI_Controller
     {
         if ($this->input->post('id',true) == null)
         {
-            $this->form_validation->set_rules('wcode','Wildlife Code','required|is_unique[tblwCategory.wcode]');
+            // $this->form_validation->set_rules('wcode','Wildlife Code','required|is_unique[tblwCategory.wcode]');
             $this->form_validation->set_rules('wdesc','Name','required|is_unique[tblwCategory.wdesc]');
             $data['wcat'] = (object)$postData = [
                 'id'            =>  $this->input->post('id',true),
-                'wcode'     =>  $this->input->post('wcode',true),
+                // 'wcode'     =>  $this->input->post('wcode',true),
                 'wdesc' =>  $this->input->post('wdesc',true)
             ];
         } else {
-            $this->form_validation->set_rules('wcode','Wildlife Codes','required|callback_check_Codes');
+            // $this->form_validation->set_rules('wcode','Wildlife Codes','required|callback_check_Codes');
             $this->form_validation->set_rules('wdesc','Name','required|callback_check_names');
             $data['wcat'] = (object)$postData = [
                 'id'            =>  $this->input->post('id',true),
-                'wcode'     =>  $this->input->post('wcode',true),
+                // 'wcode'     =>  $this->input->post('wcode',true),
                 'wdesc' =>  $this->input->post('wdesc',true)
             ];
         }
@@ -207,7 +207,7 @@ class wildlife extends CI_Controller
                 $data[] = array(
                     "",//this if for auto number
                    $r->wdesc,
-                   $r->ClassCode,
+                   // $r->ClassCode,
                    $r->ClassDesc,
                    "<a type='button' class='btn btn-flat btn-warning' title='View Order' href='../order/".$r->id_c."'><i class='ion ion-eye'></i></a>"." ".
                     "<a type='button' class='btn btn-flat btn-success' href='../classform/".$r->id_c."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
@@ -226,7 +226,7 @@ class wildlife extends CI_Controller
                 $data[] = array(
                     "",//this if for auto number
                    $r->wdesc,
-                   $r->ClassCode,
+                   // $r->ClassCode,
                    $r->ClassDesc,
                     "<a type='button' class='btn btn-flat btn-warning' title='View Order' href='order/".$r->id_c."'><i class='ion ion-eye'></i></a>"." ".
                     "<a type='button' class='btn btn-flat btn-success' href='classform/".$r->id_c."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
@@ -316,23 +316,23 @@ class wildlife extends CI_Controller
     {
         if ($this->input->post('id_c',true) == null)
         {
-            $this->form_validation->set_rules('wcode','Wildlife Code','required');
-            $this->form_validation->set_rules('classcode','Wildlife Class','required|is_unique[tblclass.ClassCode]');
+            // $this->form_validation->set_rules('wcode','Wildlife Code','required');
+            // $this->form_validation->set_rules('classcode','Wildlife Class','required|is_unique[tblclass.ClassCode]');
             $this->form_validation->set_rules('classdesc','Name','required|is_unique[tblclass.ClassDesc]');
             $data['wclass'] = (object)$postData = [
                 'id_c'      =>  $this->input->post('id_c',true),
                 'WCode'     =>  $this->input->post('wcode',true),
-                'ClassCode' =>  $this->input->post('classcode',true),
+                // 'ClassCode' =>  $this->input->post('classcode',true),
                 'ClassDesc' =>  $this->input->post('classdesc',true)
             ];
         } else {
-            $this->form_validation->set_rules('wcode','Wildlife Code','required');
+            // $this->form_validation->set_rules('wcode','Wildlife Code','required');
             $this->form_validation->set_rules('classcode','Wildlife Class','required|callback_check_class_code');
             $this->form_validation->set_rules('classdesc','Name','required|callback_check_names_class');
             $data['wclass'] = (object)$postData = [
                 'id_c'      =>  $this->input->post('id_c',true),
                 'WCode'     =>  $this->input->post('wcode',true),
-                'ClassCode' =>  $this->input->post('classcode',true),
+                // 'ClassCode' =>  $this->input->post('classcode',true),
                 'ClassDesc' =>  $this->input->post('classdesc',true)
             ];
         }
@@ -396,7 +396,7 @@ class wildlife extends CI_Controller
                     "",//this if for auto number
                    $r->wdesc,
                    $r->ClassDesc,
-                   $r->OrderCode,
+                   // $r->OrderCode,
                    $r->OrderDesc,
                     "<a type='button' class='btn btn-flat btn-warning' title='View Family' href='../family/".$r->id_family."'><i class='ion ion-eye'></i></a>"." ".
                     "<a type='button' class='btn btn-flat btn-success' href='../orderform/".$r->id_family."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
@@ -417,7 +417,7 @@ class wildlife extends CI_Controller
                     "",//this if for auto number
                     $r->wdesc,
                     $r->ClassDesc,
-                    $r->OrderCode,
+                    // $r->OrderCode,
                     $r->OrderDesc,
                     "<a type='button' class='btn btn-flat btn-warning' title='View Family' href='family/".$r->id_family."'><i class='ion ion-eye'></i></a>"." ".
                     "<a type='button' class='btn btn-flat btn-success' href='orderform/".$r->id_family."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
@@ -536,25 +536,25 @@ class wildlife extends CI_Controller
         {
             $this->form_validation->set_rules('wcode','Wildlife Category','required');
             $this->form_validation->set_rules('wclass','Wildlife Class','required');
-            $this->form_validation->set_rules('ordercode','Code','required|is_unique[tblorderw.OrderCode]');
+            // $this->form_validation->set_rules('ordercode','Code','required|is_unique[tblorderw.OrderCode]');
             $this->form_validation->set_rules('orderdesc','Name','required|is_unique[tblorderw.OrderDesc]');
             $data['wfamily'] = (object)$postData = [
                 'id_family' =>  $this->input->post('id_family',true),
                 'ClassCodes'    =>  $this->input->post('wclass',true),
                 'OrderDesc' =>  $this->input->post('orderdesc',true),
-                'OrderCode' =>  $this->input->post('ordercode',true),
+                // 'OrderCode' =>  $this->input->post('ordercode',true),
                 'wCategory' =>  $this->input->post('wcode',true),
             ];
         } else {
             $this->form_validation->set_rules('wcode','Wildlife Category','required');
             $this->form_validation->set_rules('wclass','Wildlife Class','required');
-            $this->form_validation->set_rules('ordercode','Code','required|callback_check_code_orders'); //NEED TO HAVE CALL BACK
+            // $this->form_validation->set_rules('ordercode','Code','required|callback_check_code_orders'); //NEED TO HAVE CALL BACK
             $this->form_validation->set_rules('orderdesc','Name','required|callback_check_names_orders');
             $data['wfamily'] = (object)$postData = [
                 'id_family' =>  $this->input->post('id_family',true),
                 'ClassCodes'    =>  $this->input->post('wclass',true),
                 'OrderDesc' =>  $this->input->post('orderdesc',true),
-                'OrderCode' =>  $this->input->post('ordercode',true),
+                // 'OrderCode' =>  $this->input->post('ordercode',true),
                 'wCategory' =>  $this->input->post('wcode',true),
             ];
         }
@@ -620,8 +620,8 @@ if ($this->form_validation->run() == false) {
                    $r->wdesc,
                    $r->ClassDesc,
                    $r->OrderDesc,
-                   $r->FamilyCode,
-                   $r->CommonName,
+                   // $r->FamilyCode,
+                   // $r->CommonName,
                    $r->ScientificName,
                     "<a type='button' class='btn btn-flat btn-warning' title='View Species Genus' href='../species/".$r->id_scientific."'><i class='ion ion-eye'></i></a>"." ".
                     "<a type='button' class='btn btn-flat btn-success' href='../familyform/".$r->id_scientific."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
@@ -644,8 +644,8 @@ if ($this->form_validation->run() == false) {
                     $r->wdesc,
                     $r->ClassDesc,
                     $r->OrderDesc,
-                    $r->FamilyCode,
-                    $r->CommonName,
+                    // $r->FamilyCode,
+                    // $r->CommonName,
                     $r->ScientificName,
                     "<a type='button' class='btn btn-flat btn-warning' title='View Species Genus' href='species/".$r->id_scientific."'><i class='ion ion-eye'></i></a>"." ".
                     "<a type='button' class='btn btn-flat btn-success' href='familyform/".$r->id_scientific."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
@@ -742,7 +742,7 @@ if ($this->form_validation->run() == false) {
                 $data['message'] = $option;
                 $data['status'] = true;
             } else {
-                $data['message'] = "No data available for Order!"." <a type='button'  href='././orderForm'>Add</>";
+                $data['message'] = "No data available for Order!"." <a type='button'  href='./../orderForm'>Add</>";
                 $data['status'] = false;
             }
         } else {
@@ -789,13 +789,13 @@ if ($this->form_validation->run() == false) {
             $this->form_validation->set_rules('catid','Category Name','required');
             $this->form_validation->set_rules('classid','Class Name','required');
             $this->form_validation->set_rules('orderid','Order Name','required');
-            $this->form_validation->set_rules('wfamily','Family Code','required|is_unique[tblfamily.FamilyCode]|min_length[4]');
+            // $this->form_validation->set_rules('wfamily','Family Code','required|is_unique[tblfamily.FamilyCode]|min_length[4]');
             $this->form_validation->set_rules('commonname','Common Name','required|is_unique[tblfamily.CommonName]');
             $this->form_validation->set_rules('scientificname','Scientific Name','required|is_unique[tblfamily.ScientificName]');
             $data['dataResult'] = (object)$postData = [
                 'id_scientific' =>      $this->input->post('id_scientific',true),
                 'OrderCode'     =>      $this->input->post('orderid',true),
-                'FamilyCode'    =>      $this->input->post('wfamily',true),
+                // 'FamilyCode'    =>      $this->input->post('wfamily',true),
                 'CommonName'    =>      $this->input->post('commonname',true),
                 'ScientificName'=>      $this->input->post('scientificname',true),
                 'WCode'         =>      $this->input->post('catid',true),
@@ -805,13 +805,13 @@ if ($this->form_validation->run() == false) {
             $this->form_validation->set_rules('catid','Category Name','required');
             $this->form_validation->set_rules('classid','Class Name','required');
             $this->form_validation->set_rules('orderid','Order Name','required');
-            $this->form_validation->set_rules('wfamily','Family Code','required|min_length[4]|callback_check_familyCodes');
+            // $this->form_validation->set_rules('wfamily','Family Code','required|min_length[4]|callback_check_familyCodes');
             $this->form_validation->set_rules('commonname','Common Name','required');
             $this->form_validation->set_rules('scientificname','Scientific Name','required|callback_check_familyNames');
             $data['dataResult'] = (object)$postData = [
                 'id_scientific' =>      $this->input->post('id_scientific',true),
                 'OrderCode'     =>      $this->input->post('orderid',true),
-                'FamilyCode'    =>      $this->input->post('wfamily',true),
+                // 'FamilyCode'    =>      $this->input->post('wfamily',true),
                 'CommonName'    =>      $this->input->post('commonname',true),
                 'ScientificName'=>      $this->input->post('scientificname',true),
                 'WCode'         =>      $this->input->post('catid',true),
@@ -867,10 +867,14 @@ if ($this->form_validation->run() == false) {
         if (!empty($id)) {
             $this->db->select("*");
             $this->db->from('tblwspeciesgenus');
+            // $this->db->join('tblpamainbiological_residency','tblwspeciesgenus.residency_status = tblpamainbiological_residency.id_residency','LEFT');
+            $this->db->join('tblpamain','tblwspeciesgenus.generatedcode = tblpamain.generatedcode','LEFT');
+            $this->db->join('tbliucncode','tblwspeciesgenus.status = tbliucncode.id','LEFT');
             $this->db->join('tblfamily','tblwspeciesgenus.family_id = tblfamily.id_scientific','LEFT');
             $this->db->join('tblorderw','tblfamily.Ordercode = tblorderw.id_family','LEFT');
             $this->db->join('tblclass','tblorderw.ClassCodes = tblclass.id_c','LEFT');
             $this->db->join('tblwcategory','tblclass.WCode = tblwcategory.id','LEFT');
+            $this->db->join('tblpamainbiological_residency','tblwspeciesgenus.residency_status = tblpamainbiological_residency.id_residency','LEFT');
             $this->db->where('tblwspeciesgenus.family_id',$id);
             $query = $this->db->get();
 
@@ -878,13 +882,14 @@ if ($this->form_validation->run() == false) {
             foreach ($query->result() as $r) {
                 $data[] = array(
                     "",//this if for auto number
-                   $r->wdesc,
+                   $r->description,
+                   $r->residency_desc,                    
                    $r->ClassDesc,
                    $r->OrderDesc,
                    $r->ScientificName,
-                   $r->speciesCode,                   
                    $r->commonNameSpecies,
                    $r->scientificName_genus,                    
+                   // $r->pa_name,                    
                     "<a type='button' class='btn btn-flat btn-success' href='../speciesForm/".$r->id_genus."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
                     "<a type='button' class='btn btn-flat btn-danger btn-deleteFamily' title='Delete' data-id=".$r->id_genus."><i class='ion ion-android-delete'></i></a>"
                 );
@@ -893,6 +898,9 @@ if ($this->form_validation->run() == false) {
 
             $this->db->select("*");
             $this->db->from('tblwspeciesgenus');
+            $this->db->join('tblpamainbiological_residency','tblwspeciesgenus.residency_status = tblpamainbiological_residency.id_residency','LEFT');
+            $this->db->join('tblpamain','tblwspeciesgenus.generatedcode = tblpamain.generatedcode','LEFT');
+            $this->db->join('tbliucncode','tblwspeciesgenus.status = tbliucncode.id','LEFT');
             $this->db->join('tblfamily','tblwspeciesgenus.family_id = tblfamily.id_scientific','LEFT');
             $this->db->join('tblorderw','tblfamily.Ordercode = tblorderw.id_family','LEFT');
             $this->db->join('tblclass','tblorderw.ClassCodes = tblclass.id_c','LEFT');
@@ -903,13 +911,16 @@ if ($this->form_validation->run() == false) {
             foreach ($query->result() as $r) {
                 $data[] = array(
                     "",//this if for auto number
-                   $r->wdesc,
+                   // $r->wdesc,
+                   $r->description, 
+                   $r->residency_desc,                    
                    $r->ClassDesc,
                    $r->OrderDesc,
-                   $r->ScientificName,
-                   $r->speciesCode,                   
+                   $r->ScientificName,                                     
                    $r->commonNameSpecies,
-                   $r->scientificName_genus,
+                   "<i>".$r->scientificName_genus."</i>",   
+                   // $r->pa_name,                    
+                                   
                     "<a type='button' class='btn btn-flat btn-success' href='speciesForm/".$r->id_genus."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
                     "<a type='button' class='btn btn-flat btn-danger btn-deleteSpecies' title='Delete' data-id=".$r->id_genus."><i class='ion ion-android-delete'></i></a>"
                 );
@@ -952,6 +963,9 @@ if ($this->form_validation->run() == false) {
         $data['setting'] = $this->setting_model->read();
         $data['wspecies'] = $this->wildlife_model->getDataSpecies($id_genus);
         $data['family'] = $this->wildlife_model->familyList();
+        $data['iucn'] = $this->wildlife_model->iucnList();
+        $data['residency_list_status']    = $this->wildlife_model->residency_status();        
+        $data['panames'] = $this->wildlife_model->palist();
         $data['content'] = $this->load->view('main_server/wildlife/speciesForm',$data,TRUE);
         $this->load->view('main_server/dashboard',$data);
     }
@@ -1001,32 +1015,51 @@ if ($this->form_validation->run() == false) {
     return $response;
     }
 
-    public function save_species()
+    public function save_speciess()
     {
+        if(!empty($_FILES['picture']['name'])){
+            $config ['upload_path'] = 'bmb_assets2/upload/wildlife_img';
+            $config['file_name'] = $_FILES['picture']['name'];
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+             if($this->upload->do_upload('picture')){
+                $uploadData = $this->upload->data();
+                $filenames = $uploadData['file_name'];
+            }
+        }
+
+
         if ($this->input->post('id_genus',true) == null)
         {
         $this->form_validation->set_rules('familyid','Family Name','required');
-        $this->form_validation->set_rules('speciescode','Species Code','required|is_unique[tblwspeciesgenus.speciesCode]');
-        $this->form_validation->set_rules('commonname','Common Name','required|is_unique[tblwspeciesgenus.commonNameSpecies]');
-        $this->form_validation->set_rules('scientificanamegenus','Scientific Name','required|is_unique[tblwspeciesgenus.scientificName_genus]');
+        // $this->form_validation->set_rules('commonname','Common Name','required|is_unique[tblwspeciesgenus.commonNameSpecies]');
+        // $this->form_validation->set_rules('scientificanamegenus','Scientific Name','required|is_unique[tblwspeciesgenus.scientificName_genus]');
         $data['genus'] = (object)$postData = [
-            'id_genus'      =>  $this->input->post('id_genus',true),
-            'family_id'     =>  $this->input->post('familyid',true),
-            'speciesCode'   =>  $this->input->post('speciescode',true),
-            'commonNameSpecies' =>  $this->input->post('commonname',true),
-            'scientificName_genus'  =>  $this->input->post('scientificanamegenus',true),
+            'id_genus'      =>  $this->input->post('id_genus'),
+            'family_id'     =>  $this->input->post('familyid'),
+            'commonNameSpecies' =>  $this->input->post('commonname'),
+            'scientificName_genus'  =>  $this->input->post('scientificanamegenus'),
+            // 'generatedcode'  =>  $this->input->post('paname'),
+            'status'        =>  $this->input->post('iucnid',true),
+            'residency_status'        =>  $this->input->post('residency',true),
+            'image'           => (!empty($filenames)?$filenames:$this->input->post('old_picture')),
         ];
         }else{
         $this->form_validation->set_rules('familyid','Family Name','required');
-        $this->form_validation->set_rules('speciescode','Species Code','required|callback_check_codeSpecies');
-        $this->form_validation->set_rules('commonname','Common Name','required|callback_check_commonnames');
-        $this->form_validation->set_rules('scientificanamegenus','Scientific Name','required|callback_check_speciesnames');
+        // $this->form_validation->set_rules('commonname','Common Name','required|callback_check_commonnames');
+        // $this->form_validation->set_rules('scientificanamegenus','Scientific Name','required|callback_check_speciesnames');
         $data['genus'] = (object)$postData = [
-            'id_genus'      =>  $this->input->post('id_genus',true),
-            'family_id'     =>  $this->input->post('familyid',true),
-            'speciesCode'   =>  $this->input->post('speciescode',true),
-            'commonNameSpecies' =>  $this->input->post('commonname',true),
-            'scientificName_genus'  =>  $this->input->post('scientificanamegenus',true),
+            'id_genus'      =>  $this->input->post('id_genus'),
+            'family_id'     =>  $this->input->post('familyid'),
+            'commonNameSpecies' =>  $this->input->post('commonname'),
+            // 'generatedcode'  =>  $this->input->post('paname'),
+            'scientificName_genus'  =>  $this->input->post('scientificanamegenus'),
+            'status'        =>  $this->input->post('iucnid',true),
+            'residency_status'        =>  $this->input->post('residency',true),
+            'image'           => (!empty($filenames)?$filenames:$this->input->post('old_picture')),
         ];
         }
         if ($this->form_validation->run() == false) {
@@ -1039,7 +1072,7 @@ if ($this->form_validation->run() == false) {
                 $output['messagespecies'] = "<strong style='color:yellow'>".$this->input->post('scientificanamegenus')."</strong> ".'registered successfully';
                 }else{
                 $output['error'] = true;
-                $output['messagespecies'] = 'New Species Genus registered successfully';
+                $output['messagespecies'] = 'Somethings wrong in the query...';
                 }
             }else{
 
@@ -1049,7 +1082,7 @@ if ($this->form_validation->run() == false) {
                 $output['messagespecies'] = "<strong style='color:yellow'>".$this->input->post('scientificanamegenus')."</strong> ".' successfully update';                
                 }else{
                 $output['error'] = true;
-                $output['messagespecies'] = 'Species Genus successfully update';
+                $output['messagespecies'] = 'Somethings wrong in the query...';
                 }
             }
         }

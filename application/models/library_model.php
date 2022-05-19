@@ -68,7 +68,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeCite($id = '', $citescode) {
+    function check_CodeCite($id,$citescode) {
         $this->db->where('CitesCode', $citescode);
         if($id) {
             $this->db->where_not_in('id', $id);
@@ -76,7 +76,7 @@ class library_model extends CI_Model
         return $this->db->get($this->cite)->num_rows();
     }
 
-    function check_NameCite($id = '', $description) {
+    function check_NameCite($id,$description) {
         $this->db->where('Description', $description);
         if($id) {
             $this->db->where_not_in('id', $id);
@@ -110,7 +110,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeCms($id_cms = '', $cmscode) {
+    function check_CodeCms($id_cms, $cmscode) {
         $this->db->where('CMSCode', $cmscode);
         if($id_cms) {
             $this->db->where_not_in('id_cms', $id_cms);
@@ -118,7 +118,7 @@ class library_model extends CI_Model
         return $this->db->get($this->cms)->num_rows();
     }
 
-    function check_NameCms($id_cms = '', $description) {
+    function check_NameCms($id_cms, $description) {
         $this->db->where('Description', $description);
         if($id_cms) {
             $this->db->where_not_in('id_cms', $id_cms);
@@ -151,7 +151,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeMarital($id_marital = '', $cvcode) {
+    function check_CodeMarital($id_marital, $cvcode) {
         $this->db->where('cvcode', $cvcode);
         if($id_marital) {
             $this->db->where_not_in('id_marital', $id_marital);
@@ -159,7 +159,7 @@ class library_model extends CI_Model
         return $this->db->get($this->marital)->num_rows();
     }
 
-    function check_NameMarital($id_marital = '', $cvdesc) {
+    function check_NameMarital($id_marital, $cvdesc) {
         $this->db->where('cvdesc', $cvdesc);
         if($id_marital) {
             $this->db->where_not_in('id_marital', $id_marital);
@@ -192,7 +192,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeEco($id = '', $ecocode) {
+    function check_CodeEco($id, $ecocode) {
         $this->db->where('EcoCode', $ecocode);
         if($id) {
             $this->db->where_not_in('id', $id);
@@ -200,7 +200,7 @@ class library_model extends CI_Model
         return $this->db->get($this->eco)->num_rows();
     }
 
-    function check_NameEco($id = '', $description) {
+    function check_NameEco($id, $description) {
         $this->db->where('description', $description);
         if($id) {
             $this->db->where_not_in('id', $id);
@@ -233,7 +233,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeBio($id = '', $tbzcode) {
+    function check_CodeBio($id, $tbzcode) {
         $this->db->where('TBZCode', $tbzcode);
         if($id) {
             $this->db->where_not_in('id_tbz', $id);
@@ -241,7 +241,7 @@ class library_model extends CI_Model
         return $this->db->get($this->bio)->num_rows();
     }
 
-    function check_NameBio($id = '', $tbzlocation) {
+    function check_NameBio($id, $tbzlocation) {
         $this->db->where('TBZlocation', $tbzlocation);
         if($id) {
             $this->db->where_not_in('id_tbz', $id);
@@ -274,7 +274,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeClass($id = '', $nipcode) {
+    function check_CodeClass($id, $nipcode) {
         $this->db->where('nipCode', $nipcode);
         if($id) {
             $this->db->where_not_in('id_nip', $id);
@@ -282,7 +282,7 @@ class library_model extends CI_Model
         return $this->db->get($this->nip)->num_rows();
     }
 
-    function check_NameClass($id = '', $nipdesc) {
+    function check_NameClass($id, $nipdesc) {
         $this->db->where('nipDesc', $nipdesc);
         if($id) {
             $this->db->where_not_in('id_nip', $id);
@@ -315,7 +315,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeCat($id = '', $categorycode) {
+    function check_CodeCat($id, $categorycode) {
         $this->db->where('categoryCode', $categorycode);
         if($id) {
             $this->db->where_not_in('id_cat', $id);
@@ -323,7 +323,7 @@ class library_model extends CI_Model
         return $this->db->get($this->cat)->num_rows();
     }
 
-    function check_NameCat($id = '', $categoryname) {
+    function check_NameCat($id, $categoryname) {
         $this->db->where('categoryName', $categoryname);
         if($id) {
             $this->db->where_not_in('id_cat', $id);
@@ -356,7 +356,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeLeg($id = '', $legiscode) {
+    function check_CodeLeg($id, $legiscode) {
         $this->db->where('LegisCode', $legiscode);
         if($id) {
             $this->db->where_not_in('id_legis', $id);
@@ -364,7 +364,7 @@ class library_model extends CI_Model
         return $this->db->get($this->leg)->num_rows();
     }
 
-    function check_NameLeg($id = '', $legisdesc) {
+    function check_NameLeg($id, $legisdesc) {
         $this->db->where('LegisDesc', $legisdesc);
         if($id) {
             $this->db->where_not_in('id_legis', $id);
@@ -397,7 +397,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_CodeCon($id = '', $cpabicode) {
+    function check_CodeCon($id, $cpabicode) {
         $this->db->where('CPABICode', $cpabicode);
         if($id) {
             $this->db->where_not_in('id_pac', $id);
@@ -405,7 +405,7 @@ class library_model extends CI_Model
         return $this->db->get($this->con)->num_rows();
     }
 
-    function check_NameCon($id = '', $CPABIdesc,$cpacode) {
+    function check_NameCon($id, $CPABIdesc,$cpacode) {
         $cpid = $this->input->post('cpacode');
         // $this->db->where('CPABIdesc', $CPABIdesc AND);
         $where = "CPABIdesc='$CPABIdesc' AND CPAreaCode='$cpid'";
@@ -460,7 +460,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_Codewtype($id = '', $wtypecode) {
+    function check_Codewtype($id, $wtypecode) {
         $this->db->where('wtypecode', $wtypecode);
         if($id) {
             $this->db->where_not_in('id_wtype', $id);
@@ -468,7 +468,7 @@ class library_model extends CI_Model
         return $this->db->get($this->wtype)->num_rows();
     }
 
-    function check_Namewtype($id = '', $wtypedesc) {
+    function check_Namewtype($id, $wtypedesc) {
         $this->db->where('wtypedesc', $wtypedesc);
         if($id) {
             $this->db->where_not_in('id_wtype', $id);
@@ -501,7 +501,7 @@ class library_model extends CI_Model
             ->row();
     }
 
-    function check_Codewdesc($id = '', $wdesccode) {
+    function check_Codewdesc($id, $wdesccode) {
         $this->db->where('wdesccode', $wdesccode);
         if($id) {
             $this->db->where_not_in('id_wdesc', $id);
@@ -509,7 +509,7 @@ class library_model extends CI_Model
         return $this->db->get($this->wdesc)->num_rows();
     }
 
-    function check_Namewdesc($id = '',$wtypeid, $wdescdesc) {
+    function check_Namewdesc($id,$wtypeid, $wdescdesc) {
         $mc = $this->input->post('wtypeid');
         $where = "wdesccode='$wdescdesc' AND wtype_id='$mc'";
 

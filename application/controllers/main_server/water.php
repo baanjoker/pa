@@ -317,6 +317,7 @@
                 $r->regionName,
                 $r->provinceName,
                 "<a type='button' class='btn btn-flat btn-success' href='water/form/".$r->id_wf."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
+                "<a type='button' class='btn btn-flat btn-warning' href='../report/printpdf/pdffilewater/".$r->id_wf."' title='PDF' data-id=".$r->id_wf."><i class='ion ion-android-attach'></i></a>"." ".
                 "<a type='button' class='btn btn-flat btn-danger btn-deletewater' title='Delete' data-id=".$r->id_wf."><i class='ion ion-android-delete'></i></a>"
             );
         }

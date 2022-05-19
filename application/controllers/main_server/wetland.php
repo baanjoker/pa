@@ -52,7 +52,9 @@
                $r->municipalName,
                $r->barangayName,
                 "<a type='button' class='btn btn-flat btn-success' href='./wetland/form/".$r->id_wetland."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
+                "<a type='button' class='btn btn-flat btn-warning' href='../report/printpdf/pdffilewetland/".$r->id_wetland."' title='PDF' data-id=".$r->id_wetland."><i class='ion ion-android-attach'></i></a>"." ".
                 "<a type='button' class='btn btn-flat btn-danger btn-deletewetland' title='Delete' data-id=".$r->id_wetland."><i class='ion ion-android-delete'></i></a>"
+
             );
         }
 

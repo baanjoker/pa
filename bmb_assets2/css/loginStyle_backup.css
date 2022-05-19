@@ -1,0 +1,299 @@
+button,
+form,
+fieldset,
+input,
+textarea {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  background: transparent;
+  vertical-align: baseline;
+  font-size: 100%;
+}
+body {
+  line-height: 1;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+/* remember to define focus styles! */
+:focus {
+  outline: 0;
+}
+/* remember to highlight inserts somehow! */
+ins {
+  text-decoration: none;
+}
+del {
+  text-decoration: line-through;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+address, caption, cite, code, dfn, em, strong, var {
+  font-weight: normal;
+  font-style: normal;
+}
+caption, th {
+  text-align: left;
+  font-weight: normal;
+  font-style: normal;
+}
+html {
+  background-color: #3a3a3a;
+}
+body {
+  min-height: 100%;
+  height: 100%;
+  background: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/navy_blue.png) repeat;
+  font-weight: lighter;
+  font-family: "HelveticaNeue-Light",
+    "Helvetica Neue Light",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    "Lucida Grande",
+    sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+a {
+  color: #b1c;
+  text-decoration: none;
+}
+p.adjust {
+  display: block;
+  width: 300px;
+  margin-left: -180px;
+  margin-top: -5px;
+}
+
+p.denrtext{
+  font-weight: bold;
+  color: #1a75ff;
+}
+.center_div{
+    margin: 0 auto;
+    width:80% /* value of your choice which suits your alignment */
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: white;
+}
+
+input:focus::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: black;
+}
+input:focus::-moz-placeholder { /* Firefox 19+ */
+  color: black;
+}
+input:focus:-ms-input-placeholder { /* IE 10+ */
+  color: black;
+}
+input:focus:-moz-placeholder { /* Firefox 18- */
+  color: black;
+}
+
+p.bmbtext{
+  color: #00ff00;
+}
+
+p a {
+  color: #fff;
+  font-size: 10px;
+  text-decoration: none;
+}
+p a:hover {
+  color: #ffff1a;
+  border-bottom: 1px solid gray;
+}
+#warp {
+  position: relative;
+  /*margin: 50px auto 0;*/
+  /*width: 800px;*/
+  text-align: center;
+  color: white;
+}
+#warp2 {
+    position: relative;
+    margin: 50px auto 0;
+    width: 350px;
+    text-align: center;
+    color: white;
+}
+
+h2.denrtext {
+  font-weight: bold;
+  color: #1a75ff;
+}
+
+h3.bmbtext{
+  color: #00ff00;
+}
+
+form {
+  display: block;
+  width: 400px;
+  height: 300px;
+}
+h1 {
+  color: #fff;
+  font-weight: bolder;
+  font-size: 60px;
+}
+.admin {
+  height: 255px;
+  float: left;
+  width: 200px;
+  border-right: 1px solid #333333;
+  text-align: left;
+  left: 0;
+  top: 0;
+  transition: all 200ms ease-in 100ms;
+}
+.cms {
+  height: 250px;
+  top: 70px;
+  left: -62px;
+  float: right;
+  width: 150px;
+  text-align: right;
+  transition: all 200ms ease-in 100ms;
+}
+.admin, .cms {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  transform: rotate(25deg);
+}
+.cms h1 {
+  margin-left: 15px;
+  color: #fff;
+}
+.rota h1 {margin-left: 20px;}
+.roti, .rota {
+  position: relative;
+  display: block;
+  transform: rotate(-25deg);
+}
+.admin:hover h1 {
+  color: #1a75ff;
+}
+
+.cms:hover h1{
+ color: #00ff00;
+}
+
+.rota {
+  margin-top: 80px;
+  margin-left: 25px;
+}
+.roti {
+  margin-top: 80px;
+  margin-right: 55px;
+}
+input, button {
+  margin: 4px;
+  padding: 8px 6px;
+  width: 350px;
+  /*background: white;*/
+      border: solid 1px #fff;
+      border-radius: 10px;
+  color: black;
+  font-size: 10px;
+  transition: all 1s ease-out;
+}
+#valid {
+  margin-left: -230px;
+  background: #000;
+  color: white;
+  text-align: right;
+  cursor: pointer;
+  transition: all 1s ease-out;
+  /*border: none 1px #000;*/
+}
+#valid:hover {
+  background: #be1dcc;
+  transition: all 0.3s ease-in;
+}
+input:hover {
+  box-shadow: inset 0 0 5px rgba(190, 29, 204, 0.6);
+}
+input:focus {
+  background: white;
+  color: black;
+}
+.up {
+  top: 100px;
+  left: -60px;
+}
+.down {
+  top: -100px;
+  left: 60px;
+}
+
+.alert{
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+}
+
+.close {
+    width: auto;
+    margin-left: 15px;
+    padding-top: 50px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close:hover {
+    color: black;
+}
+
+footer{
+   /* padding: 2.75rem 0;   
+    width: 100%;
+    background-color: transparent;    
+    font-size: .75rem;
+    text-align: left;
+    color: #efeff4;*/
+    padding: 2.75rem 0; 
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+}
+  
+footer p {
+  font-size: 1.25rem;
+}

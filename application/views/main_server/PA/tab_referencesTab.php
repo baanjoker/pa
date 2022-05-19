@@ -8,10 +8,12 @@
       	<div class="col-md-12">			
         	<div class="panel panel-info">
           		<div class="panel-heading"><div class="panel-title"><i class="fa fa-info"></i> REFERENCES</div></div>
-          		<div class="panel-body">          			
-		          	<div class="col-md-12">
-		          		<?php echo form_textarea($form_reference,$pamain->reference)?>
-		          	</div>
+          		<div class="panel-body">  
+	          		<table width="100%" border="0" class="table4">				    
+					    <tr valign="top" class="spaceUnder spaceOver">
+					    	<td><?php echo form_textarea($form_reference,$pamain->reference)?></td>
+					    </tr>
+					</table>
 		        </div>
 		    </div>
 		</div>

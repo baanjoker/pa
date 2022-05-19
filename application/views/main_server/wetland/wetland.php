@@ -8,6 +8,7 @@
 				<div class="col-md-12">
 	                <div class="form-group"><br>
 						<a href="<?php echo base_url('main_server/wetland/form'); ?>" class="btn btn-info btn-flat" ><i class="fa fa-plus" name="add"></i> ADD WETLAND</a>
+						<a href="<?php echo base_url('report/wetland_report/'); ?>" class="btn btn-success btn-flat" ><i class="fa fa-filter" name="add"></i> ADVANCE FILTER</a>
 					</div>
 				</div>
 				<div class="panel-body">

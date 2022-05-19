@@ -965,6 +965,7 @@ a:focus {
   color: #444 !important;
   text-align: center;
 }
+
 @media (max-width: 991px) {
   .navbar-nav > .notifications-menu > .dropdown-menu > li.footer > a,
   .navbar-nav > .messages-menu > .dropdown-menu > li.footer > a,
@@ -2012,9 +2013,11 @@ a:focus {
 .info-box {
   display: block;
   min-height: 90px;
-  background: #fff;
+  background: #f2f2f2;
   width: 100%;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  /*box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);*/
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 120);
+  border: 1px solid #c3c3c3;
   border-radius: 2px;
   margin-bottom: 15px;
 }
@@ -2057,7 +2060,7 @@ a:focus {
 .info-box-number {
   display: block;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 24px;
 }
 .progress-description,
 .info-box-text {

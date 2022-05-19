@@ -1142,6 +1142,7 @@ img {
 }
 .img-circle {
   border-radius: 50%;
+  width: 100px;
 }
 hr {
   margin-top: 20px;
@@ -2509,7 +2510,7 @@ label {
   display: inline-block;
   max-width: 100%;
   margin-bottom: 5px;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 input[type="search"] {
   -webkit-box-sizing: border-box;

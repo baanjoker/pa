@@ -4,7 +4,7 @@
 		'class' 	=>	'form-control',
 		'id'		=>	'catid',
 		'required'	=>	'required',
-		'placeholder'=> 'Category code'
+		'placeholder'=> 'Species Category code'
 	);
 	$data_class = array(
 		'name' =>	'classid',
@@ -79,7 +79,7 @@
 		'class' 	=>	'form-control',
 		'id'		=>	'orderdesc',
 		'required'	=>	'required',
-		'placeholder'=> 'Order code description'
+		'placeholder'=> 'Order description'
 
 	);
 ?>
@@ -108,7 +108,7 @@
 							<table width="100%" border="0" cellpadding="3" cellspacing="1" class="table4">
 							<?php if (!empty($wfamily->id_scientific)): ?>
 								<tr valign="top" class="spaceUnder spaceOver">
-									<td style="width: 100px">Category</td>
+									<td style="width: 100px">Species Category</td>
 									<td><?= form_dropdown($data_wCatcode,$category,$wfamily->WCode) ?><span class="error"></span></td>
 								</tr>
 								<tr valign="top" class="spaceUnder">
@@ -119,10 +119,10 @@
 									<td style="width: 100px">Order</td>
 									<td><?= form_dropdown($data_order,$OrderListDropdown,$wfamily->Ordercode) ?><span class="error3"></span> </span></td>
 								</tr>
-								<tr valign="top" class="spaceUnder">
+								<!-- <tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Family Code</td>
 									<td><?= form_input($data_wfamilycode,$wfamily->FamilyCode) ?></span> </td>	
-								</tr>
+								</tr> -->
 								<tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Common Name</td>
 									<td><?= form_input($data_commonname,$wfamily->CommonName) ?></td>	
@@ -144,10 +144,10 @@
 									<td style="width: 100px">Order</td>
 									<td><?= form_dropdown($data_order) ?><span class="error3"></span></td>
 								</tr>
-								<tr valign="top" class="spaceUnder">
+								<!-- <tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Family Code</td>
 									<td><?= form_input($data_wfamilycode) ?></span> </td>	
-								</tr>
+								</tr> -->
 								<tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Common Name</td>
 									<td><?= form_input($data_commonname) ?></td>	

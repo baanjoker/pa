@@ -18,9 +18,9 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>CATEGORY</th>
+										<th>SPECIES CATEGORY</th>
                     					<th>CLASS</th>
-                    					<th>ORDER CODE</th>
+                    					<!-- <th>ORDER CODE</th> -->
 										<th>ORDER DESCRIPTION</th>
 										<th>OPTION</th>
 									</tr>

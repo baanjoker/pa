@@ -56,56 +56,40 @@ $data_soil = array(
 			<div class="panel panel-info">
 				<div class="panel-heading"><div class="panel-title"><i class="fa fa-child"></i> PHYSICAL FEATURE</div></div>
 				<div class="panel-body">
-				    <div class="col-md-12">
-				    	<div class="row">
-		          			<div class="col-md-12">			          			
-						        <h3 class="box-title" style="color:red">ELEVATION</h3>						       
-			          			<div class="form-group">
-					            	<label for="inputCategory" class="col-sm-1 col-xs-4 control-label">Highest</label>
-					            	<div class="form-group col-sm-3 col-xs-8">
-					            		<?= form_input($data_highestelev,$pamain->elevation_highest); ?>
-					            	</div>	
-					            	<label for="inputCategory" class="col-sm-1 col-xs-4 control-label">Lowest</label>
-					            	<div class="form-group col-sm-3 col-xs-8">
-					            		<?= form_input($data_lowestelev,$pamain->elevation_lowest); ?>
-					            	</div>		            			
-					            </div>
-					        </div>
-					        <!-- <div class="box-header with-border"></div> -->
-					    </div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group">
-				          	<div class="col-md-4">
-				          		<label for="inputClassification" class="control-label">Topography</label>
-				          		<?= form_textarea($data_topo,$pamain->topology) ?>
-				          	</div>
-				          	<div class="col-md-4">
-				          		<label for="inputClassification" class="control-label">Climate</label>
-				          		<?= form_textarea($data_climate,$pamain->climate) ?>
-				          	</div>
-				          	<div class="col-md-4">
-				          		<label for="inputClassification" class="control-label">Hydrology/River System</label>
-				          		<?= form_textarea($data_hydro,$pamain->hydrology) ?>
-				          	</div>
-	                  	</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group">
-				          	<div class="col-md-4">
-				          		<label for="inputClassification" class="control-label">Location</label>
-				          		<?= form_textarea($data_location,$pamain->location_details) ?>
-				          	</div>
-				          	<div class="col-md-4">
-				          		<label for="inputClassification" class="control-label">Existing Land Use</label>
-				          		<?= form_textarea($data_landuse,$pamain->existing_landuse) ?>
-				          	</div>
-				          	<div class="col-md-4">
-				          		<label for="inputClassification" class="control-label">Soil</label>
-				          		<?= form_textarea($data_soil,$pamain->soil) ?>
-				          	</div>
-	                  	</div>
-					</div>					
+				    <table width="100%" border="0" cellpadding="3" cellspacing="1" class="table4">
+				    	<tr valign="top" class="spaceUnder spaceOver">
+				    		<!-- <td style="width: 100px">Highest Elevation</td> -->
+				    		<td>Highest Elevation<?= form_input($data_highestelev,$pamain->elevation_highest); ?></td>
+				    	</tr>
+				    	<tr valign="top" class="spaceUnder">
+				    		<!-- <td>Lowest Elevation</td> -->
+				    		<td>Lowest Elevation<?= form_input($data_lowestelev,$pamain->elevation_lowest); ?></td>
+				    	</tr>
+				    	<tr valign="top" class="spaceUnder">
+				    		<!-- <td></td> -->
+				    		<td>Topography<?= form_textarea($data_topo,$pamain->topology) ?></td>
+				    	</tr>
+				    	<tr valign="top" class="spaceUnder">
+				    		<!-- <td></td> -->
+				    		<td>Climate<?= form_textarea($data_climate,$pamain->climate) ?></td>
+				    	</tr>
+				    	<tr valign="top" class="spaceUnder">
+				    		<!-- <td></td> -->
+				    		<td>Hydrology/River System<?= form_textarea($data_hydro,$pamain->hydrology) ?></td>
+				    	</tr>
+				    	<tr valign="top" class="spaceUnder">
+				    		<!-- <td></td> -->
+				    		<td>Location<?= form_textarea($data_location,$pamain->location_details) ?></td>
+				    	</tr>
+				    	<tr valign="top" class="spaceUnder">
+				    		<!-- <td></td> -->
+				    		<td>Existing Land Use<?= form_textarea($data_landuse,$pamain->existing_landuse) ?></td>
+				    	</tr>
+				    	<tr valign="top" class="spaceUnder">
+				    		<!-- <td></td> -->
+				    		<td>Soil<?= form_textarea($data_soil,$pamain->soil) ?></td>
+				    	</tr>
+				    </table>					
 				</div>
 			</div>
 		</div>

@@ -18,12 +18,12 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>CATEGORY</th>
+										<th>SPECIES CATEGORY</th>
                     					<th>CLASS</th>
                     					<th>ORDER</th>
-                    					<th>FAMILY CODE</th>
-                    					<th>COMMON NAME</th>
-										<th>SCIENTIFIC NAME</th>
+                    					<!-- <th>FAMILY CODE</th> -->
+                    					<!-- <th>COMMON NAME</th> -->
+										<th>FAMILY NAME</th>
 										<th>OPTION</th>
 									</tr>
 								</thead>

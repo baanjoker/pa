@@ -12,6 +12,7 @@ class pamain extends CI_Controller
 		$this->load->model([
 			'pamain_model',
             'setting_model',
+            'login_model',
 		]);
 
 		if ($this->session->userdata('isLogIn') == FALSE || $this->session->userdata('user_role') !=1)
@@ -23,13 +24,32 @@ class pamain extends CI_Controller
 	{
 		$data['page_title'] = "Protected Area";
 		$data['setting'] = $this->setting_model->read();
+        $userid = $this->session->userdata('user_id');
+        $data['lastlog'] = $this->login_model->read_lastlogs($userid);
 
 		$data['content'] = $this->load->view('main_server/PA/pamain',$data,TRUE);
 		$this->load->view('main_server/dashboard',$data);
 	}
 
+    public function sample()
+    {
+        $data['page_title'] = "Protected Area";
+        $data['setting'] = $this->setting_model->read();
+
+        $data['content'] = $this->load->view('main_server/PA/main',$data,TRUE);
+        $this->load->view('main_server/dashboard',$data);
+    }
+
+    public function report()
+    {
+        $data['page_title'] = "Protected Area Report";
+        $data['setting'] = $this->setting_model->read();
 
 
+
+        $data['content'] = $this->load->view('main_server/PA/paReport',$data,TRUE);
+        $this->load->view('main_server/dashboard',$data);
+    }
 
 	public function create()
 	{
@@ -42,7 +62,7 @@ class pamain extends CI_Controller
             'pacategory_id'         => $this->input->post('pacategory_id',true),
             'cpabi_id'              => $this->input->post('cpabi_id',true),
             'tbz_id'                => $this->input->post('tbz_id',true),
-            'iucn_id'               => $this->input->post('iucncode',true),
+            // 'iucn_id'               => $this->input->post('iucncode',true),
             'pamb_approve'          => $this->input->post('pambcheck')==null ? 0 : 1,
             'pamb_month'            => $this->input->post('date_monthPAMB',true),
             'pamb_day'              => $this->input->post('date_dayPAMB',true),
@@ -57,13 +77,21 @@ class pamain extends CI_Controller
             'nipas_regionalreview'  => $this->input->post('regionalreview')==null ? 0 : 1,
             'nipas_nationalreview'  => $this->input->post('nationalreview')==null ? 0 : 1,
             'nipas_presproc'        => $this->input->post('presproc')==null ? 0 : 1,
-            'nipas_congress'        => $this->input->post('congressenact'),
-            'geographic_longdegree' => $this->input->post('longdegree',true),
-            'geographic_longminute' => $this->input->post('longminute',true),
-            'geographic_longsecond' => $this->input->post('longsecond',true),
-            'geographic_latdegree'  => $this->input->post('latdegree',true),
-            'geographic_latminute'  => $this->input->post('latminute',true),
-            'geographic_latsecond'  => $this->input->post('latsecond',true),
+            'nipas_congress'        => $this->input->post('congressenact')==null ? 0 : 1,
+            'nipas_mapstd'          => $this->input->post('mapstd')==null ? 0 : 1,
+            'nipas_pasa'            => $this->input->post('pasa')==null ? 0 : 1,
+            'nipas_ipap'            => $this->input->post('ipap')==null ? 0 : 1,
+            'nipas_delineation'     => $this->input->post('delineation')==null ? 0 : 1,
+            'nipas_proclaimed'      => $this->input->post('proclaimed')==null ? 0 : 1,
+            'nipas_legislated'      => $this->input->post('legislated')==null ? 0 : 1,
+            'nipas_demarcation'     => $this->input->post('demarcation')==null ? 0 : 1,
+            // 'nipas_pamb'            => $this->input->post('pamb')==null ? 0 : 1,
+            'nipas_pamp'            => $this->input->post('pamp')==null ? 0 : 1,
+            'nipas_ipaf'            => $this->input->post('ipafs')==null ? 0 : 1,
+            'geographic_long1'      => $this->input->post('long1',true),
+            'geographic_long2'      => $this->input->post('long2',true),
+            'geographic_lat1'       => $this->input->post('lat1',true),
+            'geographic_lat2'       => $this->input->post('lat2',true),
             'pa_boundary'           => $this->input->post('boundary',true),
             'landuses'              => $this->input->post('landuses',true),
             'accessibility'         => $this->input->post('accessibility',true),
@@ -96,11 +124,11 @@ class pamain extends CI_Controller
 		$data['categoryList'] = $this->pamain_model->categoryList();
 		$data['cpabiList'] = $this->pamain_model->cpabiList();
 		$data['zoneList'] = $this->pamain_model->zoneList();
-
 		$data['regionList'] = $this->pamain_model->regionList();
         $data['procList'] = $this->pamain_model->procList();
         $data['monthList'] = $this->pamain_model->monthList();
         $data['yearList'] = $this->pamain_model->yearList();
+        $data['yearListed'] = $this->pamain_model->yearListed();
         $data['dayList'] = $this->pamain_model->dayList();
         $data['iucnList'] = $this->pamain_model->iucnList();
         $data['sexList'] = $this->pamain_model->sexList();
@@ -114,11 +142,11 @@ class pamain extends CI_Controller
 		$this->load->view('main_server/dashboard',$data);
 	}
 
-	public function edit($id_main)
+	public function edit($gencode=null)
 	{
 		$data['page_title'] = "Protected Area";
 		$data['setting'] = $this->setting_model->read();
-        $data['pamain'] = $this->pamain_model->getAllData($id_main);
+        $data['pamain'] = $this->pamain_model->getAllData($gencode);
         $data['maritalStatus'] = $this->pamain_model->maritalStatus();
         $data['organizationposition'] = $this->pamain_model->organizationposition();
 
@@ -132,6 +160,7 @@ class pamain extends CI_Controller
         $data['procList'] = $this->pamain_model->procList();
         $data['monthList'] = $this->pamain_model->monthList();
         $data['yearList'] = $this->pamain_model->yearList();
+        $data['yearListed'] = $this->pamain_model->yearListed();
         $data['dayList'] = $this->pamain_model->dayList();
         $data['commonnameList'] = $this->pamain_model->commonnameList();
         $data['tribelist'] = $this->pamain_model->tribelist();
@@ -160,28 +189,30 @@ class pamain extends CI_Controller
             'pacategory_id'         => $this->input->post('pacategory_id',true),
             'cpabi_id'              => $this->input->post('cpabi_id',true),
             'tbz_id'                => $this->input->post('tbz_id',true),
-            'iucn_id'               => $this->input->post('iucncode',true),
             'pamb_approve'          => $this->input->post('pambcheck')==null ? 0 : 1,
             'pamb_month'            => $this->input->post('date_monthPAMB',true),
             'pamb_day'              => $this->input->post('date_dayPAMB',true),
             'pamb_year'             => $this->input->post('date_yearPAMB',true),
-            'ipaf'                  => $this->input->post('ipaf')==null ? 0 : 1,
-            'heritage'              => $this->input->post('whsites')==null ? 0 : 1,
-            'transboundary'         => $this->input->post('tbsites')==null ? 0 : 1,
-            'ramsar'                => $this->input->post('ramsasites')==null ? 0 : 1,
             'nipas_compilemap'      => $this->input->post('compilemap')==null ? 0 : 1,
             'nipas_resourceprofile' => $this->input->post('resourceprofile')==null ? 0 : 1,
             'nipas_paplan'          => $this->input->post('paplan')==null ? 0 : 1,
             'nipas_regionalreview'  => $this->input->post('regionalreview')==null ? 0 : 1,
             'nipas_nationalreview'  => $this->input->post('nationalreview')==null ? 0 : 1,
             'nipas_presproc'        => $this->input->post('presproc')==null ? 0 : 1,
-            'nipas_congress'        => $this->input->post('congressenact'),
-            'geographic_longdegree' => $this->input->post('longdegree',true),
-            'geographic_longminute' => $this->input->post('longminute',true),
-            'geographic_longsecond' => $this->input->post('longsecond',true),
-            'geographic_latdegree'  => $this->input->post('latdegree',true),
-            'geographic_latminute'  => $this->input->post('latminute',true),
-            'geographic_latsecond'  => $this->input->post('latsecond',true),
+            'nipas_congress'        => $this->input->post('congressenact')==null ? 0 : 1,
+            'nipas_mapstd'          => $this->input->post('mapstd')==null ? 0 : 1,
+            'nipas_pasa'            => $this->input->post('pasa')==null ? 0 : 1,
+            'nipas_ipap'            => $this->input->post('ipap')==null ? 0 : 1,
+            'nipas_delineation'     => $this->input->post('delineation')==null ? 0 : 1,
+            'nipas_proclaimed'      => $this->input->post('proclaimed')==null ? 0 : 1,
+            'nipas_legislated'      => $this->input->post('legislated')==null ? 0 : 1,
+            'nipas_demarcation'     => $this->input->post('demarcation')==null ? 0 : 1,
+            'nipas_pamp'            => $this->input->post('pamp')==null ? 0 : 1,
+            'nipas_ipaf'            => $this->input->post('ipafs')==null ? 0 : 1,
+            'geographic_long1'      => $this->input->post('long1',true),
+            'geographic_long2'      => $this->input->post('long2',true),
+            'geographic_lat1'       => $this->input->post('lat1',true),
+            'geographic_lat2'       => $this->input->post('lat2',true),
             'pa_boundary'           => $this->input->post('boundary',true),
             'landuses'              => $this->input->post('landuses',true),
             'accessibility'         => $this->input->post('accessibility',true),
@@ -222,28 +253,30 @@ class pamain extends CI_Controller
             'pacategory_id'         => $this->input->post('pacategory_id',true),
             'cpabi_id'              => $this->input->post('cpabi_id',true),
             'tbz_id'                => $this->input->post('tbz_id',true),
-            'iucn_id'               => $this->input->post('iucncode',true),
             'pamb_approve'          => $this->input->post('pambcheck')==null ? 0 : 1,
             'pamb_month'            => $this->input->post('date_monthPAMB',true),
             'pamb_day'              => $this->input->post('date_dayPAMB',true),
             'pamb_year'             => $this->input->post('date_yearPAMB',true),
-            'ipaf'                  => $this->input->post('ipaf')==null ? 0 : 1,
-            'heritage'              => $this->input->post('whsites')==null ? 0 : 1,
-            'transboundary'         => $this->input->post('tbsites')==null ? 0 : 1,
-            'ramsar'                => $this->input->post('ramsasites')==null ? 0 : 1,
             'nipas_compilemap'      => $this->input->post('compilemap')==null ? 0 : 1,
             'nipas_resourceprofile' => $this->input->post('resourceprofile')==null ? 0 : 1,
             'nipas_paplan'          => $this->input->post('paplan')==null ? 0 : 1,
             'nipas_regionalreview'  => $this->input->post('regionalreview')==null ? 0 : 1,
             'nipas_nationalreview'  => $this->input->post('nationalreview')==null ? 0 : 1,
             'nipas_presproc'        => $this->input->post('presproc')==null ? 0 : 1,
-            'nipas_congress'        => $this->input->post('congressenact'),
-            'geographic_longdegree' => $this->input->post('longdegree',true),
-            'geographic_longminute' => $this->input->post('longminute',true),
-            'geographic_longsecond' => $this->input->post('longsecond',true),
-            'geographic_latdegree'  => $this->input->post('latdegree',true),
-            'geographic_latminute'  => $this->input->post('latminute',true),
-            'geographic_latsecond'  => $this->input->post('latsecond',true),
+            'nipas_congress'        => $this->input->post('congressenact')==null ? 0 : 1,
+            'nipas_mapstd'          => $this->input->post('mapstd')==null ? 0 : 1,
+            'nipas_pasa'            => $this->input->post('pasa')==null ? 0 : 1,
+            'nipas_ipap'            => $this->input->post('ipap')==null ? 0 : 1,
+            'nipas_delineation'     => $this->input->post('delineation')==null ? 0 : 1,
+            'nipas_proclaimed'      => $this->input->post('proclaimed')==null ? 0 : 1,
+            'nipas_legislated'      => $this->input->post('legislated')==null ? 0 : 1,
+            'nipas_demarcation'     => $this->input->post('demarcation')==null ? 0 : 1,
+            'nipas_pamp'            => $this->input->post('pamp')==null ? 0 : 1,
+            'nipas_ipaf'            => $this->input->post('ipafs')==null ? 0 : 1,
+            'geographic_long1'      => $this->input->post('long1',true),
+            'geographic_long2'      => $this->input->post('long2',true),
+            'geographic_lat1'       => $this->input->post('lat1',true),
+            'geographic_lat2'       => $this->input->post('lat2',true),
             'pa_boundary'           => $this->input->post('boundary',true),
             'landuses'              => $this->input->post('landuses',true),
             'accessibility'         => $this->input->post('accessibility',true),
@@ -305,16 +338,25 @@ class pamain extends CI_Controller
     	$start  = intval($this->input->get("start"));
     	$length = intval($this->input->get("length"));
 
-    	$this->db->select("*");
-	    $this->db->from('tblpamain');
+        // $this->db->distinct('regionName');
+    	$this->db->select("pa_name, tblpamain.generatedcode, id_main,regionName,email,user_id,id_main");
+        $this->db->from('tblpamain');
+	    $this->db->join('tblpamainlocation','tblpamain.generatedcode = tblpamainlocation.generatedcode','left');
+        $this->db->join('tbluser','tblpamain.pasu_id = tbluser.user_id','left');
+        $this->db->join('tbllocregion','tbluser.region = tbllocregion.id','left');
+        $this->db->group_by('generatedcode');
         $query = $this->db->get();
 
     	$data = [];
     	foreach ($query->result() as $r) {
     		$data[] = array(
     			"",//this if for auto number
-    			$r->pa_name,
-    			"<a type='button' class='btn btn-flat btn-success' href='pamain/edit/".$r->id_main."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
+                $r->id_main." (".$r->generatedcode.")",
+                $r->pa_name,
+                $r->regionName,
+    			$r->email." (User id : ".$r->user_id.")",
+    			// "<a type='button' class='btn btn-flat btn-success' href='pamain/edit/".$r->generatedcode."' title='Edit' ><i class='ion ion-edit'></i></a>"." ".
+                "<a type='button' class='btn btn-flat btn-warning' href='../report/printpdf/pdffilepa/".$r->generatedcode."' target='_blank' title='PDF' data-id=".$r->generatedcode."><i class='ion ion-android-attach'></i></a>"." ".
     			"<a type='button' class='btn btn-flat btn-danger btn-deletepamain' title='Delete' data-id=".$r->id_main."><i class='ion ion-android-delete'></i></a>"
     		);
     	}
@@ -386,6 +428,8 @@ class pamain extends CI_Controller
         echo json_encode($data);
     }
 
+    
+
     public function getMunicipal()
  		{
        $regid = $this->input->post('regid');
@@ -453,7 +497,7 @@ class pamain extends CI_Controller
         {
         $this->form_validation->set_rules('region_id','Region','required');
         $this->form_validation->set_rules('province_id','Province','required');
-        $this->form_validation->set_rules('municipal_id','Municipal','required');
+        // $this->form_validation->set_rules('municipal_id','Municipal','required');
         // $this->form_validation->set_rules('barangay_id','Barangay','required');
         $data['pamainloc'] = (object)$postData = [
             'id_loc'                => $this->input->post('id_loc',true),
@@ -573,7 +617,7 @@ class pamain extends CI_Controller
             'date_day'          => $this->input->post('date_day',true),
             'area'              => $this->input->post('area',true),
             'buffer'            => $this->input->post('buffer',true),
-            'filename'          => $filename,
+            // 'filename'          => $filename,
 
         ];
         }else{
@@ -586,7 +630,7 @@ class pamain extends CI_Controller
             'date_day'          => $this->input->post('date_day',true),
             'area'              => $this->input->post('area',true),
             'buffer'            => $this->input->post('buffer',true),
-            'filename'          => ''
+            // 'filename'          => ''
         ];
         }
         }
@@ -654,14 +698,8 @@ class pamain extends CI_Controller
                 <?php else: ?>
                     <td><?php echo $row->month." ".$row->date_year; ?></td>
                 <?php endif ?>
-                <td><?php echo $row->area; ?></td>
-                <td><?php echo $row->buffer; ?></td>
-                <?php if (!empty($row->filename)): ?>
-                    <td><a title="<?php echo $row->LegisDesc." No. ".$row->legis_no; ?>" target="_blank" href="<?php echo base_url('bmb_assets2/upload/pdf_file_legislation/'.$row->filename) ?>"><i class="fa fa-paperclip fa-2x"></i></a></td>
-                <?php else: ?>
-                    <td>No attached file</td>
-                <?php endif ?>
-
+                <td><?php echo number_format($row->area,2); ?></td>
+                <td><?php echo number_format($row->buffer,2); ?></td>                
                 <td><button type="button" class="btn btn-danger btn-flat removelegislation" data-id="<?php echo $row->id_palegis ?>" title="Remove"><i class="fa fa-times"></i></button></td>
             </tr>
             <?php
@@ -687,7 +725,7 @@ class pamain extends CI_Controller
         echo json_encode($output);
     }
 
-     public function deletelegis($id = null)
+    public function deletelegis($id = null)
     {
 			$sql1 = $this->db->where('id_palegis',$id)
 											->get('tblpamainlegislation')
@@ -716,12 +754,12 @@ class pamain extends CI_Controller
         {
         $this->form_validation->set_rules('fname','First name','required|min_length[3]');
         $this->form_validation->set_rules('lname','Lastname','required|min_length[3]');
-        $this->form_validation->set_rules('sex','Gender','required');
-        $this->form_validation->set_rules('maritalstatus','Marital Status','required');
-        $this->form_validation->set_rules('address','Residential Address','required');
+        // $this->form_validation->set_rules('sex','Gender','required');
+        // $this->form_validation->set_rules('maritalstatus','Marital Status','required');
+        // $this->form_validation->set_rules('address','Residential Address','required');
         $this->form_validation->set_rules('organization','Organization/Offices','required');
         $this->form_validation->set_rules('position','Position/Designation','required');
-        $this->form_validation->set_rules('officeaddress','Office Address','required');
+        // $this->form_validation->set_rules('officeaddress','Office Address','required');
         $data['pamb'] = (object)$postData = [
             'generatedcode '        => $this->input->post('gencode',true),
             'fname'                 => $this->input->post('fname',true),
@@ -794,16 +832,16 @@ class pamain extends CI_Controller
         echo json_encode($output);
     }
 
-    function check_names($commonname) {
-    if($this->input->post('codegen'))
-        $codegen = $this->input->post('codegen');
+    function check_names_bio($commonname,$gencode) {        
+    if($this->input->post('id_pabiological'))
+        $id = $this->input->post('id_pabiological');
     else
-        $codegen = '';
-    $result = $this->pamain_model->check_Name($codegen, $commonname);
+        $id = '';
+    $result = $this->pamain_model->check_Name_bio($id,$commonname,$gencode);
     if($result == 0)
         $response = true;
     else {
-        $this->form_validation->set_message('check_names', 'Name already exists');
+        $this->form_validation->set_message('check_names_bio', 'Name already selected');
         $response = false;
     }
     return $response;
@@ -813,43 +851,26 @@ class pamain extends CI_Controller
     {
 
         $output = array('error' => false);
-        if ($this->input->post('generatedcode',true) == null)
+        if ($this->input->post('id_pabiological',true) == null)
         {
-        $this->form_validation->set_rules('commonname','Common Name','required|callback_check_names');
+        $this->form_validation->set_rules('commonname','Common Name','required|callback_check_names_bio');
         $data['biological'] = (object)$postData = [
             'id_pabiological'   =>  $this->input->post('id_pabiological',true),
             'generatedcode '    => $this->input->post('gencode',true),
             'id_genus_get'       => $this->input->post('commonname',true),
-        ];
-        }else{
-        $this->form_validation->set_rules('commonname','Common Name','required');
-        $data['biological'] = (object)$postData = [
-            'id_pabiological'   =>  $this->input->post('id_pabiological',true),
-            'generatedcode '    => $this->input->post('gencode',true),
-            'id_genus_get'      => $this->input->post('commonname',true),
         ];
         }
         if ($this->form_validation->run() == false) {
             $output['error'] = true;
             $output['messagebiological'] = validation_errors();
         }else{
-            if(empty($postData['generatedcode'])){
+            if(empty($postData['id_pabiological'])){
                 $query = $this->pamain_model->createBiological($postData);
                 if($query){
                 $output['messagebiological'] = 'New Biological feature registered successfully';
                 }else{
                 $output['error'] = true;
                 $output['messagebiological'] = 'Biological registered feature successfully';
-                }
-            }else{
-
-                $query = $this->pamain_model->update($postData);
-
-                if($query){
-                $output['messagebiological'] = 'Data successfully update';
-                }else{
-                $output['error'] = true;
-                $output['messagebiological'] = 'User registered successfully';
                 }
             }
         }
@@ -862,7 +883,7 @@ class pamain extends CI_Controller
         foreach($data as $row){
             ?>
             <tr>
-                <td><?php echo $row->wdesc; ?></td>
+                <td><?php echo $row->description; ?></td>
                 <td><?php echo $row->ClassDesc; ?></td>
                 <td><?php echo $row->OrderDesc; ?></td>
                 <td><?php echo $row->CommonName; ?></td>
@@ -1045,7 +1066,6 @@ class pamain extends CI_Controller
                 <td><?php echo $row->tribe_fname." ".$row->tribe_mname." ".$row->tribe_lname; ?></td>
                 <td><?php echo $row->reladesc; ?></td>
                 <td><?php echo $row->sexdesc; ?></td>
-                <!-- <td><?php echo $row->tribe_marital; ?></td> -->
                 <td><button type="button" class="btn btn-danger btn-flat removetribe" data-id="<?php echo $row->id_tribemember ?>" title="Remove"><i class="fa fa-times"></i></button></td>
             </tr>
             <?php
@@ -1072,10 +1092,9 @@ class pamain extends CI_Controller
 	public function image_upload_save()
     {
 		$output2 = array('error' => false);
-        if ($this->input->post('id_image') == null )
-        {
-            $this->form_validation->set_rules('gencode','Code','required');
-            if(!empty($_FILES['picture2']['name'])){
+        #-------------------------------#
+
+        if(!empty($_FILES['picture2']['name'])){                
             $config ['upload_path'] = 'bmb_assets2/upload/map_image';
             $config['file_name'] = $_FILES['picture2']['name'];
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1086,36 +1105,40 @@ class pamain extends CI_Controller
                 $uploadData = $this->upload->data();
                 $filenames = $uploadData['file_name'];
             }
-
+        }
+        if ($this->input->post('id_image') == null)
+        {
+        $this->form_validation->set_rules('gencode','Code','required');
         $data['pamainimage'] = (object)$postDataImage = [
+            'id_image'          => $this->input->post('id_image',true),
             'generatedcode '    => $this->input->post('gencode',true),
-            'filename'          => $filenames,
-
-        ];
-        }else{
-            $data['pamainimage'] = (object)$postDataImage = [
-            'generatedcode '    => $this->input->post('gencode',true),
-            'filename'          => ''
+            'remarks'           =>  $this->input->post('remarks_image',true),
+            'filename'          => (!empty($filenames)?$filenames:$this->input->post('old_picture')),
         ];
         }
-        }
-
+        
         if ($this->form_validation->run() == false) {
-            // if(!empty($_FILES['picture']['name'])){
-                $output2['error'] = true;
-                $output2['messageimage'] = validation_errors();
+            $output['error'] = true;
+            $output['messageimage'] = validation_errors();
         }else{
-            if(empty($postDataImage['id_image'])){
+            if (empty($filenames)) {
+                $output['error'] = true;
+                $output['messageimage'] = 'No image upload';
+            } else {
+               if(empty($postDataImage['id_image'])){
                 $query = $this->pamain_model->createImage($postDataImage);
                 if($query){
-                $output2['messageimage'] = 'Image successfully uploaded';
+                $output['messageimage'] = 'Image successfully uploaded';
                 }else{
-                $output2['error'] = true;
-                $output2['messageimage'] = 'Image successfully uploaded';
+                $output['error'] = true;
+                $output['messageimage'] = 'No image upload';
                 }
             }
+            }
+            
+            
         }
-        echo json_encode($output2);
+        echo json_encode($output);
     }
 
      public function fetchImage(){
@@ -1123,9 +1146,11 @@ class pamain extends CI_Controller
         $data = $this->pamain_model->getAllImage($codegens);
         foreach($data as $row){
             ?>
+
             <tr>
                 <td><img style="max-height: 100px; max-width: 100px; width: 100px; height: 100px" src=" <?php echo base_url('bmb_assets2/upload/map_image/').$row->filename ?>" /></td>
-                <!-- <td><?php echo $row->filename; ?></td>                 -->
+                <td><?php echo '<p>'.$row->remarks.'</p>'; ?></td>   
+                <td><a href="<?php echo base_url('bmb_assets2/upload/map_image/').$row->filename ?>" download="<?php echo $row->filename; ?>">Download</a></td>             
                 <td><button type="button" class="btn btn-danger btn-flat removeimage" data-id="<?php echo $row->id_image ?>" title="Remove"><i class="fa fa-times"></i></button></td>
             </tr>
             <?php
@@ -1155,4 +1180,207 @@ class pamain extends CI_Controller
 			  echo json_encode($output);
 			// 	unlink('bmb_assets2/upload/map_image/'.$sql->filename);
 		}
+
+        function check_date($id,$gencode) {        
+            if($this->input->post('id_rate'))
+                $id = $this->input->post('id_rate');
+            else
+                $id = '';
+            $result = $this->pamain_model->check_Date($id,$gencode);
+            if($result == 0)
+                $response = true;
+            else {
+                $this->form_validation->set_message('check_date', 'Date already selected');
+                $response = false;
+            }
+            return $response;
+            }
+
+        function numeric_wcomma ($str)
+        {
+            return preg_match('/^[0-9,]+$/', $str);
+        }
+
+        public function income()
+    {
+
+        if ($this->input->post('generatedcode',true) == null)
+        {
+        $this->form_validation->set_rules('year_monitoring','Year','required|callback_check_date');
+        $this->form_validation->set_rules('month_monitoring','Month','required|callback_check_date');
+        $this->form_validation->set_rules('local_male','No. of local male visitors','required|numeric');
+        $this->form_validation->set_rules('local_female','No. of local female visitors','required|numeric');
+        $this->form_validation->set_rules('foreign_male','No. of foreign male visitors','required|numeric');
+        $this->form_validation->set_rules('foreign_female','No. of foreign female visitors','required|numeric');
+        $this->form_validation->set_rules('entrancefee','Total income of entrance fee','required|numeric');
+        $this->form_validation->set_rules('parkingfee','Total income of parking fee','required|numeric');
+        $this->form_validation->set_rules('rentalsfee','Total income of rentals','required|numeric');
+        $this->form_validation->set_rules('otherfee','Total income of other fees','required|numeric');
+        $data['pamainincome'] = (object)$postData = [
+            'generatedcode '    => $this->input->post('gencode',true),
+            'date_year'         => $this->input->post('year_monitoring',true),
+            'date_month'       => $this->input->post('month_monitoring',true),
+            'localmale'      => $this->input->post('local_male',true),
+            'localfemale'       => $this->input->post('local_female',true),
+            'foreignmale'      => $this->input->post('foreign_male',true),
+            'foreignfemale'       => $this->input->post('foreign_female',true),
+            'entrance'      => $this->input->post('entrancefee',true),
+            'parkingfee'       => $this->input->post('parkingfee',true),
+            'rentalsfee'      => $this->input->post('rentalsfee',true),
+            'others'       => $this->input->post('otherfee',true),
+        ];
+        }
+        if ($this->form_validation->run() == false) {
+            $output['error'] = true;
+            $output['incomeMessage'] = validation_errors();
+        }else{
+            if(empty($postData['generatedcode'])){
+                $query = $this->pamain_model->createincome($postData);
+                if($query){
+                $output['incomeMessage'] = 'Visitors and income successfully added';
+                }else{
+                $output['error'] = true;
+                $output['incomeMessage'] = 'Visitors and income successfully added';
+                }
+            }else{
+
+                $query = $this->pamain_model->updateincome($postData);
+
+                if($query){
+                $output['incomeMessage'] = 'Visitors and income successfully update';
+                }else{
+                $output['error'] = true;
+                $output['incomeMessage'] = 'Visitors and income successfully update';
+                }
+            }
+        }
+        echo json_encode($output);
+    }
+
+    public function fetchincome(){
+        $codegens = $this->input->post('codegens');
+        $data = $this->pamain_model->getallIncome($codegens);
+           foreach($data as $row){
+            ?>
+            <tr>
+                <td><?php echo $row->month." ".$row->year; ?></td>
+                <td><?php echo "Male : ".$row->localmale."<br>Female : ".$row->localfemale."<br> Total : ".$row->total_local; ?></td>
+                <td><?php echo "Male : ".$row->foreignmale."<br>Female : ".$row->foreignfemale."<br> Total : ".$row->total_foreign; ?></td>
+                <td><?php echo "Entrance Fee : ".number_format($row->entrance,2)."<br>Parking Fee : ".number_format($row->parkingfee,2)."<br> Rentals Fee : ".number_format($row->rentalsfee,2)."<br> Others Fee : ".number_format($row->others,2); ?></td>
+                <td><?php echo "Sub-IPAF : ".number_format($row->total_sub,2)."<br> Central IPAF : ".number_format($row->total_central,2)."<br><h4> GRAND TOTAL : ".number_format($row->grand_total,2); ?></td>
+                <td><button type="button" class="btn btn-danger btn-flat removefee" data-id="<?php echo $row->id_rate ?>" title="Remove"><i class="fa fa-times"></i></button></td>
+            </tr>
+            <?php
+        }
+    }
+
+    public function deleteincome($id = null)
+    {
+
+        $output = array();
+         $sql = "DELETE FROM tblpavisitorsrate WHERE id_rate = '$id'";
+
+        if($this->db->query($sql)){
+            $output['status'] = 'success';
+            $output['message'] = 'Data Removed successfully';
+        }
+        else{
+            $output['status'] = 'error';
+            $output['message'] = 'Something went wrong in deleting the data';
+        }
+        echo json_encode($output);
+    }
+
+
+    public function ecotourism_upload_save()
+    {
+        $output2 = array('error' => false);
+        #-------------------------------#
+
+        if(!empty($_FILES['pic_eco']['name'])){  
+                          
+            $config ['upload_path'] = 'bmb_assets2/upload/ecotourism_img';
+            $config['file_name'] = $_FILES['pic_eco']['name'];
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+             if($this->upload->do_upload('pic_eco')){
+                $uploadData = $this->upload->data();
+                $filenames = $uploadData['file_name'];
+            }
+        }
+        if ($this->input->post('eco_id') == null)
+        {
+        $this->form_validation->set_rules('gencode','Code','required');
+        $data['pamainimage'] = (object)$postDataImage = [
+            'eco_id'          => $this->input->post('eco_id',true),
+            'generatedcode '  => $this->input->post('gencode',true),
+            'activities'      =>  $this->input->post('activities',true),
+            'description'     =>  $this->input->post('description',true),
+            'image_eco'       => (!empty($filenames)?$filenames:$this->input->post('old_picture')),
+        ];
+        }
+        
+        if ($this->form_validation->run() == false) {
+            $output['error'] = true;
+            $output['messageimageeco'] = validation_errors();
+        }else{
+            if (empty($filenames)) {
+                $output['error'] = true;
+                $output['messageimageeco'] = 'No image upload';
+            } else {
+               if(empty($postDataImage['id_image'])){
+                $query = $this->pamain_model->createImageeco($postDataImage);
+                if($query){
+                $output['messageimageeco'] = 'New Ecotourism activities successfully uploaded';
+                }else{
+                $output['error'] = true;
+                $output['messageimageeco'] = 'No image upload';
+                }
+            }
+            }
+            
+            
+        }
+        echo json_encode($output);
+    }
+
+     public function fetchImageeco(){
+        $codegens = $this->input->post('codegens');
+        $data = $this->pamain_model->getAllImageeco($codegens);
+        foreach($data as $row){
+            ?>
+
+            <tr>
+                <td><img style="max-height: 100px; max-width: 100px; width: 100px; height: 100px" src=" <?php echo base_url('bmb_assets2/upload/ecotourism_img/').$row->image_eco ?>" /></td>
+                <td><?php echo '<p>'.$row->activities.'</p>'; ?></td> 
+                <td><?php echo '<p>'.$row->description.'</p>'; ?></td>   
+                <td><a href="<?php echo base_url('bmb_assets2/upload/ecotourism_img/').$row->image_eco ?>" download="<?php echo $row->image_eco; ?>">Download</a></td>             
+                <td><button type="button" class="btn btn-danger btn-flat removeimageeco" data-id="<?php echo $row->eco_id ?>" title="Remove"><i class="fa fa-times"></i></button></td>
+            </tr>
+            <?php
+        }
+    }
+
+        public function deleteecotourism($id = null)
+        {
+            $sql1 = $this->db->where('eco_id',$id)
+                                            ->get('tblpaecotourism')
+                                            ->row();
+            unlink('bmb_assets2/upload/ecotourism_img/'.$sql1->image_eco);
+            // $image_path = base_url().'bmb_assets2/upload/map_image/'; // your image path
+            $sql = "DELETE FROM tblpaecotourism WHERE eco_id = '$id'";
+            if ($this->db->query($sql)) {
+
+                $output['status'] = 'success';
+                $output['message'] = 'Ecotourism activity successfully removed';
+            } else {
+                $output['status'] = 'error';
+                $output['message'] = 'Something went wrong in deleting the data';
+            }
+              echo json_encode($output);
+            //  unlink('bmb_assets2/upload/map_image/'.$sql->filename);
+        }
+       
 }

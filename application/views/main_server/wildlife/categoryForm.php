@@ -4,14 +4,14 @@
 		'class' 	=>	'form-control',
 		'id'		=>	'wcode',
 		'required'	=>	'required',
-		'placeholder'=> 'Category code'
+		'placeholder'=> 'Species Category code'
 	);
 	$data_name = array(
 		'name' 		=>	'wdesc',
 		'class' 	=>	'form-control',
 		'id'		=>	'wdesc',
 		'required'	=>	'required',
-		'placeholder'=> 'Category code description'
+		'placeholder'=> 'Species Category description'
 
 	);
 ?>
@@ -22,7 +22,7 @@
 				<?php if (!empty($identifier)): ?>
 					<div class="panel-heading"><div class="panel-title"><i class="fas fa-handshake"></i> <?php echo strtoupper(" EDIT <strong>".$wcat->wdesc."</strong> INFORMATION") ?></div></div>
 				<?php else: ?>
-					<div class="panel-heading"><div class="panel-title"><i class="fas fa-handshake"></i> ADD NEW CATEGORY</div></div>
+					<div class="panel-heading"><div class="panel-title"><i class="fas fa-handshake"></i> ADD SPECIES CATEGORY</div></div>
 				<?php endif ?>
 				
 					<div class="panel-body">
@@ -39,21 +39,21 @@
 						 } ?>
 							<table width="100%" border="0" cellpadding="3" cellspacing="1" class="table4">
 							<?php if (!empty($identifier)): ?>
-								<tr valign="top" class="spaceUnder spaceOver">
-									<td style="width: 100px">Category Code</td>
+								<!-- <tr valign="top" class="spaceUnder spaceOver">
+									<td style="width: 100px">Species Category Code</td>
 									<td><?= form_input($data_code,$wcat->wcode) ?></td>
-								</tr>
-								<tr valign="top" class="spaceUnder">
-									<td style="width: 150px">Category Description</td>
+								</tr> -->
+								<tr valign="top" class="spaceUnder spaceOver">
+									<td style="width: 150px">Species Category</td>
 									<td><?= form_input($data_name,$wcat->wdesc) ?></td>	
 								</tr>
 							<?php else: ?>
-								<tr valign="top" class="spaceUnder spaceOver">
-									<td style="width: 100px">Category Code</td>
+								<!-- <tr valign="top" class="spaceUnder spaceOver">
+									<td style="width: 100px">Species Category Code</td>
 									<td><?= form_input($data_code) ?></td>
-								</tr>
-								<tr valign="top" class="spaceUnder">
-									<td style="width: 150px">Category Description</td>
+								</tr> -->
+								<tr valign="top" class="spaceUnder spaceOver">
+									<td style="width: 150px">Species Category</td>
 									<td><?= form_input($data_name) ?></td>	
 								</tr>
 							<?php endif ?>								

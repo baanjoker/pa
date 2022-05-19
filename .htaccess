@@ -2,5 +2,9 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /pa/index.php/$1 [L]
+RewriteRule ^(.*)$ /paiss/index.php/$1 [L]
 </IfModule>
+
+
+php_value max_execution_time 300
+php_value max_input_vars 5000

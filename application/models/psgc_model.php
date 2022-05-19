@@ -211,7 +211,7 @@ class psgc_model extends CI_Model {
 			->row();
 	}
 
-	function check_regionCode($id = '', $region_code) {
+	function check_regionCode($id, $region_code) {
         $this->db->where('regionCOde', $region_code);
         if($id) {
             $this->db->where_not_in('id', $id);
@@ -219,7 +219,7 @@ class psgc_model extends CI_Model {
         return $this->db->get('tbllocregion')->num_rows();
     }
 
-    function check_regionName($id = '', $region_name) {
+    function check_regionName($id, $region_name) {
         $this->db->where('regionName', $region_name);
         if($id) {
             $this->db->where_not_in('id', $id);
@@ -227,7 +227,7 @@ class psgc_model extends CI_Model {
         return $this->db->get('tbllocregion')->num_rows();
     }
 
-    function check_provinceCode($id = '', $province_code) {
+    function check_provinceCode($id, $province_code) {
         $this->db->where('provinceCode', $province_code);
         if($id) {
             $this->db->where_not_in('id_p', $id);
@@ -235,7 +235,7 @@ class psgc_model extends CI_Model {
         return $this->db->get('tbllocprovince')->num_rows();
     }
 
-    function check_provinceName($id = '', $province_name) {
+    function check_provinceName($id, $province_name) {
         $this->db->where('provinceName', $province_name);
         if($id) {
             $this->db->where_not_in('id_p', $id);
@@ -451,7 +451,7 @@ class psgc_model extends CI_Model {
 
     } 
 
-    function check_municipalCode($id = '', $municipalcode) {
+    function check_municipalCode($id, $municipalcode) {
         $this->db->where('municipalCode', $municipalcode);
         if($id) {
             $this->db->where_not_in('id_m', $id);
@@ -459,7 +459,7 @@ class psgc_model extends CI_Model {
         return $this->db->get('tbllocmunicipality')->num_rows();
     }
 
-    function check_municipalName($id='', $municipalname) 
+    function check_municipalName($id, $municipalname) 
     {
         $pc = $this->input->post('province_id');
 
@@ -528,7 +528,7 @@ class psgc_model extends CI_Model {
             ->row();
     }
 
-    function check_barangayCode($id = '', $barangaycode) {
+    function check_barangayCode($id, $barangaycode) {
         $this->db->where('barangayCode', $barangaycode);
         if($id) {
             $this->db->where_not_in('id_b', $id);
@@ -536,7 +536,7 @@ class psgc_model extends CI_Model {
         return $this->db->get('tbllocbarangay')->num_rows();
     }
 
-    function check_barangayName_update($id = '', $barangayname) {
+    function check_barangayName_update($id, $barangayname) {
         $mc = $this->input->post('municipal_id');
         $where = "barangayName='$barangayname' AND municipalid='$mc'";
         $this->db->where($where); 
@@ -548,7 +548,7 @@ class psgc_model extends CI_Model {
         return $this->db->get('tbllocbarangay')->num_rows();
     }
 
-     function check_barangayName_add($id = '', $barangayname, $municipal_id) {   
+     function check_barangayName_add($id, $barangayname, $municipal_id) {   
         
         $mc = $this->input->post('municipal_id');
         $where = "barangayName='$barangayname' AND municipalid='$mc'";

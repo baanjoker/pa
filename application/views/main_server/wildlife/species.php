@@ -18,13 +18,15 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>CATEGORY</th>
+										<!-- <th>SPECIES CATEGORY</th> -->
+										<th>IUCN STATUS</th>
+										<th>RESIDENCY STATUS</th>
                     					<th>CLASS</th>
                     					<th>ORDER</th>
                     					<th>FAMILY</th>
-                    					<th>SPECIES CODE</th>
                     					<th>COMMON NAME</th>
                     					<th>SCIENTIFIC NAME</th>
+                    					<!-- <th>PROTECTED AREA</th> -->
 										<th>OPTION</th>
 									</tr>
 								</thead>

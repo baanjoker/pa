@@ -1,196 +1,124 @@
-<!--change color of theme in  views/main_server/dashboard.php -->
-<body class="hold-transition skin-blue-light sidebar-mini">
-<!--  -->
-<div class="wrapper">
+<header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <!-- <div class="container"> -->
+        
+        <div class="navbar-header">
+          <a href="<?php echo base_url ('index.php/dashboard') ?>" class="navbar-brand"><b>DENR</b>-BMB</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
 
-  <!-- Main Header -->
-  <header class="main-header">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="<?php if($this->uri->segment(1) == "dashboard"){echo 'active';} ?>"><a href="<?php echo base_url ('dashboard') ?>">Dashboard</a></li>
+            <li class="dropdown <?php if($this->uri->segment(2) == "wildlife"){echo 'active';} ?>">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown">Wildlife Resource<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="<?php echo base_url ('main_server/wildlife/category') ?>"><i class="fa fa-list">Species Category</i></a></li>
+                  <li><a href="<?php echo base_url ('main_server/wildlife/wclass') ?>"><i class="fa fa-list"> Class</i></a></li>
+                  <li><a href="<?php echo base_url ('main_server/wildlife/order') ?>"><i class="fa fa-list"> Order</i></a></li>
+                  <li><a href="<?php echo base_url ('main_server/wildlife/family') ?>"><i class="fa fa-list"> Family Name</i></a></li>
+                  <li><a href="<?php echo base_url ('main_server/wildlife/species') ?>"><i class="fa fa-list"> Species Genus</i></a></li>
+                </ul>
+            </li>
+            <li class="dropdown <?php if($this->uri->segment(2) == "pamain"){echo 'active';}?>">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown">Protected Area<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="<?php echo base_url ('main_server/pamain') ?>"><i class="fa fa-list"> List of Protected Area</i></a></li>
+                  <li><a href="<?php echo base_url ('main_server/ipaf_report') ?>"><i class="fa fa-bar-chart-o"> Generate IPAF Report</i></a></li>
+                </ul> 
+            </li>
+            <!-- <li class="dropdown <?php if($this->uri->segment(2) == "cave" || $this->uri->segment(2) == "wetland" || $this->uri->segment(2) == "water"){echo 'active';} ?>">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Caves, Wetland and Other Ecosystem <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="<?php echo base_url ('main_server/cave') ?>"><i class="fa fa-list"></i>Cave Records</a></li>
+                <li class="divider"></li>
+                <li><a href="<?php echo base_url ('main_server/wetland') ?>"><i class="fa fa-list"></i>Wetland Records</a></li>
+                <li class="divider"></li>
+                <li><a href="<?php echo base_url ('main_server/water') ?>"><i class="fa fa-list"></i>Waterfowl Records</a></li>
+              </ul>
+            </li> -->
+            <?php $user_role = $this->session->userdata('user_role');
 
-    <!-- Logo -->
-    <a href="<?php echo base_url ('index.php/dashboard') ?>" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>BM</b>B</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Biodiversity</b>System</span>
-    </a>
-
-    <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-      
-      <!-- Navbar Right Menu -->
-    <div class="navbar-custom-menu">
-      <ul class="nav navbar-nav">
-        <li class="dropdown user user-menu">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <img src="<?php echo base_url().$this->session->userdata('picture')?>" class="user-image" alt="User Image">
-            <span class="hidden-xs">
-              <?php echo $this->session->userdata('fullname') ?>
-            </span>
-          </a>
-          <ul class="dropdown-menu">
-            <!-- HEADER -->
-            <li class="user-header">
-              <img src="<?php echo base_url().$this->session->userdata('picture')?>" class="img-circle" alt="Image User">
-              <p><?php echo $this->session->userdata('fullname')." ".$this->session->userdata('lastnames') ?>
-                <small>
+            if ($user_role == 1) {?>
+              <li class="<?php if($this->uri->segment(2) == "library"){echo 'active';}?>"><a href="<?php echo base_url ('main_server/library'); ?>">Libraries</a></li>
+            <?php } ?>
+              <li class="dropdown <?php if($this->uri->segment(2) == "wsettings" || $this->uri->segment(2) == "wslider"){echo 'active';} ?>">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">Customize Webpage<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="<?php echo base_url ('main_server/wsettings') ?>"><i class="fa fa-wrench"> Website Settings</i></a></li>
+                  <li><a href="<?php echo base_url ('main_server/wslider') ?>"><i class="fa fa-reorder"> Website Slider Setting</i></a></li>
+                  <li><a href="<?php echo base_url ('main_server/wnews') ?>"><i class="fa fa-newspaper-o"> Website News and Events</i></a></li>                  
+                </ul>
+              </li>
+            <li class="<?php if($this->uri->segment(1) == "user"){echo 'active';} ?>"><a href="<?php echo base_url ('main_server/user') ?>">User</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <!-- User Account Menu -->
+            <li class="dropdown user user-menu <?php if($this->uri->segment(1) == "profile"){echo 'active';}?>">
+              <!-- Menu Toggle Button -->
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <!-- The user image in the navbar-->
+                <img src="<?php echo base_url('bmb_assets2/img/user_img/').$this->session->userdata('picture')?>" class="user-image" alt="User Image">
+                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                <span class="hidden-xs"><?php echo $this->session->userdata('fullname') ?></span>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- The user image in the menu -->
+                <li class="user-header">
+                  <img src="<?php echo base_url('bmb_assets2/img/user_img/').$this->session->userdata('picture')?>" class="user-image" alt="User Image">                    
+                  <p>
+                    <?php echo $this->session->userdata('fullname')." ".$this->session->userdata('lastnames') ?>
+                  </p>
+                  <p>
                   <?php $user_role = $this->session->userdata('user_role') ?>
-                <?php 
-                if ($user_role == 1) {
-                    echo "Admin";
-                } elseif ($user_role == 2) {
-                    echo "User";
-                } else {
-                    echo "";
-                }  
-                ?>  
-                </small>
-              </p>
+                  <?php 
+                  if ($user_role == 1) {
+                      echo "Administrator";
+                  } elseif ($user_role == 2) {
+                      echo "User";
+                  } else {
+                      echo "";
+                  }  
+                  ?>  
+                  </p>
+                </li>
+                <!-- Menu Body -->
+                <li class="user-body">
+                  <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <p><i class="fa fa-calendar"></i> <strong> Last login :</strong> <?= date('F d / g:i a',strtotime($this->session->userdata('last_logs'))) ?></p>
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="<?php echo base_url ('profile') ?>" class="btn btn-default btn-flat">Profile</a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="<?php echo base_url('logout') ?>" class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                </li>
+              </ul>
             </li>
-            <!-- END OF HEADER -->
-
-            <!-- BODY -->
-            <li class="user-body">
-              <div class="row">
-                <div class="col-xs-6 text-center">
-                  <p><b>Status</b></p>
-
-                </div> 
-                <i class="fa fa-circle text-success"></i> Online               
-              </div>
-            </li>            
-            <!-- END OF BODY -->
-            <!-- FOOTER -->
-            <li class="user-footer">
-              <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
-              </div>
-              <div class="pull-right">
-                <a href="<?php echo base_url('logout') ?>" class="btn btn-default btn-flat">Sign out</a>
-              </div>
-            </li>
-            <!-- END OF FOOTER -->
           </ul>
-        </li>
-        <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-            <small></small>
-          </li>
-      </ul>
-    </div>
+        </div>
+        <!-- /.navbar-custom-menu -->
+      <!-- </div> -->
+      <!-- /.container-fluid -->
     </nav>
-  </header>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-    <br>
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <!-- <div class="pull-left image">
-          <img src="<?php echo base_url('bmb_assets2/dist/img/ic10.png') ?>" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-            <strong><a href="" class="text-success"><?php echo $this->session->userdata('fullname') ?> </a></strong>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div> -->
-        <div class="image">
-          <img src="<?php echo base_url('bmb_assets2/img/denr-emb-logo.gif') ?>" class="img-circle">
-        </div>
-      </div>
-
-      <!-- search form (Optional) -->
-      <!-- /.search form -->
-
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu tree" data-widget="tree">
-        <li class="header text-center">MAIN NAVIGATION</li>
-        <!-- Optionally, you can add icons to the links -->
-        <li class=""><a href="<?php echo base_url ('dashboard') ?>"><i class="fa fa-dashboard"></i> <span>DASHBOARD</span></a></li>
-        <li><a href="<?php echo base_url ('main_server/cave') ?>"><i class="fa fa-codiepie"></i><span>CAVE RECORDS</span></a></li>
-        <li><a href="<?php echo base_url ('main_server/pamain') ?>"><i class="fa fa-hand-paper-o"></i><span>PROTECTED AREA</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/wetland') ?>"><i class="fa fa-area-chart"></i><span>WETLAND RECORDS</span></a></li>
-         <li><a href="<?php echo base_url ('main_server/water') ?>"><i class="fa fa-ravelry"></i><span>WATERFOWL RECORDS</span></a></li>
-
-        <li class="treeview">
-          <a href=""><i class="fa fa-bug"></i><span>WILDLIFE RECORDS</span>
-          <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url ('main_server/wildlife/category') ?>"><i class="fa fa-list"> CATEGORY LIST</i></a></li>
-            <li><a href="<?php echo base_url ('main_server/wildlife/wclass') ?>"><i class="fa fa-list"> CLASS LIST</i></a></li>
-            <li><a href="<?php echo base_url ('main_server/wildlife/order') ?>"><i class="fa fa-list"> ORDER LIST</i></a></li>
-            <li><a href="<?php echo base_url ('main_server/wildlife/family') ?>"><i class="fa fa-list"> FAMILY NAME</i></a></li>
-            <li><a href="<?php echo base_url ('main_server/wildlife/species') ?>"><i class="fa fa-list"> SPECIES GENUS</i></a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href=""><i class="fa fa-map-marker"></i><span>PSGC RECORDS</span>
-          <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url ('main_server/psgc_locations/regionList') ?>"><i class="fa fa-map"> REGIONS</i></a></li>
-            <li><a href="<?php echo base_url ('main_server/psgc_locations/provinceList') ?>"><i class="fa fa-map"> PROVINCES</i></a></li>
-            <li><a href="<?php echo base_url ('main_server/psgc_locations/municipalityList') ?>"><i class="fa fa-map"> MUNICIPALITIES</i></a></li>
-            <!-- <li><a href="<?php echo base_url ('main_server/psgc_locations/barangayList') ?>"><i class="fa fa-list"> BARANGAYS</i></a></li> -->
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href=""><i class="fa fa-cogs"></i> <span> LIBRARY SETTINGS</span>
-            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?php echo base_url ('main_server/library/defterm') ?>"><i class="fa fa-file"></i><span>DEFINITION OF TERMS</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/cite') ?>"><i class="fa fa-file"></i><span> CITE STATUS</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/cms') ?>"><i class="fa fa-file"></i><span> CMS STATUS</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/marital') ?>"><i class="fa fa-file"></i><span> MARITAL STATUS</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/ecosystem') ?>"><i class="fa fa-file"></i><span> ECOSYSTEM LIBRARY</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/biogeolocation') ?>"><i class="fa fa-file"></i><span> BIOGEOGRAPHIC ZONE</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/classification') ?>"><i class="fa fa-file"></i><span> P.A. CLASSIFICATION</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/category') ?>"><i class="fa fa-file"></i><span> P.A. CATEGORY</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/legislation') ?>"><i class="fa fa-file"></i><span> P.A. LEGISLATION</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/conservation') ?>"><i class="fa fa-file"></i><span> CONSERVATION AREA</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/wltype') ?>"><i class="fa fa-file"></i><span> WETLAND TYPE</span></a></li>
-            <li><a href="<?php echo base_url ('main_server/library/wldesc') ?>"><i class="fa fa-file"></i><span> WETLAND DESCRIPTION</span></a></li>
-          </ul>
-        </li>
-      </ul>
-
-      <!-- /.sidebar-menu
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-  <!-- Content Wrapper. Contains page content -->
-   <div class="content-wrapper"><br>
-    <section class="content-header">
-      <h1><?php echo $page_title; ?><small>Control panel</small>
-      </h1>
-      <!-- <ol class="breadcrumb">
-        <li><a href="<?php echo base_url ('dashboard') ?>"><i class="fa fa-dashboard"></i>
-                        <?php $user_role = $this->session->userdata('user_role') ?>
-                        <?php 
-                        if ($user_role == 1) {
-                            echo "Admin";
-                        } elseif ($user_role == 2) {
-                            echo "User";
-                        } else {
-                            echo "";
-                        }  
-                        ?>   </a></li>
-        <li class="active">dashboard</li>
-      </ol> -->
-    </section>
-
-<!-- REQUIRED JS SCRIPTS -->
-<!-- jQuery 3 -->
-<!--<script src="bower_components/jquery/dist/jquery.min.js"></script>-->
-<!-- Bootstrap 3.3.7 -->
-<!--<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
-<!-- AdminLTE App -->
+</header>
+<div class="content-wrapper"><br>
+  <section class="content-header">
+    <center><h1><?php echo $page_title; ?></h1></center>
+  </section>
 <script src="<?php echo base_url('bmb_assets2/dist/js/adminlte.min.js') ?>"></script>
 <script src="<?php echo base_url('bmb_assets2/resources/lightbox/js/lightbox.min.js') ?>"></script>

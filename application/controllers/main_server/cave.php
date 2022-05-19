@@ -9,7 +9,7 @@ class Cave extends CI_Controller {
 		$this->load->model([
 			'setting_model',
 			'cave_model',
-			
+            'login_model',
 		]);
 
 		if ($this->session->userdata('isLogIn') == false 
@@ -40,7 +40,8 @@ class Cave extends CI_Controller {
 		// $data['region_list'] = $this->cave_model->region_list(); //Display the list of Regions
 		// $data['prov_list'] = $this->cave_model->prov_list();
         // $data['caves'] = $this->cave_model->caveData();
-
+        $userid = $this->session->userdata('user_id');
+        $data['lastlog'] = $this->login_model->read_lastlogs($userid);
 		$data['content'] = $this->load->view('main_server/cave/cave',$data,true);
 		$this->load->view('main_server/dashboard',$data);
 	}
@@ -123,7 +124,7 @@ class Cave extends CI_Controller {
             $option = "<option value=\"\">SELECT PROVINCE</option>"; 
             if ($query->num_rows() > 0) {
                 foreach ($query->result() as $prov) {
-                    $option .= strtoupper("<option value=\"$prov->id_p\">$prov->provinceName</option>");
+                    $option .= "<option value=\"$prov->id_p\">$prov->provinceName</option>";
                 } 
                 $data['message'] = $option;
                 $data['status'] = true;

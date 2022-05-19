@@ -9,8 +9,6 @@ $("#regid").change(function(){
                                     
     $.ajax({
         url  : BASE_URL+'/main_server/cave/getProv/',
-        // url +'/main_server/cave/getProv/',
-        // '<?= base_url('index.php/main_server/cave/getProv/') ?>',
         type : 'post',
         dataType : 'JSON',
         data : {
@@ -78,6 +76,7 @@ $("#provid").change(function(){
         clear2.html('');
       } else {
         municipal_list_item.html('');
+        
         output.html(data.message).addClass('text-danger').removeClass('text-success');
         clear2.html('');
       }

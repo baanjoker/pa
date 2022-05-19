@@ -1,4 +1,5 @@
 
+
 <?php
 $data_paname = array(
     'name' => 'pa_name',
@@ -6,98 +7,9 @@ $data_paname = array(
     'class'=> 'form-control',
     'type' => 'text',
     'placeholder'=>'Name of Protected Area');
-$data_legisno = array(
-    'name' => 'legisno',
-    'id'   => 'legisno',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Legislation No.');
-$data_legisarea = array(
-    'name' => 'area',
-    'id'   => 'area',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Area (has.)',
-	'onkeyup'=>'run(this)');
-$data_legisbuffer = array(
-    'name' => 'buffer',
-    'id'   => 'buffer',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Buffer Zone (has.)',
-	'onkeyup'=>'run(this)');
-$data_legispdf = array(
-    'name' => 'picture',
-    'id'   => 'picture',
-    'class'=> 'form-control',
-    'type' => 'file',
-    'placeholder'=>'PDF File');
-$data_longdegree = array(
-    'name' => 'longdegree',
-    'id'   => 'longdegree',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Degree',
-	'onkeyup'=>'run(this)');
-$data_latdegree = array(
-    'name' => 'latdegree',
-    'id'   => 'latdegree',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Degree',
-	'onkeyup'=>'run(this)');
-$data_longminute = array(
-    'name' => 'longminute',
-    'id'   => 'longminute',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Minute',
-	'onkeyup'=>'run(this)');
-$data_latminute = array(
-    'name' => 'latminute',
-    'id'   => 'latminute',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Minute',
-	'onkeyup'=>'run(this)');
-$data_longsecond = array(
-    'name' => 'longsecond',
-    'id'   => 'longsecond',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Second',
-	'onkeyup'=>'run(this)');
-$data_latsecond = array(
-    'name' => 'latsecond',
-    'id'   => 'latsecond',
-    'class'=> 'form-control',
-    'type' => 'text',
-    'placeholder'=>'Second',
-	'onkeyup'=>'run(this)');
-$data_boundary = array(
-    'name' => 'boundary',
-    'id'   => 'boundary',
-    'class'=> 'form-control',
-    'placeholder'=>'Details',
-    'style' => 'height:130px'
-);
-$data_landuses = array(
-    'name' => 'landuses',
-    'id'   => 'landuses',
-    'class'=> 'form-control',
-    'placeholder'=>'Details',
-    'style' => 'height:130px'
-);
-$data_accessibility = array(
-    'name' => 'accessibility',
-    'id'   => 'accessibility',
-    'class'=> 'form-control',
-    'placeholder'=>'Details',
-    'style' => 'height:130px'
-);
 ?>
 <?php
- function generateRandomString($length = 6)
+ function generateRandomString($length = 11)
     {
         $char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charlength = strlen($char);
@@ -108,400 +20,172 @@ $data_accessibility = array(
         return $randomString;
     }
 ?>
-
+<?php if (!empty($pamain->id_main)): ?>
+    <input type="text" name="gencode" class="hide" value="<?php echo $pamain->generatedcode ?>" id="codegen">
+<?php else: ?>
+	<input type="text" name="gencode" class="hide" value="<?php echo generateRandomString() ?>" id="codegen">
+<?php endif ?>
 <div class="tab-pane active" id="tab_geninfoTab">
   	<div class="row">
       	<div class="col-md-12">
         	<div class="panel panel-info">
-          		<div class="panel-heading"><div class="panel-title"><i class="fa fa-info"></i> PROTECTED AREA GENERAL INFORMATION</div></div>
+          		<div class="panel-heading"><div class="panel-title"><i class="fa fa-info"></i> GENERAL INFORMATION</div></div>
           		<div class="panel-body">
-		          	<div class="col-md-12">
-		          		<div class="form-group">
-			          		<div class="col-md-2">
-			          			<label for="inputNIP" class="control-label">PA Name</label>
-			          		</div>
-			          		<div class="col-md-8">
-			          			<?php echo form_input($data_paname,$pamain->pa_name); ?>
-			          		</div>
-		          		</div>
-
-		          		<div class="form-group">
-			          		<div class="col-md-2">
-			          			<label for="inputClassification" class="control-label">Classification</label>
-			          		</div>
-			          		<div class="col-md-8">
-			          			<?php echo form_dropdown('nip_id',$classList,$pamain->nip_id,'class="form-control"') ?>
-			          		</div>
-		          		</div>
-
-		          		<div class="form-group">
-			          		<div class="col-md-2">
-			          			<label for="inputCategory" class="control-label">PA Category</label>
-			          		</div>
-			          		<div class="col-md-8">
-			          			<?php echo form_dropdown('pacategory_id',$categoryList,$pamain->pacategory_id,'class="form-control"') ?>
-			          		</div>
-		          		</div>
-
-		          		<div class="form-group">
-			          		<div class="col-md-2">
-			          			<label for="inputConservePrior" class="control-label">Conservation Area</label>
-			          		</div>
-			          		<div class="col-md-8">
-			          			<?php echo form_dropdown('cpabi_id',$cpabiList,$pamain->cpabi_id,'class="form-control"') ?>
-			          		</div>
-		          		</div>
-
-		          		<div class="form-group">
-			          		<div class="col-md-2">
-			          			<label for="inputBiogeoZone" class="control-label">Biogeographic Zone</label>
-			          		</div>
-			          		<div class="col-md-8">
-			          			<?php echo form_dropdown('tbz_id',$zoneList,$pamain->tbz_id,'class="form-control"') ?>
-			          		</div>
-		          		</div>
-
-		          		<div class="form-group">
-			          		<div class="col-md-2">
-			          			<label for="inputBiogeoZone" class="control-label">IUCN</label>
-			          		</div>
-			          		<div class="col-md-8">
-			          			<?php echo form_dropdown('iucncode',$iucnList,$pamain->iucn_id,'class="form-control"') ?>
-			          		</div>
-		          		</div>
-		          		<div class="box-header with-border"></div>
-
-		          		<div class="checkbox">
-		          				<label><?= form_checkbox('pambcheck',$pamain->pamb_approve,set_value('pambcheck',$pamain->pamb_approve),'id="dateApprovePMB"') ?>Approved PAMB?</label>
-		          				<?php if ($pamain->pamb_approve == TRUE): ?>
-		          					<div id="dateOrganizeds">
-					                <div class="form-group">
-						            	<label for="inputNIP" class="col-sm-3 col-xs-12 control-label">Date approved</label>
-							              	<div class="form-group col-sm-2 col-xs-6">
-							              	<?php echo form_dropdown('date_monthPAMB',$monthList,$pamain->pamb_month,'class="form-control" id="dateMonthPAMB"'); ?>
-							              	</div>
-							              	<div class="form-group col-sm-2 col-xs-4">
+          			<table width="100%" border="0" class="table4">				    
+					    <tr valign="top" class="spaceUnder spaceOver">
+					    	<td>PA Name</td>
+					    	<td><?php echo form_input($data_paname,$pamain->pa_name); ?></td>
+					    </tr>
+					    <tr valign="top" class="spaceUnder">
+					    	<td>Classification</td>
+					    	<td><?php echo form_dropdown('nip_id',$classList,$pamain->nip_id,'class="form-control"') ?></td>
+					    </tr>
+					    <tr valign="top" class="spaceUnder">
+					    	<td>Category</td>
+					    	<td><?php echo form_dropdown('pacategory_id',$categoryList,$pamain->pacategory_id,'class="form-control"') ?></td>
+					    </tr>
+					    <tr valign="top" class="spaceUnder">
+					    	<td>Conservation Area</td>
+					    	<td><?php echo form_dropdown('cpabi_id',$cpabiList,$pamain->cpabi_id,'class="form-control"') ?></td>
+					    </tr>
+					    <tr valign="top" class="spaceUnder">
+					    	<td>Biogeographic Zone</td>
+					    	<td><?php echo form_dropdown('tbz_id',$zoneList,$pamain->tbz_id,'class="form-control"') ?></td>
+					    </tr>
+					    <!-- <tr valign="top" class="spaceUnder">
+					    	<td>IUCN</td>
+					    	<td><?php echo form_dropdown('iucncode',$iucnList,$pamain->iucn_id,'class="form-control"') ?></td>
+					    </tr> -->
+					</table>
+					<br>					
+					<!-- <table width="100%" border="0" class="table4">
+						<tr valign="top" class="spaceUnder spaceOver">
+							<td>
+								<?= form_checkbox('ipaf',$pamain->ipaf,set_value('ipaf',$pamain->ipaf),'class="styled-checkbox" id="styled-checkbox-ipaf"') ?>
+    							<label for="styled-checkbox-ipaf">IPAF Established</label>
+    						</td>
+    						<td>
+    							<?= form_checkbox('whsites',$pamain->heritage,set_value('whsites',$pamain->heritage),'class="styled-checkbox" id="styled-checkbox-heritage"') ?>
+    							<label for="styled-checkbox-heritage">World Heritage Sites</label>
+    						</td>
+    						<td>
+    							<?= form_checkbox('tbsites',$pamain->transboundary,set_value('tbsites',$pamain->transboundary),'class="styled-checkbox" id="styled-checkbox-transboundary"') ?>
+    							<label for="styled-checkbox-transboundary">Transboundary Sites</label>
+    						</td>
+    						<td>
+    							<?= form_checkbox('ramsasites',$pamain->ramsar,set_value('ramsasites',$pamain->ramsar),'class="styled-checkbox" id="styled-checkbox-ramsar"') ?>
+    							<label for="styled-checkbox-ramsar">Ramsar Sites</label>
+    						</td>							
+						</tr>					   
+					</table>
+					<br> -->
+					<table width="100%" border="0" class="table4">
+						<tr valign="top" class="spaceUnder spaceOver">
+							<td>
+    							<?= form_checkbox('pambcheck',$pamain->pamb_approve,set_value('pambcheck',$pamain->pamb_approve),'class="styled-checkbox" id="dateApprovePMB"') ?>
+    							<label for="dateApprovePMB">Approved PAMB</label>
+    						</td>
+						</tr>
+					</table>
+					<div class="checkbox">
+		          		<?php if ($pamain->pamb_approve == TRUE): ?>
+		          			<div id="dateOrganizeds">
+					            <div class="form-group">
+						            <label for="inputNIP" class="col-sm-3 col-xs-12 control-label">Date approved</label>
+							            <div class="form-group col-sm-2 col-xs-6">
+							            	<?php echo form_dropdown('date_monthPAMB',$monthList,$pamain->pamb_month,'class="form-control" id="dateMonthPAMB"'); ?>
+							            </div>
+							            <div class="form-group col-sm-2 col-xs-4">
 							              	<?php echo form_dropdown('date_dayPAMB',$dayList,$pamain->pamb_day,'class="form-control" id="dateDayPAMB"'); ?>
-							              	</div>
-							              	<div class="form-group col-sm-2 col-xs-5">
+							            </div>
+							            <div class="form-group col-sm-2 col-xs-5">
 							                <?php echo form_dropdown('date_yearPAMB',$yearList,$pamain->pamb_year,'class="form-control" id="dateYearPAMB"'); ?>
-							              	</div>
-						            </div>
-						            <div class="danger">
-										<p style="font-style: italic;color: red;background-color: #ffdddd;border-left: 6px solid #f44336;"><strong>Note!</strong> PAMB Members tab activated.</p>
-									</div>
-					            </div>
-		          				<?php else: ?>
-		          					<div id="dateOrganized">
-					                <div class="form-group">
-						            	<label for="inputNIP" class="col-sm-3 col-xs-12 control-label">Date approved</label>
-							              	<div class="form-group col-sm-2 col-xs-6">
+							            </div>
+						        </div>
+						        <div class="danger">
+									<p style="font-style: italic;color: red;background-color: #ffdddd;border-left: 6px solid #f44336;"><strong>Note!</strong> PAMB Members tab activated.</p>
+								</div>
+					        </div>
+		          		<?php else: ?>
+		          			<div id="dateOrganized">
+					            <div class="form-group">
+						            <label for="inputNIP" class="col-sm-3 col-xs-12 control-label">Date approved</label>
+							            <div class="form-group col-sm-2 col-xs-6">
 							              	<?php echo form_dropdown('date_monthPAMB',$monthList,$pamain->pamb_month,'class="form-control" id="dateMonthPAMB"'); ?>
-							              	</div>
-							              	<div class="form-group col-sm-2 col-xs-4">
+							            </div>
+							            <div class="form-group col-sm-2 col-xs-4">
 							              	<?php echo form_dropdown('date_dayPAMB',$dayList,$pamain->pamb_day,'class="form-control" id="dateDayPAMB"'); ?>
-							              	</div>
-							              	<div class="form-group col-sm-2 col-xs-5">
+							            </div>
+							            <div class="form-group col-sm-2 col-xs-5">
 							                <?php echo form_dropdown('date_yearPAMB',$yearList,$pamain->pamb_year,'class="form-control" id="dateYearPAMB"'); ?>
-							              	</div>
-						            </div>
-						            <div class="danger">
-										<p style="font-style: italic;color: red;background-color: #ffdddd;border-left: 6px solid #f44336;"><strong>Note!</strong> PAMB Members tab activated.</p>
-									</div>
-					            </div>
-		          				<?php endif ?>
-	          			</div>
-
-
-	          				<div class="box-header with-border"></div>
-	          					<div class="col-sm-3">
-	          						<div class="form-group">
-								        <div class="checkbox">
-								            <label><?= form_checkbox('ipaf',$pamain->ipaf,set_value('ipaf',$pamain->ipaf),'id="dateApprovePMB"') ?> IPAF Established?</label>
-								        </div>
-								        <div class="checkbox">
-									        <label><?= form_checkbox('whsites',$pamain->heritage,set_value('whsites',$pamain->heritage),'id="dateApprovePMB"') ?> World Heritage Sites?</label>
-									    </div>
-									    <div class="checkbox">
-									        <label><?= form_checkbox('tbsites',$pamain->transboundary,set_value('tbsites',$pamain->transboundary),'id="dateApprovePMB"') ?> Transboundary Sites?</label>
-									    </div>
-									    <div class="checkbox">
-									        <label><?= form_checkbox('ramsasites',$pamain->ramsar,set_value('ramsasites',$pamain->ramsar),'id="dateApprovePMB"') ?> Ramsar Sites?</label>
-									    </div>
-						    		</div>
-						    	</div>
-		          	</div>
+							            </div>
+						        </div>
+						        <div class="danger">
+									<p style="font-style: italic;color: red;background-color: #ffdddd;border-left: 6px solid #f44336;"><strong>Note!</strong> PAMB Members tab activated.</p>
+								</div>
+					        </div>
+		          		<?php endif ?>
+	          		</div>	          			
+						<table width="100%" border="0" class="table4">				    
+						    <tr valign="top" class="spaceUnder spaceOver"><div style="background-color: #ffd9b3"><label>Status of Accomplishments for NIPAS/ENIPAS Implementation</label></div>
+						    	<td>
+	    							<?= form_checkbox('mapstd',$pamain->nipas_mapstd,set_value('mapstd',$pamain->nipas_mapstd),'class="styled-checkbox" id="styled-checkbox-nipas_mapstd"') ?>
+	    							<label for="styled-checkbox-nipas_mapstd">Maps and TDs</label>
+    							</td>
+    							<td>
+	    							<?= form_checkbox('pasa',$pamain->nipas_pasa,set_value('pasa',$pamain->nipas_pasa),'class="styled-checkbox" id="styled-checkbox-nipas_pasa"') ?>
+	    							<label for="styled-checkbox-nipas_pasa">PASA</label>
+    							</td>
+    							<td>
+	    							<?= form_checkbox('ipap',$pamain->nipas_ipap,set_value('ipap',$pamain->nipas_ipap),'class="styled-checkbox" id="styled-checkbox-nipas_ipap"') ?>
+	    							<label for="styled-checkbox-nipas_ipap">IPAP</label>
+    							</td>
+    							<td>
+	    							<?= form_checkbox('delineation',$pamain->nipas_delineation,set_value('delineation',$pamain->nipas_delineation),'class="styled-checkbox" id="styled-checkbox-nipas_delineation"') ?>
+	    							<label for="styled-checkbox-nipas_delineation">Delineation</label>
+    							</td>
+						    </tr>
+						    <tr valign="top" class="spaceUnder spaceOver">
+						    	<td>
+	    							<?= form_checkbox('proclaimed',$pamain->nipas_proclaimed,set_value('proclaimed',$pamain->nipas_proclaimed),'class="styled-checkbox" id="styled-checkbox-nipas_proclaimed"') ?>
+	    							<label for="styled-checkbox-nipas_proclaimed">Proclaimed</label>
+    							</td>
+    							<td>
+	    							<?= form_checkbox('legislated',$pamain->nipas_legislated,set_value('legislated',$pamain->nipas_legislated),'class="styled-checkbox" id="styled-checkbox-nipas_legislated"') ?>
+	    							<label for="styled-checkbox-nipas_legislated">Legislated</label>
+    							</td>
+    							<td>
+	    							<?= form_checkbox('demarcation',$pamain->nipas_demarcation,set_value('demarcation',$pamain->nipas_demarcation),'class="styled-checkbox" id="styled-checkbox-nipas_demarcation"') ?>
+	    							<label for="styled-checkbox-nipas_demarcation">Demarcation</label>
+    							</td>
+    							<!-- <td>
+	    							<?= form_checkbox('pamb',$pamain->nipas_pamb,set_value('pamb',$pamain->nipas_pamb),'class="styled-checkbox" id="styled-checkbox-nipas_pamb"') ?>
+	    							<label for="styled-checkbox-nipas_pamb">PAMB</label>
+    							</td> -->
+    							<td>
+	    							<?= form_checkbox('pamp',$pamain->nipas_pamp,set_value('pamp',$pamain->nipas_pamp),'class="styled-checkbox" id="styled-checkbox-nipas_pamp"') ?>
+	    							<label for="styled-checkbox-nipas_pamp">PAMP</label>
+    							</td>	
+						    </tr>
+						    <tr valign="top" class="spaceUnder spaceOver">						    						   
+						    	<td>
+	    							<?= form_checkbox('ipafs',$pamain->nipas_ipaf,set_value('ipafs',$pamain->nipas_ipaf),'class="styled-checkbox" id="styled-checkbox-nipas_ipaf"') ?>
+	    							<label for="styled-checkbox-nipas_ipaf">IPAF</label>
+    							</td>
+    							<td></td>
+    							<td></td>
+    							<td></td>
+						    </tr>
+						</table>
 		        </div>
 		    </div>
-		    <div class="panel panel-info">
-          		<div class="panel-heading"><div class="panel-title"><i class="fa fa-question"></i> STATUS OF NIPAS IMPLEMENTATION</div></div>
-          		<div class="panel-body">
-		          	<div class="col-md-12">
-
-		          		<div class="form-group">
-		          			<div class="col-md-6">
-		          				<div class="checkbox">
-							        <label><?= form_checkbox('compilemap',$pamain->nipas_compilemap,set_value('compilemap',$pamain->nipas_compilemap),'id="dateApprovePMB"') ?> Compilation of Maps</label>
-							    </div>
-							    <div class="checkbox">
-							        <label><?= form_checkbox('resourceprofile',$pamain->nipas_resourceprofile,set_value('resourceprofile',$pamain->nipas_resourceprofile),'id="dateApprovePMB"') ?> Resource Profile</label>
-							    </div>
-							    <div class="checkbox">
-							    	<label><?= form_checkbox('paplan',$pamain->nipas_paplan,set_value('paplan',$pamain->nipas_paplan),'id="dateApprovePMB"') ?> Initial PA Plan</label>
-						        </div>
-		          			</div>
-		          			<div class="col-md-6">
-								<div class="checkbox">
-							        <label><?= form_checkbox('regionalreview',$pamain->nipas_regionalreview,set_value('regionalreview',$pamain->nipas_regionalreview),'id="dateApprovePMB"') ?> Regional Review</label>
-							    </div>
-							    <div class="checkbox">
-							        <label><?= form_checkbox('nationalreview',$pamain->nipas_nationalreview,set_value('nationalreview',$pamain->nipas_nationalreview),'id="dateApprovePMB"') ?> National Review</label>
-							    </div>
-							    <div class="checkbox">
-							        <label><?= form_checkbox('presproc',$pamain->nipas_presproc,set_value('presproc',$pamain->nipas_presproc),'id="dateApprovePMB"') ?> Presidential Proclamation</label>
-							    </div>
-							    <div class="checkbox">
-							        <label><?= form_checkbox('congressenact',$pamain->nipas_congress,set_value('congressenact',$pamain->nipas_congress),'id="dateApprovePMB"') ?> Congressional Enactment</label>
-							    </div>
-	          				</div>
-		          		</div>
-	          			<div class="box-header with-border"></div>
-          			</div>
-          		</div>
-          	</div>
-
-          	<div class="panel panel-info">
-          		<div class="panel-heading"><div class="panel-title"><i class="fa fa-map"></i> PROTECTED AREA LOCATION INFORMATION</div></div>
-          			<div class="panel-body">
-          				<div class="row">
-          					<div class="col-md-12">
-          					<div class="box-header with-border">
-				            	<h3 class="box-title" style="color:red">GEOGRAPHIC LOCATION</h3>
-				            </div><br>
-
-	          					<div class="form-group">
-			            			<label for="inputCategory" class="col-sm-1 col-xs-12 control-label">Longitude</label>
-			            			<div class="form-group col-sm-3 col-xs-4">
-			            				<?= form_input($data_longdegree,$pamain->geographic_longdegree); ?>
-			            			</div>
-			            			<div class="form-group col-sm-3 col-xs-4">
-			            				<?= form_input($data_longminute,$pamain->geographic_longminute); ?>
-			            			</div>
-			            			<div class="form-group col-sm-3 col-xs-4">
-			            				<?= form_input($data_longsecond,$pamain->geographic_longsecond); ?>
-			            			</div>
-			            		</div>
-			            	</div>
-			            	<div class="col-md-12">
-			            		<div class="form-group">
-			            			<label for="inputCategory" class="col-sm-1 col-xs-12 control-label">Latitude</label>
-			            			<div class="form-group col-sm-3 col-xs-4">
-			            				<?= form_input($data_latdegree,$pamain->geographic_latdegree); ?>
-			            			</div>
-			            			<div class="form-group col-sm-3 col-xs-4">
-			            				<?= form_input($data_latminute,$pamain->geographic_latminute); ?>
-			            			</div>
-			            			<div class="form-group col-sm-3 col-xs-4">
-			            				<?= form_input($data_latsecond,$pamain->geographic_latsecond); ?>
-			            			</div>
-	          					</div>
-
-	          				</div>
-	          			</div>
-	          			<div class="box-header with-border"></div>
-
-	          			<div class="row">
-	          				<div class="col-md-12">
-	          				<div class="box-header with-border">
-				            	<h3 class="box-title" style="color:red">LOCATION</h3>
-				            </div><br>
-				           		<div id="responseDiv" class="alert text-center" style="display:none;">
-			    					<button type="button" class="close" id="clearMsg"><span aria-hidden="true">&times;</span></button>
-			    					<span style="color:#000" id="message"></span>
-			    				</div>
-
-          						<?php if (!empty($pamain->id_main)): ?>
-          							<input type="text" name="gencode" class="hide" value="<?php echo $pamain->pacode ?>" id="codegen">
-          						<?php else: ?>
-          							<input type="text" name="gencode" class="hide" value="<?php echo generateRandomString() ?>" id="codegen">
-          						<?php endif ?>
-
-          						<div class="form-group">
-          							<div class="col-md-3">
-          								<label for="input" class="control-label">Region</label>
-          								<?php echo form_dropdown('region_id',$regionList,'','class="form-control" id="regid"') ?>
-          								<span class="prov_error"></span>
-          							</div>
-          							<div class="col-md-3">
-          								<label for="input" class="control-label">Province</label>
-          								<?php echo form_dropdown('province_id','','','class="form-control" id="provid"') ?>
-          								<span class="municipal_error"></span>
-          							</div>
-          							<div class="col-md-3">
-          								<label for="input" class="control-label">Municipality</label>
-          								<?php echo form_dropdown('municipal_id','','','class="form-control action" id="municipal_id"') ?>
-					            		<span class="barangay_error"></span>
-          							</div>
-          							<div class="col-md-3">
-          								<label for="input" class="control-label">Barangay</label>
-          								<?php echo form_dropdown('barangay_id','','','class="form-control" id="bar_id"') ?>
-					            		<span class="barangay_error"></span>
-          							</div>
-          						</div>
-
-				            	<div class="row">
-					            	<div class="col-md-12">
-					            		<div class="form-group col-sm-12 col-xs-12">
-					            			<button type="button" name="btnlocation" onclick="insert()" id="submitlocation" class="btn btn-success  btn-flat"><i class="fa fa-angle-double-down"> Add to list</i></button>
-					            		</div>
-					           		</div>
-				           		</div>
-				            </div>
-				            <!-- TABLE -->
-			          		<div class="col-md-12">
-			          			<div class="table-responsive">
-								    <table id="tablelocation" class="table table-hover">
-								        <thead>
-								            <tr>
-								                <th>Region</th>
-								                <th>Province</th>
-								                <th>Municipality</th>
-								                <th>Barangay</th>
-								                <th>Remove</th>
-								            </tr>
-								        </thead>
-								        <tbody id="tbody"></tbody>
-								    </table>
-								</div>
-	          				</div>
-	          			<!-- END OF TABLE -->
-          				</div>
-          				<div class="box-header with-border"></div>
-          				<div class="row">
-          					<div class="col-md-12">
-	          				<div class="box-header with-border">
-				            	<h3 class="box-title" style="color:red">OTHER LOCATION INFORMATION</h3>
-				            </div><br>
-
-				            	<div class="form-group">
-				            		<div class="col-md-4">
-          								<label for="input" class="control-label">Protected Area Boundary</label>
-          								<?php echo form_textarea($data_boundary,$pamain->pa_boundary,'') ?>
-          								<span class="prov_error"></span>
-          							</div>
-          							<div class="col-md-4">
-          								<label for="input" class="control-label">Land Uses</label>
-          								<?php echo form_textarea($data_landuses,$pamain->landuses,'') ?>
-          								<span class="prov_error"></span>
-          							</div>
-          							<div class="col-md-4">
-          								<label for="input" class="control-label">Accessibility</label>
-          								<?php echo form_textarea($data_accessibility,$pamain->accessibility,'') ?>
-          								<span class="prov_error"></span>
-          							</div>
-				            	</div>
-				            </div>
-				        </div>
-
-          			</div>
-        	</div>
-        	<div class="panel panel-info">
-          	<div class="panel-heading"><div class="panel-title"><i class="fa fa-gavel"></i> ORDINANCE POWER</div></div>
-          		<div class="panel-body">
-	          			<div class="col-md-12">
-	          				<div id="responseDivLegis" class="alert text-center" style="display:none;">
-			    				<button type="button" class="close" id="clearMsgLegis"><span aria-hidden="true">&times;</span></button>
-			    					<span style="color:#000" id="messagelegis"></span>
-			    			</div>
-
-			    			<div class="form-group">
-          						<div class="col-md-4">
-          							<label for="input" class="control-label">Legislation</label>
-          								<?php echo form_dropdown('legis_id',$procList,'','class="form-control" id="legis_id"') ?>
-          						</div>
-          						<div class="col-md-4">
-          							<label for="input" class="control-label">Legislation No.</label>
-          								<?php echo form_input($data_legisno); ?>
-          						</div>
-	          					<div class="form-inline">
-	          						<div class="col">
-	          							<label for="input" class="control-label">Dated</label>
-	          						</div>
-	          						<?php echo form_dropdown('date_month',$monthList,'','class="form-control"'); ?>
-	          						<?php echo form_dropdown('date_day',$dayList,'','class="form-control"'); ?>
-	          						<?php echo form_dropdown('date_year',$yearList,'','class="form-control"'); ?>
-	          					</div>
-          					</div>
-
-          					<div class="form-group">
-          						<div class="col-md-4">
-          							<label for="input" class="control-label">Area (hectare)</label>
-          							<?php echo form_input($data_legisarea); ?>
-          						</div>
-          						<div class="col-md-4">
-          							<label for="input" class="control-label">Buffer Zone (hectare)</label>
-          							<?php echo form_input($data_legisbuffer); ?>
-          						</div>
-          					</div>
-
-          					<div class="form-group">
-          						<div class="col-md-2">
-          							<label for="input" class="control-label">PDF File</label>
-          						</div>
-          						<div class="col-md-4">
-          							<input type="file" name="picture" id="picture">
-		                			<input type="hidden" name="old_file">
-          						</div>
-          					</div>
-
-          					<div class="row">
-					            <div class="col-md-12">
-					            	<div class="form-group col-sm-12 col-xs-12">
-					            		<button type="button" name="btnlegislation" onclick="insert_legis2()" id="btnlegislation" class="btn btn-success btn-flat"><i class="fa fa-angle-double-down"> Add to list</i></button>
-					            	</div>
-					           	</div>
-				           	</div>
-
-	          			</div>
-	          		<!-- </div> -->
-	          			<div class="col-md-12">
-			          		<div class="table-responsive">
-								<table id="tableLegislation" class="table table-hover">
-								    <thead>
-								        <tr>
-								            <th>LEGISLATION</th>
-								            <th>DATED</th>
-								            <th>AREA(ha.)</th>
-								            <th>BUFFER ZONE(ha.)</th>
-								            <th>FILE ATTACHED</th>
-								            <th>Remove</th>
-								        </tr>
-								    </thead>
-								    <tbody id="tbodylegis">
-								    </tbody>
-								</table>
-							</div>
-	          			</div>
-	          	</div>
-	        </div>
-    	</div>
+		</div>
 	</div>
 </div>
 
 
 <script type="text/javascript">
-
-// 	$(document).ready(function(){
-//     var a = document.getElementById("dateApprovePMB").value;
-//     	<?php if (a.checked == true): ?>
-//     		$("#pambmemberTab").show();
-//     		$("#dateOrganized").show();
-//     	<?php elseif (a.checked == false): ?>
-//     		$("#pambmemberTab").hide();
-//     		$("#dateOrganized").hide();
-//     	<?php endif ?>
-// });
-
+	
 	function run(field) {
     setTimeout(function() {
         var regex = /\d*\.?\d?\d?/g;
@@ -595,7 +279,7 @@ $data_accessibility = array(
     $(document).ready(function() {
 	  getTables();
 
-    $(document).on('click', '.removelocations', function(){
+	$(document).on('click', '.removelocations', function(){
 		var id = $(this).data('id');
 		swal({
 		  	title: 'Remove from the list?',
@@ -605,28 +289,25 @@ $data_accessibility = array(
 		  	confirmButtonColor: '#3085d6',
 		  	cancelButtonColor: '#d33',
 		  	confirmButtonText: 'Yes, remove it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/pamain/deletelocation/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Removed!', response.message, response.status);
-					  // $('#tablelocation').DataTable().ajax.reload();
-					  // $('#tbody').html(response);
-					getTables();
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deletelocation/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTables();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	});
 
-		})
-
-		});
 	});
 
 // ------------------------------------ LEGISLATION -------------------------------------//
@@ -694,7 +375,7 @@ $data_accessibility = array(
     $(document).ready(function() {
 	  getTablesLegis();
 
-    $(document).on('click', '.removelegislation', function(){
+	$(document).on('click', '.removelegislation', function(){
 		var id = $(this).data('id');
 		swal({
 		  	title: 'Remove from the list?',
@@ -704,28 +385,26 @@ $data_accessibility = array(
 		  	confirmButtonColor: '#3085d6',
 		  	cancelButtonColor: '#d33',
 		  	confirmButtonText: 'Yes, remove it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/pamain/deletelegis/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Removed!', response.message, response.status);
-					  // $('#tablelocation').DataTable().ajax.reload();
-					  // $('#tbody').html(response);
-					getTablesLegis();
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deletelegis/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTablesLegis();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	});
 
-		})
-
-		});
+ 
 	});
 //----------------------------------- END LEGISLATION -------------------------------------//
 
@@ -783,7 +462,7 @@ $data_accessibility = array(
     $(document).ready(function() {
 	  getTabPAMB();
 
-    $(document).on('click', '.removepambmember', function(){
+	$(document).on('click', '.removepambmember', function(){
 		var id = $(this).data('id');
 		swal({
 		  	title: 'Remove from the list?',
@@ -793,28 +472,24 @@ $data_accessibility = array(
 		  	confirmButtonColor: '#3085d6',
 		  	cancelButtonColor: '#d33',
 		  	confirmButtonText: 'Yes, remove it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/pamain/deletepambmember/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Removed!', response.message, response.status);
-					  // $('#tablelocation').DataTable().ajax.reload();
-					  // $('#tbody').html(response);
-					getTabPAMB();
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
-
-		})
-
-		});
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deletepambmember/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTabPAMB();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	});  
 	});
 // ------------------------------------END OF PAMB -------------------------------------//
 
@@ -872,7 +547,7 @@ $data_accessibility = array(
     $(document).ready(function() {
 	  getTabBiological();
 
-    $(document).on('click', '.removebiological', function(){
+	$(document).on('click', '.removebiological', function(){
 		var id = $(this).data('id');
 		swal({
 		  	title: 'Remove from the list?',
@@ -882,28 +557,24 @@ $data_accessibility = array(
 		  	confirmButtonColor: '#3085d6',
 		  	cancelButtonColor: '#d33',
 		  	confirmButtonText: 'Yes, remove it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/pamain/deletebiological/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Removed!', response.message, response.status);
-					  // $('#tablelocation').DataTable().ajax.reload();
-					  // $('#tbody').html(response);
-					getTabBiological();
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
-
-		})
-
-		});
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deletebiological/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTabBiological();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	}); 
 	});
 // ------------------------------------END OF BIOLOGICAL -------------------------------------//
 
@@ -961,7 +632,7 @@ $data_accessibility = array(
     $(document).ready(function() {
 	  getTabProject();
 
-    $(document).on('click', '.removeproject', function(){
+	$(document).on('click', '.removeproject', function(){
 		var id = $(this).data('id');
 		swal({
 		  	title: 'Remove from the list?',
@@ -971,28 +642,24 @@ $data_accessibility = array(
 		  	confirmButtonColor: '#3085d6',
 		  	cancelButtonColor: '#d33',
 		  	confirmButtonText: 'Yes, remove it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/pamain/deleteproject/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Removed!', response.message, response.status);
-					  // $('#tablelocation').DataTable().ajax.reload();
-					  // $('#tbody').html(response);
-					getTabProject();
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
-
-		})
-
-		});
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deleteproject/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTabProject();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	});   
 	});
 // ------------------------------------END OF PROJECTS -------------------------------------//
 
@@ -1051,7 +718,7 @@ $data_accessibility = array(
     $(document).ready(function() {
 	  getTabtribes();
 
-    $(document).on('click', '.removetribe', function(){
+	  $(document).on('click', '.removetribe', function(){
 		var id = $(this).data('id');
 		swal({
 		  	title: 'Remove from the list?',
@@ -1061,28 +728,25 @@ $data_accessibility = array(
 		  	confirmButtonColor: '#3085d6',
 		  	cancelButtonColor: '#d33',
 		  	confirmButtonText: 'Yes, remove it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/pamain/deletetribe/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Removed!', response.message, response.status);
-					  // $('#tablelocation').DataTable().ajax.reload();
-					  // $('#tbody').html(response);
-					getTabtribes();
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
-
-		})
-
-		});
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deletetribe/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTabtribes();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	});   
+  
 	});
 // ------------------------------------END OF TRIBES -------------------------------------//
 
@@ -1155,7 +819,7 @@ function insert_image()
                 }
                 else{
                     $('#responseDivImage').removeClass('alert-warning').addClass('alert-success').show();
-                    document.getElementById('picture2').value='';
+                    document.getElementById('picture').value='';
                     setTimeout(function() {
                    $("#responseDivImage").fadeOut();
                 }, 2000);
@@ -1184,7 +848,7 @@ function insert_image()
 $(document).ready(function() {
 	  getTabImage();
 
-    $(document).on('click', '.removeimage', function(){
+	  $(document).on('click', '.removeimage', function(){
 		var id = $(this).data('id');
 		swal({
 		  	title: 'Remove from the list?',
@@ -1194,28 +858,202 @@ $(document).ready(function() {
 		  	confirmButtonColor: '#3085d6',
 		  	cancelButtonColor: '#d33',
 		  	confirmButtonText: 'Yes, remove it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/pamain/deleteimages/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Removed!', response.message, response.status);
-					  // $('#tablelocation').DataTable().ajax.reload();
-					  // $('#tbody').html(response);
-					getTabImage();
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deleteimages/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTabImage();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	});
+	});
+//------------------------------------END OF IMAGE UPLOAD---------------------------------------------//
 
-		})
+// ----------------------------------- INCOME GENERATED ------------------------------------//
 
-		});
+function insert_income()
+    {
+    	 var url = '<?php echo base_url(); ?>';
+    	 $.ajax({
+    	 	url : url + 'index.php/main_server/pamain/income',
+    	 	type: "POST",
+    	 	data: $('#regFormlocation').serialize(),
+    	 	dataType: "JSON",
+    	 	success:function(response){
+                    $('#incomeMessage').html(response.incomeMessage);
+                    if(response.error){
+                        $('#incomeDiv').removeClass('alert-success').addClass('alert-warning').show();
+                         setTimeout(function() {
+						// $("#responseDiv").hide();
+						           $("#incomeDiv").fadeOut();
+
+						        }, 2000);
+                    }
+                    else{
+                        $('#incomeDiv').removeClass('alert-warning').addClass('alert-success').show();
+                        // $('#regFormlocation')[0].reset();
+                         setTimeout(function() {
+						// $("#responseDiv").hide();
+						           $("#incomeDiv").fadeOut();
+
+						        }, 2000);
+                        getTablesincome();
+                    }
+                }
+    	 });
+    	  $(document).on('click', '#clearMsg', function(){
+            $('#incomeDiv').hide();
+        });
+    }
+
+
+    function getTablesincome(){
+        var url = '<?php echo base_url(); ?>';
+        var codegen = $('#codegen').val();
+        $.ajax({
+            type: 'POST',
+            data : {codegens:codegen},
+            url: url + 'index.php/main_server/pamain/fetchincome',
+            success:function(response){
+                $('#tbodyfee').html(response);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+	  getTablesincome();
+
+	  $(document).on('click', '.removefee', function(){
+		var id = $(this).data('id');
+		swal({
+		  	title: 'Remove from the list?',
+		  	text: "You won't be able to revert this!",
+		  	type: 'warning',
+		  	showCancelButton: true,
+		  	confirmButtonColor: '#3085d6',
+		  	cancelButtonColor: '#d33',
+		  	confirmButtonText: 'Yes, remove it!',
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deleteimages/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTablesincome();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	});
+	});
+
+// ----------------------------------- end of INCOME GENERATED ------------------------------------//
+
+// ----------------------------------- ECO-TOURISM ------------------------------------//
+function insert_ecotourism()
+{
+	// var clearimage = document.getElementById('picture2');
+
+	  var formdata = new FormData();
+	  formdata.append('pic_eco', document.getElementById('pic_eco').files[0]);
+
+    var other_data = $('#regFormlocation').serializeArray();
+    $.each(other_data,function(key,input){
+        formdata.append(input.name,input.value);
+    });
+
+  	var url = '<?php echo base_url(); ?>';
+   $.ajax({
+	  url : url + 'main_server/pamain/ecotourism_upload_save',
+	  method: 'POST',
+	  contentType: false,
+	  cache: false,
+	  processData: false,
+	  data: formdata,
+    dataType: "JSON",
+    success:function(response){
+                $('#messageimageeco').html(response.messageimageeco);
+                if(response.error){
+                    $('#responseDivImageeco').removeClass('alert-success').addClass('alert-warning').show();
+                     setTimeout(function() {
+                   $("#responseDivImageeco").fadeOut();
+                }, 2000);
+                }
+                else{
+                    $('#responseDivImageeco').removeClass('alert-warning').addClass('alert-success').show();
+                    document.getElementById('pic_eco').value='';
+                    setTimeout(function() {
+                   $("#responseDivImageeco").fadeOut();
+                }, 2000);
+                    getTabImageEco();
+                }
+            }
+   });
+    $(document).on('click', '#clearMsgImage', function(){
+        $('#responseDivImageeco').hide();
+    });
+}
+
+ function getTabImageEco(){
+        var url = '<?php echo base_url(); ?>';
+        var codegen = $('#codegen').val();
+        $.ajax({
+            type: 'POST',
+            data : {codegens:codegen},
+            url: url + 'main_server/pamain/fetchImageeco',
+            success:function(response){
+                $('#tbodyimageecotourism').html(response);
+            }
+        });
+    }
+
+$(document).ready(function() {
+	  getTabImageEco();
+
+	  $(document).on('click', '.removeimageeco', function(){
+		var id = $(this).data('id');
+		swal({
+		  	title: 'Remove from the list?',
+		  	text: "You won't be able to revert this!",
+		  	type: 'warning',
+		  	showCancelButton: true,
+		  	confirmButtonColor: '#3085d6',
+		  	cancelButtonColor: '#d33',
+		  	confirmButtonText: 'Yes, remove it!',
+		},
+    function(){
+      $.ajax({
+        url: BASE_URL+'/main_server/pamain/deleteecotourism/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTabImageEco();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+	});
 	});
 //------------------------------------END OF IMAGE UPLOAD---------------------------------------------//
 </script>

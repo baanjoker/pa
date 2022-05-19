@@ -2,40 +2,43 @@
 //							SPECIES    								 //
 // ================================================================= //
 
+
 $(document).ready(function() {
-	fetch_wSpecies();
-	$(document).on('click', '.btn-deleteSpecies', function(){
-		var id = $(this).data('id');
-		swal({
-		  	title: 'Are you sure?',
-		  	text: "You won't be able to revert this!",
-		  	type: 'warning',
-		  	showCancelButton: true,
-		  	confirmButtonColor: '#3085d6',
-		  	cancelButtonColor: '#d33',
-		  	confirmButtonText: 'Yes, delete it!',
-		}).then((result) => {
-		  	if (result.value){
-		  		$.ajax({
-			   		url: BASE_URL+'/main_server/wildlife/delete_Species/'+id,
-			    	type: 'POST',
-			       	data: 'id='+id,
-			       	dataType: 'json'
-			    })
-			    .done(function(response){
-			     	swal('Deleted!', response.message, response.status);
-					  $('#tablewSpecies').DataTable().ajax.reload();
-
-			    })
-			    .fail(function(){
-			     	swal('Oops...', 'Something went wrong with ajax !', 'error');
-			    });
-		  	}
-
-		})
-
-	});
+  fetch_wSpecies();
+    $(document).on('click', '.btn-deleteSpecies', function(){
+    var id = $(this).data('id');
+    swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        },
+            function() {
+            $.ajax({
+              
+              data : 'id='+id,
+              url: BASE_URL+'/main_server/wildlife/delete_Species/'+id,
+              type:'post',
+              crossOrigin: false,
+              dataType: 'JSON',
+              success : function(result){
+                // console.log(data.check)
+                if (result.status == "success") {
+                  swal('Deleted!', result.message, result.status);
+                  $('#tablewSpecies').DataTable().ajax.reload();
+                }else{
+                  swal('Oops...', 'Something went wrong with ajax !', 'error');
+                }
+              }
+            });
+            }
+        );    
+  });
 });
+
 function fetch_wSpecies(){
 var id = $('#id_family').val();
 var t = $('#tablewSpecies').DataTable({
@@ -65,19 +68,28 @@ var t = $('#tablewSpecies').DataTable({
 	}).draw();
 }
 
-var myLink = document.getElementById('save_species');
-myLink.addEventListener('click', function() {
- 
-       var url = '<?php echo base_url(); ?>';
+$(document).ready(function() {
+	$(document).on('click', '#save_speciess', function(){
+ var speciesForm = document.getElementById("speciesForm");
+      var formdata = new FormData();
+    formdata.append('picture', document.getElementById('picture').files[0]);
+
+      var other_data = $('#speciesForm').serializeArray();
+      $.each(other_data,function(key,input){
+          formdata.append(input.name,input.value);
+      });
        $.ajax({
-        url : BASE_URL+'/main_server/wildlife/save_species',
+        url : BASE_URL+'/main_server/wildlife/save_speciess',
         type: "POST",
-        data: $('#speciesForm').serialize(),
+        contentType: false,
+        cache: false,
+        processData: false,
+        data: formdata,
         dataType: "JSON",
         success:function(response){
                     $('#messagespecies').html(response.messagespecies);
                     if(response.error){
-                        $('#divSpecies').removeClass('alert-success').addClass('alert-warning').show();                       
+                        $('#divSpecies').removeClass('alert-success').addClass('alert-warning').show();
                          setTimeout(function() {
                        $("#divSpecies").fadeOut();
 
@@ -85,16 +97,23 @@ myLink.addEventListener('click', function() {
                     }
                     else{
                         $('#divSpecies').removeClass('alert-warning').addClass('alert-success').show();
-                        $('#speciesForm')[0].reset();
                          setTimeout(function() {
                        $("#divSpecies").fadeOut();
-                       location.reload();
+
                     }, 2000);
-                        
+                       speciesForm.reset();
+                       document.getElementById('img_wildlife').src = BASE_URL + 'bmb_assets2/upload/wildlife_img/nophoto.jpg';
+                       document.getElementById("picture").value='';
                     }
                 }
        });
         $(document).on('click', '#clearMsg', function(){
             $('#divSpecies').hide();
         });
-    });
+
+});
+});
+
+      
+     
+  

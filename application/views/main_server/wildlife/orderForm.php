@@ -4,7 +4,7 @@
 		'class' 	=>	'form-control',
 		'id'		=>	'wcode',
 		'required'	=>	'required',
-		'placeholder'=> 'Category code'
+		'placeholder'=> 'Species Category code'
 	);
 	$data_class = array(
 		'name' =>	'wclass',
@@ -34,7 +34,7 @@
 		'class' 	=>	'form-control',
 		'id'		=>	'orderdesc',
 		'required'	=>	'required',
-		'placeholder'=> 'Order code description'
+		'placeholder'=> 'Order description'
 
 	);
 ?>
@@ -63,17 +63,17 @@
 							<table width="100%" border="0" cellpadding="3" cellspacing="1" class="table4">
 							<?php if (!empty($worder->id_family)): ?>
 								<tr valign="top" class="spaceUnder spaceOver">
-									<td style="width: 100px">Category</td>
+									<td style="width: 100px">Species Category</td>
 									<td><?= form_dropdown($data_wCatcode,$category,$worder->wCategory) ?><span class="error"></span></td>
 								</tr>
 								<tr valign="top" class="spaceUnder">
 									<td style="width: 100px">Class</td>
 									<td><?= form_dropdown($data_class,$classListDropdown,$worder->ClassCodes) ?></td>
 								</tr>
-								<tr valign="top" class="spaceUnder">
+								<!-- <tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Order Code</td>
 									<td><?= form_input($data_Ordercode,$worder->OrderCode) ?></td>	
-								</tr>
+								</tr> -->
 								<tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Order Description</td>
 									<td><?= form_input($data_Ordername,$worder->OrderDesc) ?></td>	
@@ -87,10 +87,10 @@
 									<td style="width: 100px">Class</td>
 									<td><?= form_dropdown($data_class) ?></td>
 								</tr>
-								<tr valign="top" class="spaceUnder">
+								<!-- <tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Order Code</td>
 									<td><?= form_input($data_Ordercode) ?></td>	
-								</tr>
+								</tr> -->
 								<tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Order Description</td>
 									<td><?= form_input($data_Ordername) ?></td>	

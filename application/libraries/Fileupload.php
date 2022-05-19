@@ -6,7 +6,7 @@ class Fileupload
     // To load this model
     // $this->fileupload->do_upload($upload_path = 'assets/images/profile/', $field_name = 'userfile');
 
-    function do_uploads($upload_path = null, $field_name = null) {
+    function do_upload($upload_path = null, $field_name = null) {
         if (empty($_FILES[$field_name]['name'])) {
             return null;
         } else {
@@ -24,7 +24,7 @@ class Fileupload
             $config = [
                 'upload_path'   => $file_path,
                 // 'file_name'     => time(),
-                'allowed_types' => 'pdf|gif|jpg|png|jpeg|ico',
+                'allowed_types' => 'gif|jpg|png|jpeg|ico|pdf',
                 // 'max_size'      => 1024,
                 // 'max_width'     => 1024,
                 // 'max_height'    => 768,

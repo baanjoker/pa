@@ -11,7 +11,8 @@ class library extends CI_Controller
 		parent::__construct();
 
 		$this->load->model([
-			'library_model'
+			'library_model',
+            'login_model',
 		]);
 
 		if ($this->session->userdata('isLogIn') == false 
@@ -19,6 +20,17 @@ class library extends CI_Controller
 		) 
 		redirect('login'); 
 	}
+
+    public function index()
+    {
+        $data['page_title'] = "Library Setting";
+        $data['setting'] = $this->setting_model->read();
+        $userid = $this->session->userdata('user_id');
+        $data['lastlog'] = $this->login_model->read_lastlogs($userid);
+
+        $data['content'] = $this->load->view('main_server/libraries',$data,true);       
+        $this->load->view('main_server/dashboard',$data);
+    }
 // ==================================================================//
 //                          DEFINITION OF TERM                       //
 // ================================================================= //

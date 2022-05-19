@@ -18,8 +18,8 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>CATEGORY</th>
-                    					<th>CLASS CODE</th>
+										<th>SPECIES CATEGORY</th>
+                    					<!-- <th>CLASS CODE</th> -->
 										<th>CLASS DESCRIPTION</th>
 										<th>OPTION</th>
 									</tr>

@@ -18,7 +18,7 @@
 		'class' 	=>	'form-control',
 		'id'		=>	'classdesc',
 		'required'	=>	'required',
-		'placeholder'=> 'Class code description'
+		'placeholder'=> 'Class description'
 
 	);
 ?>
@@ -47,26 +47,26 @@
 							<table width="100%" border="0" cellpadding="3" cellspacing="1" class="table4">
 							<?php if (!empty($identifier)): ?>
 								<tr valign="top" class="spaceUnder spaceOver">
-									<td style="width: 100px">Category</td>
+									<td style="width: 100px">Species Category</td>
 									<td><?= form_dropdown($data_wCatcode,$category,$wclass->WCode) ?></td>
 								</tr>
-								<tr valign="top" class="spaceUnder">
+								<!-- <tr valign="top" class="spaceUnder">
 									<td style="width: 100px">Class Code</td>
 									<td><?= form_input($data_code,$wclass->ClassCode) ?></td>
-								</tr>
+								</tr> -->
 								<tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Class Description</td>
 									<td><?= form_input($data_name,$wclass->ClassDesc) ?></td>	
 								</tr>
 							<?php else: ?>
 								<tr valign="top" class="spaceUnder spaceOver">
-									<td style="width: 100px">Category</td>
+									<td style="width: 100px">Species Category</td>
 									<td><?= form_dropdown($data_wCatcode,$category) ?></td>
 								</tr>
-								<tr valign="top" class="spaceUnder">
+								<!-- <tr valign="top" class="spaceUnder">
 									<td style="width: 100px">Class Code</td>
 									<td><?= form_input($data_code) ?></td>
-								</tr>
+								</tr> -->
 								<tr valign="top" class="spaceUnder">
 									<td style="width: 150px">Class Description</td>
 									<td><?= form_input($data_name) ?></td>	
