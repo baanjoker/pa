@@ -71469,3 +71469,44 @@ function editCertificatedaily(elem){
     $("#DailyCertificateForm").trigger("reset");
 });
 }
+
+$("#addestimatepopulation").click(function(){
+    var code    =   document.getElementById("codegen").value;
+    var code2    =   document.getElementById("gencodespecies").value;
+
+    var mon = document.getElementById("fdateM");
+    var strmon = mon.options[mon.selectedIndex].text;
+    var iDmon      = $("#fdateM").val();
+
+    var year = document.getElementById("fdateY");
+    var stryear = year.options[year.selectedIndex].text;
+    var iDyear      = $("#fdateY").val();
+
+    var number      = $("#populationcount").val();
+    var remarks      = $("#populationremarks").val();
+
+    // if ($("#ipafotherincomesourcefee").val()=="") {
+    // swal("Specify other amount",'','warning');
+    //      return
+    // }else{
+      $("#tblestimatepopulation tbody:last-child").append(
+          "<tr style='text-align: left'>"+
+            "<td class='hide'>"+code+"</td>"+
+            "<td class='hide'>"+code2+"</td>"+
+            "<td class='hide'>"+iDmon+"</td>"+
+            "<td class='hide'>"+iDyear+"</td>"+
+            "<td class='hide'>"+number+"</td>"+
+            "<td class='hide'>"+remarks+"</td>"+
+           "<td>"+"<button type='button' name='remove' data-row='row style='float:right' class='btn btn-danger btn-xs remove' onclick='deleteRowThreat(this)'><i class='glyphicon glyphicon-remove'></i></button><br>"+
+            "Date Assessed : "+strmon+" "+stryear+"<br>"+
+            "Estimate population : "+number+
+            "<br>Remarks : "+remarks+
+            "</td>"+
+          "</tr>"
+    );
+    // }
+    document.getElementById("populationremarks").value='';
+    document.getElementById("populationcount").value='';
+    $("#fdateM")[0].selectedIndex = 0;
+    $("#fdateY")[0].selectedIndex = 0;
+});

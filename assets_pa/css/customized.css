@@ -4200,6 +4200,9 @@ label.error {
   font-weight: bold;
   color: #009879;
 }
+
+
+
 @media (min-width: 1200px){
     .select2-container .select2-selection--single .select2-selection__rendered {
        /* display: block;
@@ -4210,4 +4213,58 @@ label.error {
         white-space: nowrap;*/
         width: 100%;
     }
+}
+
+.temp-content-table {
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 1em;
+  width: 100%;
+  /*min-width: 400px;*/
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  margin-top: 10px;
+}
+
+.temp-content-table thead tr {
+  color: #fff;
+  background-color: #f0ad4e;
+  /*border-color: #eea236;*/
+  text-align: left;
+  font-weight: bold;
+}
+
+.temp-content-table thead tr th {
+    text-align: center;
+}
+
+.temp-content-table < thead {
+  border: 0 solid #009879;
+}
+
+.temp-content-table th,
+.temp-content-table td {
+  padding: 12px 15px;
+}
+
+.temp-content-table tbody tr {
+  border-bottom: 1px dotted #dddddd;
+}
+
+.temp-content-table tbody tr td {
+    border: 1px dotted #dddddd;
+}
+
+.temp-content-table tbody tr:nth-of-type(even) {
+  /*background-color: #f3f3f3;*/
+}
+
+.temp-content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.temp-content-table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
 }

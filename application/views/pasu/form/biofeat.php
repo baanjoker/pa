@@ -2215,11 +2215,44 @@
                 </div>
                </fieldset>
            </div>
-           <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 tooltip">
-                <ul><li>
-                    <?php echo form_label('Estimated Population','','for="populationcount"').form_input('populationcount','','id="populationcount"'); ?>
-                    <span class="tooltiptext">The estimated number of individuals of a species based on the most recent survey conducted in the PA.</span>
-                </li></ul>
+           <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+            <fieldset><legend>Population</legend>
+                <div class="col-lg-4 col-xs-12 tooltip">
+                    <ul><li>
+                        <?php echo form_label('Estimated Population','','for="populationcount"').form_input('populationcount','','id="populationcount"'); ?>
+                        <span class="tooltiptext">The estimated number of individuals of a species based on the most recent survey conducted in the PA.</span>
+                    </li></ul>
+                </div>
+                <div class="col-lg-4 col-xs-12 tooltip">
+                    <ul><li>
+                        <?= form_label('Date Assessed').form_dropdown('fdateM',$monthListed,'','id="fdateM"') ?>
+                    </li></ul>
+                </div>
+                <div class="col-lg-4 col-xs-12 tooltip">
+                    <ul><li>
+                        <?= form_label('&nbsp;').form_dropdown('fdateY',$yearListed,'','id="fdateY"') ?>
+                    </li></ul>
+                </div>
+                <div class="col-lg-12 col-xs-12 tooltip">
+                    <ul><li>
+                        <?php echo form_label('Remarks','','for="populationremarks"').form_textarea('populationremarks','','id="populationremarks"'); ?>
+                    </li></ul>
+                </div>
+                <div class="col-xs-12 col-lg-12">
+                    <div class="col-xs-1 col-lg-1">
+                        <a type="text" class="btn btn-warning" id="addestimatepopulation">Add estimate population</a>
+                    </div>
+                    <div class="col-xs-12 col-lg-12">
+                        <div class="table-responsive large-tables">
+                            <table id="tblestimatepopulation" class="temp-content-table">
+                                <thead><tr><th>Estimate Population</th></tr>
+                                </thead>
+                                <tbody id="tbodyestimatepopulation"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>                
             </div>
             <div class="col-xs-12 col-lg-12 col-md-12 tooltip">
                 <ul><li>

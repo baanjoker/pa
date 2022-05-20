@@ -357,7 +357,7 @@
                         </div>
                         <div class="col-xs-12 col-lg-12">
                             <div class="table-responsive large-tables">
-                                <table id="tblinitialcomponent" class="content-table">
+                                <table id="tblinitialcomponent" class="temp-content-table">
                                     <thead>
                                     </thead>
                                     <tbody id="tbodyinitialcomponent"></tbody>
