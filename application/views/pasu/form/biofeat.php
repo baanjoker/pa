@@ -2219,13 +2219,12 @@
             <fieldset><legend>Population</legend>
                 <div class="col-lg-4 col-xs-12 tooltip">
                     <ul><li>
-                        <?php echo form_label('Estimated Population','','for="populationcount"').form_input('populationcount','','id="populationcount"'); ?>
-                        <span class="tooltiptext">The estimated number of individuals of a species based on the most recent survey conducted in the PA.</span>
+                        <?= form_label('Date conducted').form_dropdown('fdateM',$monthListed,'','id="fdateM"') ?>
                     </li></ul>
                 </div>
                 <div class="col-lg-4 col-xs-12 tooltip">
                     <ul><li>
-                        <?= form_label('Date Assessed').form_dropdown('fdateM',$monthListed,'','id="fdateM"') ?>
+                        <?= form_label('&nbsp;').form_dropdown('fdateD',$dayList,'','id="fdateD"') ?>
                     </li></ul>
                 </div>
                 <div class="col-lg-4 col-xs-12 tooltip">
@@ -2233,6 +2232,18 @@
                         <?= form_label('&nbsp;').form_dropdown('fdateY',$yearListed,'','id="fdateY"') ?>
                     </li></ul>
                 </div>
+                <div class="col-lg-12 col-xs-12">
+                    <ul><li>
+                        <?php echo form_label('Activity/Monitoring type','','for="populationactivity"').form_input('populationactivity','','id="populationactivity"'); ?>
+                    </li></ul>
+                </div>
+                <div class="col-lg-12 col-xs-12 tooltip">
+                    <ul><li>
+                        <?php echo form_label('Estimated Population','','for="populationcount"').form_input('populationcount','','id="populationcount" placeholder="# of estimated population" class="number-separator"'); ?>
+                        <span class="tooltiptext">The estimated number of individuals of a species based on the most recent survey conducted in the PA.</span>
+                    </li></ul>
+                </div>
+                
                 <div class="col-lg-12 col-xs-12 tooltip">
                     <ul><li>
                         <?php echo form_label('Remarks','','for="populationremarks"').form_textarea('populationremarks','','id="populationremarks"'); ?>
@@ -4508,12 +4519,63 @@
                                 <span class="tooltiptext">Input fauna species local name</span>
                             </li></ul>
                         </div>
-                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 tooltip">
-                            <ul><li>
-                                <?php echo form_label('Estimated Population','','for="edit-populationcount"').form_input('edit-populationcount','','id="edit-populationcount"'); ?>
-                                <span class="tooltiptext">No. of estimated population per species</span>
-                            </li></ul>
-                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                            <fieldset><legend>Population</legend>
+                                <div class="col-lg-4 col-xs-12 tooltip">
+                                    <ul><li>
+                                        <?= form_label('Date conducted').form_dropdown('edit-fdateMs',$monthListed,'','id="edit-fdateMs"') ?>
+                                    </li></ul>
+                                </div>
+                                <div class="col-lg-4 col-xs-12 tooltip">
+                                    <ul><li>
+                                        <?= form_label('&nbsp;').form_dropdown('edit-fdateDs',$dayList,'','id="edit-fdateDs"') ?>
+                                    </li></ul>
+                                </div>
+                                <div class="col-lg-4 col-xs-12 tooltip">
+                                    <ul><li>
+                                        <?= form_label('&nbsp;').form_dropdown('edit-fdateYs',$yearListed,'','id="edit-fdateYs"') ?>
+                                    </li></ul>
+                                </div>
+                                <div class="col-lg-12 col-xs-12">
+                                    <ul><li>
+                                        <?php echo form_label('Activity/Monitoring type','','for="edit-populationactivitys"').form_input('edit-populationactivitys','','id="edit-populationactivitys"'); ?>
+                                    </li></ul>
+                                </div>
+                                <div class="col-lg-12 col-xs-12 tooltip">
+                                    <ul><li>
+                                        <?php echo form_label('Estimated Population','','for="edit-populationcount"').form_input('edit-populationcount','','id="edit-populationcount" placeholder="# of estimated population" class="number-separator"'); ?>
+                                        <span class="tooltiptext">The estimated number of individuals of a species based on the most recent survey conducted in the PA.</span>
+                                    </li></ul>
+                                </div>
+                                
+                                <div class="col-lg-12 col-xs-12 tooltip">
+                                    <ul><li>
+                                        <?php echo form_label('Remarks','','for="edit-populationremarkss"').form_textarea('edit-populationremarkss','','id="edit-populationremarkss"'); ?>
+                                    </li></ul>
+                                </div>
+                                <div class="col-xs-1 col-lg-1">
+                                    <a type="text" class="btn btn-warning" id="addestimatepopulationEdit">Add estimate population</a>
+                                </div>
+                                <!-- <div id="tbldisplaypopcount"></div> -->
+                                <div class='table-responsive large-tables'>
+                                    <table id='tblspeciespopulation1' class='temp-content-table'>
+                                        <thead>
+                                            <tr>
+                                                <th colspan='5'>Estimate Population</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Date Conducted</th>
+                                                <th>Activity</th>
+                                                <th>Estimate Population</th>
+                                                <th>Remarks</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id='tbldisplaypopcount' class='text-center trow'></tbody>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </div>                        
                         <div class="col-xs-12 col-lg-12 col-md-12 tooltip">
                             <ul><li>
                                 <?php echo form_label('References of the photo','','for="edit-reference_photo_ff"').form_input('edit-reference_photo_ff','','id="edit-reference_photo_ff"'); ?>
@@ -4578,6 +4640,68 @@
                         <div class="col-xs-12">
                             <div class="modal-footer">
                                 <button class="btn btn-info" type="button" onclick="updateBioFeature();" />Update
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form>
+
+
+<form method="post" action="" id="FloraFaunaFormPops" enctype="multipart/form-data" role="form" class="form-style-7">
+    <div class="modal fade" data-backdrop="static" id="modal-edit-ffbp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit</h4>
+                </div>
+                <input type="hidden" id="ffbp-id" name="ffbp-id" value="" />
+                <input type="hidden" id="ffbp-gencode" name="ffbp-gencode" value="" />
+                <input type="hidden" id="ffbp-gencode-species" name="ffbp-gencode-species" value="" />
+                <div class="modal-body" >
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                        <fieldset><legend>Population</legend>
+                            <div class="col-lg-4 col-xs-12 tooltip">
+                                <ul><li>
+                                    <?= form_label('Date conducted').form_dropdown('edit-fdateM',$monthListed,'','id="edit-fdateM"') ?>
+                                </li></ul>
+                            </div>
+                            <div class="col-lg-4 col-xs-12 tooltip">
+                                <ul><li>
+                                    <?= form_label('&nbsp;').form_dropdown('edit-fdateD',$dayList,'','id="edit-fdateD"') ?>
+                                </li></ul>
+                            </div>
+                            <div class="col-lg-4 col-xs-12 tooltip">
+                                <ul><li>
+                                    <?= form_label('&nbsp;').form_dropdown('edit-fdateY',$yearListed,'','id="edit-fdateY"') ?>
+                                </li></ul>
+                            </div>
+                            <div class="col-lg-12 col-xs-12">
+                                <ul><li>
+                                    <?php echo form_label('Activity/Monitoring type','','for="edit-populationactivity"').form_input('edit-populationactivity','','id="edit-populationactivity"'); ?>
+                                </li></ul>
+                            </div>
+                            <div class="col-lg-12 col-xs-12 tooltip">
+                                <ul><li>
+                                    <?php echo form_label('Estimated Population','','for="edit-populationcounts"').form_input('edit-populationcounts','','id="edit-populationcounts" placeholder="# of estimated population" class="number-separator"'); ?>
+                                    <span class="tooltiptext">The estimated number of individuals of a species based on the most recent survey conducted in the PA.</span>
+                                </li></ul>
+                            </div>
+                            
+                            <div class="col-lg-12 col-xs-12 tooltip">
+                                <ul><li>
+                                    <?php echo form_label('Remarks','','for="edit-populationremarks"').form_textarea('edit-populationremarks','','id="edit-populationremarks"'); ?>
+                                </li></ul>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-xs-12" style="margin-top:10px">
+                        <div class="col-xs-12">
+                            <div class="modal-footer">
+                                <button class="btn btn-info" type="button" onclick="updatebiologicalpops();" />Update
                             </div>
                         </div>
                     </div>

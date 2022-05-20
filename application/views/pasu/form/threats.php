@@ -167,7 +167,7 @@
                                 <a type="text" class="btn btn-warning" id="add_data_threat">Add to list</a>
                             </div>
                             <div class="col-xs-12">
-                                <br><table id="tblthreatlist" class="content-table">
+                                <br><table id="tblthreatlist" class="temp-content-table">
                                     <thead>
                                         <tr>
                                             <th colspan="5" style="text-align: center; font-size: 24px">List of threats</th>

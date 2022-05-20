@@ -13832,6 +13832,20 @@ $(function(){
     var chk5 = document.getElementById("chk_seagrass").value;
     var chk6 = document.getElementById("chk_mangrove").value;
 
+    var tablepopulation = [];
+    $("#tbodyestimatepopulation tr").each(function(row,tr){
+        var push = {
+          "generatedcode" : $(tr).find("td:eq(0)").text(),
+          "species_codegen" : $(tr).find("td:eq(1)").text(),
+          "fdateM" : $(tr).find("td:eq(2)").text(),
+          "fdateD" : $(tr).find("td:eq(3)").text(),
+          "fdateY" : $(tr).find("td:eq(4)").text(),
+          "populationcount" : $(tr).find("td:eq(5)").text(),
+          "populationremarks" : $(tr).find("td:eq(6)").text(),
+          "activity_title" : $(tr).find("td:eq(7)").text(),
+        }
+      tablepopulation.push(push);
+    });
 
     $.ajax({
         type: 'POST',
@@ -13856,10 +13870,11 @@ $(function(){
                     swal("You already added this species");
                 }else{
                     addedProductCodes.push(td_productCode);
+                    var sample_data = $('#regFormMain').serialize() + '&' + $.param({"tablepopulation" : tablepopulation});
                     $.ajax({
                       url : BASE_URL + 'pasu/pamain/insertPABiologicalFF',
                       type: 'POST',
-                      data: $('#regFormMain').serialize(),
+                      data: sample_data,
                       dataType: "JSON",
                       success:function(response){
                         saveffimgem();
@@ -13869,7 +13884,7 @@ $(function(){
                           // getTabBiologicalflora();
                           // // document.getElementById("select2-searchBoxs-container").innerText='Select';
                           document.getElementById('gencodespecies').value = makespeciescode(8);
-                          document.getElementById("popcount").value='';
+                          document.getElementById("populationcount").value='';
                           document.getElementById('chk_forest').checked=false;
                           document.getElementById('chk_inland').checked=false;
                           document.getElementById('chk_cave').checked=false;
@@ -13879,6 +13894,7 @@ $(function(){
                           document.getElementById('chk_tidal').checked=false;
                           document.getElementById('chk_coastalwetland').checked=false;
                           document.getElementById('chk_grassland').checked=false;
+                          $("#tbodyestimatepopulation tr").remove();
 
                           getTabBiological();
                           getTabBiologicalflora();
@@ -14204,6 +14220,16 @@ function editfaunaflora(elem){
               document.getElementById("edit-chk_grassland").checked = chk9;
               document.getElementById("edit-chk_grassland").value = chk9;
              }
+
+             var gencode = this.cells[15].innerHTML;
+             $.ajax({
+                type: 'POST',
+                data : {codegens:gencode},
+                url: BASE_URL + 'pasu/pamain/fetchSpeciesPopulations',
+                success:function(response){
+                    $('#tbldisplaypopcount').html(response);
+                }
+            });
         };
     }
     $('#ffb-id').val(elem.value);
@@ -71482,8 +71508,10 @@ $("#addestimatepopulation").click(function(){
     var stryear = year.options[year.selectedIndex].text;
     var iDyear      = $("#fdateY").val();
 
+    var idDay      = $("#fdateD").val();
     var number      = $("#populationcount").val();
     var remarks      = $("#populationremarks").val();
+    var activity      = $("#populationactivity").val();
 
     // if ($("#ipafotherincomesourcefee").val()=="") {
     // swal("Specify other amount",'','warning');
@@ -71494,9 +71522,11 @@ $("#addestimatepopulation").click(function(){
             "<td class='hide'>"+code+"</td>"+
             "<td class='hide'>"+code2+"</td>"+
             "<td class='hide'>"+iDmon+"</td>"+
+            "<td class='hide'>"+idDay+"</td>"+
             "<td class='hide'>"+iDyear+"</td>"+
             "<td class='hide'>"+number+"</td>"+
             "<td class='hide'>"+remarks+"</td>"+
+            "<td class='hide'>"+activity+"</td>"+
            "<td>"+"<button type='button' name='remove' data-row='row style='float:right' class='btn btn-danger btn-xs remove' onclick='deleteRowThreat(this)'><i class='glyphicon glyphicon-remove'></i></button><br>"+
             "Date Assessed : "+strmon+" "+stryear+"<br>"+
             "Estimate population : "+number+
@@ -71507,6 +71537,141 @@ $("#addestimatepopulation").click(function(){
     // }
     document.getElementById("populationremarks").value='';
     document.getElementById("populationcount").value='';
+    document.getElementById("populationactivity").value='';
     $("#fdateM")[0].selectedIndex = 0;
+    $("#fdateD")[0].selectedIndex = 0;
     $("#fdateY")[0].selectedIndex = 0;
 });
+
+function editfaunafloraPop(elem){
+    var table = document.getElementById('tblspeciespopulation1');
+    var ct = elem.value;
+    var x = $('#popsy1'+ct).val();
+    var y = $('#popsy2'+ct).val();
+    var z = $('#popsy3'+ct).val();
+    var t_rows = document.getElementById(elem.value);
+    for(var i = 1; i < table.rows.length; i++)
+    {
+        table.rows[i].onclick = function()
+        {
+             document.getElementById("edit-fdateM").value = x;
+             document.getElementById("edit-fdateD").value = y;
+             document.getElementById("edit-fdateY").value = z;
+             document.getElementById("edit-populationactivity").value = this.cells[1].innerHTML;
+             document.getElementById("edit-populationcounts").value = this.cells[2].innerHTML;
+             document.getElementById("edit-populationremarks").value = this.cells[3].innerHTML;
+        };
+    }
+    $('#ffbp-id').val(elem.value);
+    $("#modal-edit-ffbp").modal("toggle");
+    $('#modal-edit-ffbp').on('hidden.bs.modal', function(){
+    $("#FloraFaunaFormPops").trigger("reset");
+});
+}
+
+$(document).on('click', '.removebiologicalpops', function(){
+    var id = $(this).data('id');
+    swal({
+        title: 'Remove from the list?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, remove it!',
+    },
+    function(){
+      $.ajax({
+        url: BASE_URL+'/pasu/pamain/deletebiologicalpopulations/'+id,
+        type: 'POST',
+        data: 'id='+id,
+        dataType: 'json',
+        success : function(result){
+          if (result.status == "success") {
+          swal('Removed!', result.message, result.status);
+          getTabBiologicalpopulations();
+          getTabBiological();
+        }else{
+          swal('Oops...', 'Something went wrong with ajax !', 'error');
+        }
+        }
+      });
+    });
+    });
+
+    function getTabBiologicalpopulations(){
+
+        var codegen = $('#ffb-gencode-species').val();
+        $.ajax({
+            type: 'POST',
+            data : {codegens:codegen},
+            url: BASE_URL + 'pasu/pamain/fetchSpeciesPopulations',
+            success:function(response){
+                $('#tbodypopesti').html(response);
+            }
+        });
+    }
+
+    function updatebiologicalpops()
+{
+   $.ajax({
+    url : BASE_URL+'pasu/pamain/update_speciespopulation',
+    type: "POST",
+    data: $('#FloraFaunaFormPops').serialize(),
+    dataType: "JSON",
+    success:function(response){
+            swal({
+              title: "Successful Update!",
+              text: "Your data has been updated.",
+              type: "success",
+              showConfirmButton: true,
+           });
+           // $('#modal-edit-mgmtplan').modal('hide');
+            getTabBiological();
+            var gencode = $('#ffb-gencode-species').val();
+             $.ajax({
+                type: 'POST',
+                data : {codegens:gencode},
+                url: BASE_URL + 'pasu/pamain/fetchSpeciesPopulations',
+                success:function(response){
+                    $('#tbldisplaypopcount').html(response);
+                }
+            });
+
+        }
+   });
+}
+
+
+$("#addestimatepopulationEdit").click(function(){
+    if (document.getElementById('edit-fdateMs')[0].selectedIndex <= 0) {
+      swal('Select Month');
+    }else if(document.getElementById('edit-fdateYs')[0].selectedIndex <= 0){
+      swal('Select Year');
+    }else{
+
+            $.ajax({
+              url : BASE_URL + 'index.php/pasu/pamain/insertFuanaPopulations',
+              type: "POST",
+              data: $('#FloraFaunaForm').serialize(),
+              dataType: "JSON",
+              success:function(response){
+                  if (response.message == "Add") {
+                      swal('','Successfully added',"success");
+                  }else if(response.error){
+                      swal('',response.statusError,"error");
+                  }
+                  var gencode = $('#ffb-gencode-species').val();
+                 $.ajax({
+                    type: 'POST',
+                    data : {codegens:gencode},
+                    url: BASE_URL + 'pasu/pamain/fetchSpeciesPopulations',
+                    success:function(response){
+                        $('#tbldisplaypopcount').html(response);
+                    }
+                });
+                getTabBiological();
+              }
+          });
+        }
+      });

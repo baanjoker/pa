@@ -168,7 +168,7 @@
                         <br><a type="text" id="addsapamonitor" class="btn btn-warning">Add to list monitoring report</a>
                     </div>
                     <div class="col-xs-12"><br>
-                        <table id="tablesapamonitoring" class="content-table">
+                        <table id="tablesapamonitoring" class="temp-content-table">
                             <thead>
                                 <tr>
                                     <th>Details</th>
@@ -353,7 +353,7 @@
                         <br><a type="text" id="addmoamonitor" class="btn btn-warning">Add to list monitoring report</a>
                     </div>
                     <div class="col-xs-12">
-                        <table id="tablemoamonitoring" class="content-table">
+                        <table id="tablemoamonitoring" class="temp-content-table">
                             <thead>
                                 <tr>
                                     <th>Details</th>

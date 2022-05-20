@@ -415,10 +415,10 @@
                                         </fieldset>
                                     </div>
                                     <div class="col-xs-12">
-                                        <a type="text" class="btn btn-success" id="addiecmat">Add to list</a>                               
+                                        <a type="text" class="btn btn-warning" id="addiecmat">Add to list</a>                               
                                     </div>
                                     <div class="col-xs-12">
-                                        <table id="data_tableiecmaterials" class="content-table">
+                                        <table id="data_tableiecmaterials" class="temp-content-table">
                                             <thead>
                                                 <tr>
                                                     <th>Print</th>
@@ -478,10 +478,10 @@
                                     </div>
                                     
                                     <div class="col-xs-12" style="margin-top: 10px">
-                                        <a type="text" class="btn btn-success" id="addmultimedia">Add to list</a>                                
+                                        <a type="text" class="btn btn-warning" id="addmultimedia">Add to list</a>                                
                                     </div>
                                     <div class="col-xs-12">
-                                        <table id="data_tablemultimedia" class="content-table">
+                                        <table id="data_tablemultimedia" class="temp-content-table">
                                             <thead>
                                                 <tr>
                                                     <th>Multimedia</th>
@@ -548,11 +548,11 @@
                                         </div>
                                     </div>                    
                                     <div class="col-xs-12" style="margin-top: 10px">
-                                        <a type="text" class="btn btn-success" id="addsocialmedia">Add to list</a>                                
+                                        <a type="text" class="btn btn-warning" id="addsocialmedia">Add to list</a>                                
                                         <!-- <a type="text" class="btn btn-primary" id="addsocialmedia" onclick="insertcepamultimedia2()">Add to table</a>                                 -->
                                     </div>
                                     <div class="col-xs-12">
-                                        <table id="data_tablesocialmedia" class="content-table">
+                                        <table id="data_tablesocialmedia" class="temp-content-table">
                                             <thead>
                                                 <tr>
                                                     <th>Social Media</th>
@@ -589,11 +589,11 @@
                                     </li></ul>
                                 </div>
                                 <div class="col-xs-12" style="margin-top: 10px">
-                                    <a type="text" class="btn btn-success" id="addradiostation">Add to list</a>                                
+                                    <a type="text" class="btn btn-warning" id="addradiostation">Add to list</a>                                
                                     <!-- <a type="text" class="btn btn-primary" id="addradiostation" onclick="insertceparadiostation()">Add to table</a>                                 -->
                                 </div>
                                 <div class="col-xs-12">
-                                    <table id="data_tableradiostation" class="content-table">
+                                    <table id="data_tableradiostation" class="temp-content-table">
                                         <thead>
                                             <tr>
                                                 <th>Station</th>
@@ -644,10 +644,10 @@
                                         </li></ul>
                                     </div>
                                     <div class="col-xs-12" style="margin-top: 20px">
-                                        <a type="text" class="btn btn-success" id="addsouveniritem">Add to list</a>                               
+                                        <a type="text" class="btn btn-warning" id="addsouveniritem">Add to list</a>                               
                                     </div>
                                     <div class="col-xs-12">
-                                        <table id="data_tablesouvenir" class="content-table">
+                                        <table id="data_tablesouvenir" class="temp-content-table">
                                             <thead>
                                                 <tr>
                                                     <th>Souvenir Item</th>

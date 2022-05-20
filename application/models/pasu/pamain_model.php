@@ -3870,6 +3870,11 @@ class Pamain_Model extends CI_Model
          return $this->db->insert_id();
     }
 
+    public function createfuanpopulationEdit($data = []){
+         $this->db->insert('tblpamainbiological_population',$data);
+         return $this->db->insert_id();
+    }
+
     public function createApasuinfo($data = []){
          $this->db->insert('tblpaapasuinfo',$data);
          return $this->db->insert_id();
@@ -4300,9 +4305,36 @@ class Pamain_Model extends CI_Model
          return $this->db->insert_id();
     }
 
-    public function createPAbiologicalFF($data = []){
-         $this->db->insert('tblpamainbiological',$data);
-         return $this->db->insert_id();
+    public function createPAbiologicalFF($data,$rel_data1){
+         // $this->db->insert('tblpamainbiological',$data);
+         // return $this->db->insert_id();
+        if (!empty($rel_data1)) {
+            for($x11 = 0; $x11 < count($rel_data1); $x11++){
+            $datas[] = array(
+              "generatedcode" => $rel_data1[$x11]["generatedcode"],
+              "species_codegen" => $rel_data1[$x11]["species_codegen"],
+              "fdateM" => $rel_data1[$x11]['fdateM'],
+              "fdateD" => $rel_data1[$x11]['fdateD'],
+              "fdateY" => $rel_data1[$x11]['fdateY'],
+              "populationcount" => str_replace(',','',$rel_data1[$x11]['populationcount']),
+              "populationremarks" => $rel_data1[$x11]['populationremarks'],
+              "activity_title" => $rel_data1[$x11]['activity_title']);
+            }
+        }
+        try{
+            if (!empty($rel_data1)) {
+                for($x =0; $x<count($rel_data1); $x++){
+                    $this->db->insert('tblpamainbiological_population',$datas[$x]);
+                }
+            }
+
+            $this->db->insert('tblpamainbiological',$data);
+            return "success";
+            }
+                catch(Exception $e)
+            {
+                return "failed";
+            }
     }
 
     public function createPAbtrcertifi($data = []){
@@ -6803,6 +6835,14 @@ public function pabstatus()
         $this->db->where('species_codegen',$id_species);
                  // ->where('tblpamainbiological_img.generatedcode',$codegens);
         $query = $this->db->get('tblpamainbiological_img');
+        return $query->result();
+    }
+
+    public function getAllbiologicalspeciesPopulation($id_species){
+        // $this->db->join('tblpamainbiological','tblpamainbiological_img.species_id=tblpamainbiological.id_genus_get','left');
+        $this->db->where('species_codegen',$id_species);
+                 // ->where('tblpamainbiological_img.generatedcode',$codegens);
+        $query = $this->db->get('tblpamainbiological_population');
         return $query->result();
     }
 
@@ -12300,6 +12340,11 @@ public function pabstatus()
     public function updateMgmtPlan($details,$id){
         $this->db->where("id_mngmtplan",$id);
         $this->db->update("tblpamanagementplan",$details);
+    }
+
+    public function updateFaunaPopulations($details,$id){
+        $this->db->where("id_biopopulation",$id);
+        $this->db->update("tblpamainbiological_population",$details);
     }
 
     public function updateEcotourismMgmtPlan($details,$id){

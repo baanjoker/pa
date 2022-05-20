@@ -2778,6 +2778,7 @@ public function insertPAotherPlanFile()
 
 public function insertPABiologicalFF()
 {
+        $rel_data1 = $this->input->post('tablepopulation');
         $output = array();
         $data['paloacations'] = (object)$postData = [
             'generatedcode' => $this->input->post('gencode',true),
@@ -2796,7 +2797,7 @@ public function insertPABiologicalFF()
             'photo_references' => $this->input->post('reference_photo_ff'),
             'species_codegen' => $this->input->post('gencodespecies'),
         ];
-                $query = $this->pamain_model->createPAbiologicalFF($postData);
+                $query = $this->pamain_model->createPAbiologicalFF($postData,$rel_data1);
                 // }
                 if($query){
                 $output['message'] = 'Add';
@@ -8430,9 +8431,9 @@ public function insertvegetativecover()
             <?php if (!empty($row)) { ?>
                 <tr id="<?php echo $row->id_palegis; ?>" style="background-color: #ffdd99;">
                     <?php if (!empty($row->nipsub_id)){ ?>
-                        <td><?php echo (!empty($row->sub_nip_description)?$row->sub_nip_description." - ":"").(!empty($row->nipDesc)?" ".$row->nipDesc:""); ?></td>
+                        <td style="font-weight: 500"><?php echo (!empty($row->sub_nip_description)?$row->sub_nip_description." - ":"").(!empty($row->nipDesc)?" ".$row->nipDesc:""); ?></td>
                     <?php } else { ?>
-                        <td><?php echo $row->nipDesc?></td>
+                        <td style="font-weight: 500"><?php echo $row->nipDesc?></td>
                     <?php } ?>
                     <td><?php echo (!empty($row->pa_category_id)?$row->categoryName:"").(!empty($row->pa_category_other)?"(".$row->pa_category_other.")":""); ?></td>
                     <td><?php echo $row->LegisDesc." No. ".$row->legis_no; ?></td>
@@ -8540,10 +8541,10 @@ public function insertvegetativecover()
                     <!-- <td><button type="button" class="btn btn-danger btn-flat removelegislation" data-id="<?php echo $row->id_palegis ?>" title="Remove">Remove</button></td> -->
             </tr>
             <tr style="background-color: #ccebff;">
-                <td colspan="6">History of Establishment</td>
+                <td colspan="6" style="text-align: center;font-weight: 700">History of Establishment</td>
             </tr>
             <?php foreach ($data2 as $dd): ?>
-                <tr>
+                <tr style="background-color: #f2f2f2;">
                     <td><?php echo $dd->sub_nip_description?></td>
                     <td><?php echo ($dd->nipid_status==1?$dd->categoryName:"")  ?></td>
                     <td><?php echo $dd->LegisDesc." No. ".$dd->legal_basis_no?></td>
@@ -8840,12 +8841,33 @@ public function insertvegetativecover()
             echo json_encode(array('status' => $status));
     }
 
+    public function fetchSpeciesPopulations()
+    {
+        $id_species = $this->input->post('codegens');        
+        $data_population = $this->pamain_model->getAllbiologicalspeciesPopulation($id_species);
+        foreach ($data_population as $pops) {
+            echo "<tr id=".$pops->id_biopopulation.">
+                     <td>".(!empty($pops->fdateM)?$pops->fdateM." ":"").(!empty($pops->fdateD)?$pops->fdateD.", ":"").(!empty($pops->fdateY)?$pops->fdateY:"")."</td>
+                     <td>".($pops->activity_title)."</td>
+                     <td>".number_format($pops->populationcount,2)."</td>
+                     <td>".($pops->populationremarks)."</td>
+                     <td>".'<button type="button" value="'.$pops->id_biopopulation.'" class="btn btnbtn btn-info btn-xs" onclick="editfaunafloraPop(this);">Edit</button>'.
+                         '<button type="button" class="btn btnbtn btn-danger btn-xs removebiologicalpops" data-id="'.$pops->id_biopopulation.'" title="Remove">Remove</button>'.
+                         '<input type="hidden" id="popsy1'.$pops->id_biopopulation.'" value="'.$pops->fdateM.'" />'.
+                         '<input type="hidden" id="popsy2'.$pops->id_biopopulation.'" value="'.$pops->fdateD.'" />'.
+                         '<input type="hidden" id="popsy3'.$pops->id_biopopulation.'" value="'.$pops->fdateY.'" />'.
+                     "</td>
+                 </tr>";
+        }
+    }
+
     public function fetchBiological(){
         $codegens = $this->input->post('codegens');
         $data = $this->pamain_model->getAllbiological($codegens);
         foreach($data as $row){
         $id_species = $row->species_codegen;
         $data_species = $this->pamain_model->getAllbiologicalImgespecies($id_species);
+        $data_population = $this->pamain_model->getAllbiologicalspeciesPopulation($id_species);
             ?>
             <tr id="<?php echo $row->id_pabiological; ?>" class="text-center trow">
                 <td class="hidden"><?php echo $row->description; ?></td>
@@ -8890,7 +8912,7 @@ public function insertvegetativecover()
                         '<br><b>Scientific Name : </b><i>'.$row->scientificName_genus.'</i>'.
                         '<br><b>Local Name : </b>'.$row->localname.
                         '<br><b>Residency Status : </b>'.$row->residency_desc.
-                        '<br><b>Estimated Population : </b>'.$row->estimate_population.
+                        // '<br><b>Estimated Population : </b>'.$row->estimate_population.
                         '<br><b>Habitats/Ecosystem Discovered : </b>'.
                         (($row->chk_forest==1)?"<i class='glyphicon glyphicon-ok'></i>Forest":" ").
                         (($row->chk_inland==1)?"<i class='glyphicon glyphicon-ok'></i>Inland Wetland":" ").
@@ -8901,14 +8923,40 @@ public function insertvegetativecover()
                         (($row->chk_mudflats==1)?"<i class='glyphicon glyphicon-ok'></i>Tidal flats/Mudflats":" ").
                         (($row->chk_coastalwetland==1)?"<i class='glyphicon glyphicon-ok'></i>Coastal Wetland":" ").
                         (($row->chk_grassland==1)?"<i class='glyphicon glyphicon-ok'></i>Grassland":" "); ?>
-
+                        <?php
+                            foreach ($data_population as $pop) {
+                                echo "<div class='table-responsive large-tables'>
+                                        <table class='temp-content-table'>
+                                            <thead>
+                                                <tr>
+                                                    <th colspan='4'>Estimate Population</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Date Conducted</th>
+                                                    <th>Activity</th>
+                                                    <th>Estimate Population</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>".(!empty($pop->fdateM)?$pop->fdateM." ":"").(!empty($pop->fdateD)?$pop->fdateD.", ":"").(!empty($pop->fdateY)?$pop->fdateY:"")."</td>
+                                                    <td>".($pop->activity_title)."</td>
+                                                    <td>".number_format($pop->populationcount,2)."</td>
+                                                    <td>".($pop->populationremarks)."</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                      </div>";
+                            }
+                        ?>
                         <br><button type="button" value="<?php echo $row->id_pabiological;?>" class="btn btnbtn btn-info btn-xs" onclick="editfaunaflora(this);">Edit</button>
-                        <button type="button" class="btn btnbtn btn-danger btn-xs removebiological" data-id="<?php echo $row->species_codegen ?>" title="Remove">Remove</button></div></div>
-                    <?php
-                        foreach ($data_species as $spec) {
-                            echo "<div style='display: inline-block'>".(!empty($spec->species_image)?'<img src="'.base_url('bmb_assets2/upload/species_img_local/').(!empty($spec->species_image)?$spec->species_image:"nophoto.jpg").'" style="max-height: 300px; max-width: 300px; width: 300px; height: 300px">':"")."</div>";
-                        }
-                    ?>
+                        <button type="button" class="btn btnbtn btn-danger btn-xs removebiological" data-id="<?php echo $row->species_codegen ?>" title="Remove">Remove</button></div></div>                        
+                        <?php
+                            foreach ($data_species as $spec) {
+                                echo "<div style='display: inline-block'>".(!empty($spec->species_image)?'<img src="'.base_url('bmb_assets2/upload/species_img_local/').(!empty($spec->species_image)?$spec->species_image:"nophoto.jpg").'" style="max-height: 300px; max-width: 300px; width: 300px; height: 300px">':"")."</div>";
+                            }
+                        ?>
 
 
 
@@ -9040,9 +9088,10 @@ public function insertvegetativecover()
     {
 
         $output = array();
-        $sql = "DELETE tblpamainbiological,tblpamainbiological_img
+        $sql = "DELETE tblpamainbiological,tblpamainbiological_img,tblpamainbiological_population
                 FROM tblpamainbiological
                 LEFT JOIN tblpamainbiological_img ON tblpamainbiological_img.species_codegen = tblpamainbiological.species_codegen
+                LEFT JOIN tblpamainbiological_population ON tblpamainbiological_population.species_codegen = tblpamainbiological.species_codegen
                 WHERE tblpamainbiological.species_codegen = '$id'
                 ";
         if($this->db->query($sql)){
@@ -9055,6 +9104,23 @@ public function insertvegetativecover()
         }
         echo json_encode($output);
     }
+
+     public function deletebiologicalpopulations($id = null)
+    {
+
+        $output = array();
+        $sql = "DELETE FROM tblpamainbiological_population WHERE id_biopopulation = '$id'";
+        if($this->db->query($sql)){
+            $output['status'] = 'success';
+            $output['message'] = 'Data Removed successfully';
+        }
+        else{
+            $output['status'] = 'error';
+            $output['message'] = 'Something went wrong in deleting the data';
+        }
+        echo json_encode($output);
+    }
+
 
     public function deletebiologicalflora($id = null)
     {
@@ -22060,14 +22126,7 @@ public function insertvegetativecover()
                              'mngmtplan_shpfile' => (empty($this->input->post("edit-new_shpfilemgmntplan"))?$this->input->post("edit-old_shpfilemgmntplan"):$this->input->post("edit-new_shpfilemgmntplan")),
                              'mngmtplan_pambreso' => (empty($this->input->post("edit-new_mgmtplanpambreso"))?$this->input->post("edit-old_mgmtplanpambreso"):$this->input->post("edit-new_mgmtplanpambreso")));
             $this->pamain_model->updateMgmtPlan($details,$id);
-            // if (empty($scraper)) {
-            //     unlink('bmb_assets2/upload/management_plan/'.$scraperdelete);
-            // } else {
-            //     # code...
-            // }
             echo json_encode(['result' => 'things you want to show']);
-            // redirect('pasu/pamain/edit/'.$gencode);
-            // echo "<script>alert('Successfully updated service.');</script>";
         }
         else{
             echo "<script>alert('Login is required.');</script>";
@@ -32175,6 +32234,30 @@ public function insertTrustGenerated()
                 if($query){
                 $output['message'] = 'Add';
                 $output['status'] = 'Successfully added CRMP Activity!';
+                }else{
+
+                }
+        echo json_encode($output);
+}
+
+public function insertFuanaPopulations()
+{
+        $output = array();
+        $data['IncomeGenerated'] = (object)$postData = [
+            'generatedcode' => $this->input->post('ffb-gencode',true),
+            'species_codegen' => $this->input->post('ffb-gencode-species',true),
+            'fdateM' => $this->input->post('edit-fdateMs',true),
+            'fdateD' => $this->input->post('edit-fdateDs',true),
+            'fdateY' => $this->input->post('edit-fdateYs'),
+            'activity_title' => $this->input->post('edit-populationactivitys'),
+            'populationcount' => str_replace(',','',$this->input->post('edit-populationcount')),
+            'populationremarks' => $this->input->post('edit-populationremarkss'),
+        ];
+                $query = $this->pamain_model->createfuanpopulationEdit($postData);
+
+                if($query){
+                $output['message'] = 'Add';
+                $output['status'] = 'Successfully added.';
                 }else{
 
                 }
@@ -48537,5 +48620,23 @@ public function wetlandlandfiless()
             }
         }
         redirect('/pasu/pamain/edit/'.$urldirect);
+    }
+
+    public function update_speciespopulation(){
+        if($this->session->userdata('email')){
+            $id = $this->input->post("ffbp-id");
+            $details = array('fdateM' => $this->input->post("edit-fdateM"),
+                             'fdateD' => $this->input->post("edit-fdateD"),
+                             'fdateY' => $this->input->post("edit-fdateY"),
+                             'activity_title' => $this->input->post("edit-populationactivity"),
+                             'populationcount' => str_replace(',','',$this->input->post("edit-populationcounts")),
+                             'populationremarks' => $this->input->post("edit-populationremarks"));
+            $this->pamain_model->updateFaunaPopulations($details,$id);
+            echo json_encode(['result' => 'things you want to show']);
+        }
+        else{
+            echo "<script>alert('Login is required.');</script>";
+            echo "<meta http-equiv=Refresh content=0;url=../../login>";
+        }
     }
 }
