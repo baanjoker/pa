@@ -1825,6 +1825,7 @@ public function ecoplan_img()
             'ip_recognize' => $this->input->post('ip_recognize')==null?0:1,
             'ip_inside_pa' => $this->input->post('ip_inside_pa')==null?0:1,
             'ip_outside_pa' => $this->input->post('ip_outside_pa')==null?0:1,
+            'ip_titled_land' => $this->input->post('ip_titled_land')==null?0:1,
             'ipsiccs' => $this->input->post('select_iccsips'),
             'x_long' => $this->input->post('ddlatoutputdemo'),
             'y_lat' => $this->input->post('ddlongoutputdemo'),
@@ -1869,7 +1870,7 @@ public function insertPAHydrology()
             'hydro_desc' => $this->input->post('hydro'),
             'hydro_map_img' => $this->input->post('picdatainsert'),
             'hydro_shp_file' => $this->input->post('ziphydrodatainsert'),
-            'date_assessed' => ($this->input->post('waterclass',true)==1?$this->input->post('hydroyearassess',true):""),
+            'date_assessed' => ($this->input->post('waterclass',true)==1?$this->input->post('hydroyearassess',true):""),            
             'date_created' => $now,
         ];
                 $query = $this->pamain_model->createPAhydrology($postData,$rel_data1);
@@ -10094,6 +10095,54 @@ public function insertvegetativecover()
         }
     }
 
+    public function hydrowaterqualitymonreport()
+    {
+        if(isset($_FILES["waterquality_file"]["name"]))
+           {
+            $config['upload_path'] = 'bmb_assets2/upload/hydro_water_monitoring_report';
+            $config['allowed_types'] = 'csv|pdf';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if(!$this->upload->do_upload('waterquality_file'))
+            {
+                 echo $this->upload->display_errors();
+            }
+            else
+            {
+                 $data = $this->upload->data();
+                 $this->load->library('image_lib', $config);
+                 $this->image_lib->initialize($config);
+                    $filenames = $data['file_name'];
+                    $output['status'] = $filenames;
+                    echo json_encode($output);
+            }
+        }
+    }
+
+    public function hydrowaterqualitymonreportEdit()
+    {
+        if(isset($_FILES["edit-waterquality_file"]["name"]))
+           {
+            $config['upload_path'] = 'bmb_assets2/upload/hydro_water_monitoring_report';
+            $config['allowed_types'] = 'csv|pdf';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if(!$this->upload->do_upload('edit-waterquality_file'))
+            {
+                 echo $this->upload->display_errors();
+            }
+            else
+            {
+                 $data = $this->upload->data();
+                 $this->load->library('image_lib', $config);
+                 $this->image_lib->initialize($config);
+                    $filenames = $data['file_name'];
+                    $output['status'] = $filenames;
+                    echo json_encode($output);
+            }
+        }
+    }
+
     public function otherinstrument_img()
     {
         if(isset($_FILES["pic_otother"]["name"]))
@@ -10249,36 +10298,97 @@ public function insertvegetativecover()
       }
   }
 
-        // if(isset($_FILES["pic_inlandimg"]["name"]))
-        //    {
-        //     $config['upload_path'] = 'bmb_assets2/upload/iwimg';
-        //     $config['allowed_types'] = 'jpg|jpeg|png|gif';
-        //     $this->load->library('upload', $config);
-        //     $this->upload->initialize($config);
-        //     if(!$this->upload->do_upload('pic_inlandimg'))
-        //     {
-        //          echo $this->upload->display_errors();
-        //     }
-        //     else
-        //     {
-        //          $data = $this->upload->data();
-        //          $config['image_library'] = 'gd2';
-        //          $config['source_image'] = 'bmb_assets2/upload/iwimg/'.$data["file_name"];;
-        //          $config['create_thumb'] = FALSE;
-        //          $config['maintain_ratio'] = FALSE;
-        //          $config['quality'] = '60%';
-        //          $config['width'] = 800;
-        //          $config['height'] = 600;
-        //          $config['new_image'] = 'bmb_assets2/upload/iwimg/'.$data["file_name"];
-        //          $this->load->library('image_lib', $config);
-        //          $this->image_lib->initialize($config);
-        //          $this->image_lib->resize();
-        //             $filenames = $data['file_name'];
-        //             $output['status'] = $filenames;
-        //             echo json_encode($output);
-        //     }
-        // }
-    }
+}
+
+ public function upload_hydro_monitoringsite_pics()
+    {
+        sleep(3);
+        // $output = array();
+
+        if(isset($_FILES["pic_monitoringsiteimg"]["name"]))
+        {
+         $output = '';
+         $config["upload_path"] = 'bmb_assets2/upload/hydro_monitoring_station_map';
+         $config["allowed_types"] = 'gif|jpg|png';
+         $this->load->library('upload', $config);
+         $this->upload->initialize($config);
+         for($count = 0; $count<count($_FILES["pic_monitoringsiteimg"]["name"]); $count++)
+         {
+          $_FILES["file"]["name"] = $_FILES["pic_monitoringsiteimg"]["name"][$count];
+          $_FILES["file"]["type"] = $_FILES["pic_monitoringsiteimg"]["type"][$count];
+          $_FILES["file"]["tmp_name"] = $_FILES["pic_monitoringsiteimg"]["tmp_name"][$count];
+          $_FILES["file"]["error"] = $_FILES["pic_monitoringsiteimg"]["error"][$count];
+          $_FILES["file"]["size"] = $_FILES["pic_monitoringsiteimg"]["size"][$count];
+
+          if($this->upload->do_upload('file'))
+          {
+           $uploadData = $this->upload->data();
+            $config['image_library'] = 'gd2';
+            $config['source_image'] = 'bmb_assets2/upload/hydro_monitoring_station_map/'.$uploadData["file_name"];;
+            $config['create_thumb'] = FALSE;
+            $config['maintain_ratio'] = FALSE;
+            $config['quality'] = '60%';
+            $config['width'] = 1600;
+            $config['height'] = 1200;
+            $config['new_image'] = 'bmb_assets2/upload/hydro_monitoring_station_map/'.$uploadData["file_name"];
+            $this->load->library('image_lib', $config);
+            $this->image_lib->initialize($config);
+            $this->image_lib->resize();
+           $filenames = $uploadData['file_name'];
+
+           $data = $this->upload->data();
+           $output .= $data['file_name'];
+           echo json_encode($output);
+
+          }
+      }
+  }
+}
+
+public function upload_hydro_monitoringsite_picsEdit()
+    {
+        sleep(3);
+        // $output = array();
+
+        if(isset($_FILES["edit-pic_monitoringsiteimg"]["name"]))
+        {
+         $output = '';
+         $config["upload_path"] = 'bmb_assets2/upload/hydro_monitoring_station_map';
+         $config["allowed_types"] = 'gif|jpg|png';
+         $this->load->library('upload', $config);
+         $this->upload->initialize($config);
+         for($count = 0; $count<count($_FILES["edit-pic_monitoringsiteimg"]["name"]); $count++)
+         {
+          $_FILES["file"]["name"] = $_FILES["edit-pic_monitoringsiteimg"]["name"][$count];
+          $_FILES["file"]["type"] = $_FILES["edit-pic_monitoringsiteimg"]["type"][$count];
+          $_FILES["file"]["tmp_name"] = $_FILES["edit-pic_monitoringsiteimg"]["tmp_name"][$count];
+          $_FILES["file"]["error"] = $_FILES["edit-pic_monitoringsiteimg"]["error"][$count];
+          $_FILES["file"]["size"] = $_FILES["edit-pic_monitoringsiteimg"]["size"][$count];
+
+          if($this->upload->do_upload('file'))
+          {
+           $uploadData = $this->upload->data();
+            $config['image_library'] = 'gd2';
+            $config['source_image'] = 'bmb_assets2/upload/hydro_monitoring_station_map/'.$uploadData["file_name"];;
+            $config['create_thumb'] = FALSE;
+            $config['maintain_ratio'] = FALSE;
+            $config['quality'] = '60%';
+            $config['width'] = 1600;
+            $config['height'] = 1200;
+            $config['new_image'] = 'bmb_assets2/upload/hydro_monitoring_station_map/'.$uploadData["file_name"];
+            $this->load->library('image_lib', $config);
+            $this->image_lib->initialize($config);
+            $this->image_lib->resize();
+           $filenames = $uploadData['file_name'];
+
+           $data = $this->upload->data();
+           $output .= $data['file_name'];
+           echo json_encode($output);
+
+          }
+      }
+  }
+}
 
     public function inland_img()
     {
@@ -18006,7 +18116,7 @@ public function insertvegetativecover()
             $data3 = $this->pamain_model->getAllImageHydrologyWaterParam_break($code2);
             $details_s ="";
             foreach($data2 as $row2):
-                $details_s = $row2->hydrodet."<br>";
+                // $details_s = $row2->hydrodet."<br>";
             endforeach;
             ?>
              <tr id="<?php echo $row->id_hydrology; ?>" class="trow">
@@ -18034,24 +18144,38 @@ public function insertvegetativecover()
                     <?php $pctr=0;foreach($data3 as $cc):$pctr+=1;
                     ?>
                     <div id="divdevelopmentedit<?php echo $cc->id_hydrology_para?>" class="showdata">
-                    <button type="button" class="btn btn-danger removeEditHydroParameters" id="<?php echo $cc->id_hydrology_para ?>" data-id="<?php echo $cc->id_hydrology_para ?>" style="position: absolute;right: 25px">Remove</button>
+                    <button type="button" class="btn btn-danger removeEditHydroParameters" id="<?php echo $cc->id_hydrology_para ?>" data-id="<?php echo $cc->id_hydrology_para ?>" style="position: absolute;right: 25px">X</button>
                     <fieldset>
                         <div class="col-xs-12">
+                            <?php echo '<img src="../../../bmb_assets2/upload/hydro_monitoring_station_map/'.(!empty($cc->monitoring_map)?$cc->monitoring_map:"nophoto.jpg").'" style="max-height: 300px; max-width: 300px; width: 300px; height: 300px"></img>'; ?>
+                        </div>
+                        <div class="col-xs-12">
+                            <i class="cap-icon ci-paperclip"></i><a target='_blank' href="<?php echo base_url('bmb_assets2/upload/hydro_monitoring_station_shp/').$cc->monitoring_shpfile ?>"><?php echo $cc->monitoring_shpfile ?></a>
+                        </div>
+                        <div class="col-xs-12">
                             <div class="col-xs-4 col-lg-4">Sub Water Classification : </div>
-                            <div class="col-xs-4 col-lg-4"><?php echo $cc->waterClass; ?></div>
+                            <div class="col-xs-8 col-lg-8"><?php echo $cc->waterClass; ?></div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="col-xs-4 col-lg-4">Date water monitoring assessment : </div>
+                            <div class="col-xs-8 col-lg-8"><?php echo (!empty($cc->hydro_dateM_assessed)?$cc->hydro_dateM_assessed." ":"").(!empty($cc->hydro_dateD_assessed)?$cc->hydro_dateD_assessed.", ":"").(!empty($cc->hydro_date_assessed)?$cc->hydro_date_assessed:""); ?></div>
                         </div>
                         <div class="col-xs-12">
                             <div class="col-xs-4 col-lg-4">Parameter : </div>
-                            <div class="col-xs-4 col-lg-4"><?php echo $cc->hydro_parameter; ?></div>
+                            <div class="col-xs-8 col-lg-8"><?php echo $cc->hydro_parameter; ?></div>
                         </div>
                         <div class="col-xs-12">
                             <div class="col-xs-4 col-lg-4">Status : </div>
-                            <div class="col-xs-4 col-lg-4"><?php echo $cc->status_waterquality; ?></div>
+                            <div class="col-xs-8 col-lg-8"><?php echo $cc->status_waterquality; ?></div>
                         </div>
                         <div class="col-xs-12">
-                            <div class="col-xs-4 col-lg-4">Year assessed : </div>
-                            <div class="col-xs-4 col-lg-4"><?php echo $cc->hydro_date_assessed; ?></div>
+                            <div class="col-xs-4 col-lg-4">Monitoring Report : </div>
+                            <div class="col-xs-8 col-lg-8"><i class="cap-icon ci-paperclip"></i><a target='_blank' href="<?php echo base_url('bmb_assets2/upload/hydro_water_monitoring_report/').$cc->monitoring_file ?>"><?php echo $cc->monitoring_file ?></a></div>
                         </div>
+                        <div class="col-xs-12">
+                            <div class="col-xs-4 col-lg-4">Remarks : </div>
+                            <div class="col-xs-8 col-lg-8"><?php echo $cc->monitoring_remarks; ?></div>
+                        </div>                        
                     </fieldset>
                     </div>
                     <?php endforeach;?>
@@ -18062,14 +18186,32 @@ public function insertvegetativecover()
                 <td style="text-align: left">
                     <?php echo '<br><img src="../../../bmb_assets2/upload/hydro_map_img/'.(!empty($row->hydro_map_img)?$row->hydro_map_img:"nophoto.jpg").'" style="max-height: 300px; max-width: 300px; width: 300px; height: 300px"></img><br><b>Shapefile : </b>'.'<a href="'.base_url().'bmb_assets2/upload/hydro_shp_file/'.$row->hydro_shp_file.'">'.$row->hydro_shp_file.'</a><br>'.'<b>Water Classification :</b>'.$row->id_waterClassDesc."<br>" ?>
                     <?php
+                        echo "<fieldset>".
+                                        "<legend>Water Quality</legend>";
                         if($row->hydro_class == 1)
                         {
                             echo '<br><b>Sub Water Classification : </b>'.$row->waterClass.'<br><b>River-inflow : </b>'.$row->riverinflow.'</br><b>River-outflow : </b>'.$row->riveroutflow.'<br><b>Description : </b>'.$row->hydro_desc.'<br>';
                         }else if($row->hydro_class == 2)
                         {
-                                echo $details_s;
+                                // echo $details_s;
+                            foreach($data2 as $row2):
+                                echo 
+                                    
+                                        '<img src="../../../bmb_assets2/upload/hydro_monitoring_station_map/'.(!empty($row2->monitoring_map)?$row2->monitoring_map:"nophoto.jpg").'" style="max-height: 10%; max-width: 10%; width: 10%; height: 10%"></img><br>'.
+                                        "<b>Shapefile : </b>"."<i class='cap-icon ci-paperclip'></i><a target='_blank' href=".base_url('bmb_assets2/upload/hydro_monitoring_station_shp/').$cc->monitoring_shpfile.">".$cc->monitoring_shpfile."</a><br>".
+                                        "<b>Sub water classification : </b>".$row2->waterClass."<br>".
+                                        "<b>Parameters of water quality : </b>".$row2->hydro_parameter."<br>".
+                                        "<b>Status : </b>".$row2->status_waterquality."<br>".
+                                        "<fieldset>".
+                                        "<legend>Monitoring Report</legend>".
+                                            "<b>Date of water monitoring assessment : </b>".(!empty($cc->hydro_dateM_assessed)?$cc->hydro_dateM_assessed." ":"").(!empty($cc->hydro_dateD_assessed)?$cc->hydro_dateD_assessed.", ":"").(!empty($cc->hydro_date_assessed)?$cc->hydro_date_assessed:"")."<br>".
+                                            "<b>Monitoring Report file : </b><i class='cap-icon ci-paperclip'></i><a target='_blank' href=".base_url('bmb_assets2/upload/hydro_water_monitoring_report/').$cc->monitoring_file.">".$cc->monitoring_file."</a>"."</fieldset><hr>";
+                            endforeach;
+
                         }
+                        echo   "</fieldset>";
                     ?>
+                    <?php echo "<b>Year Assessed : </b>".$row->date_assessed."<br>" ?>
                     <button type="button" value="<?php echo $row->id_hydrology;?>" class="btn btnbtn btn-info btn-xs" onclick="edithydro(this);">
                     Edit </button>
                     <button type="button" class="btn btnbtn btn-danger btn-xs removeimageHydro" data-id="<?php echo $row->id_hydrology ?>" title="Remove">Remove</button>
@@ -18129,8 +18271,14 @@ public function insertvegetativecover()
             'hydro_parawclass_id'    => $this->input->post('edit-waterclass',true),
             'hydro_parasubwclass_id'    => $this->input->post('edit-waterclasssubid',true),
             'hydro_parameter'    => $this->input->post('edit-parameterwater',true),
-            'hydro_date_assessed'    => $this->input->post('edit-hydroyearassess',true),
-            'hydro_para_status'      => $this->input->post('edit-waterqualitystatus')];
+            'hydro_date_assessed'    => $this->input->post('edit-hydro_monitoring_Y',true),
+            'hydro_para_status'      => $this->input->post('edit-waterqualitystatus'),
+            'monitoring_file'      => $this->input->post('edit-waterquality_span'),
+            'monitoring_remarks'      => $this->input->post('edit-hydro_monitoring_remarks'),
+            'hydro_dateM_assessed'      => $this->input->post('edit-hydro_monitoring_M'),
+            'hydro_dateD_assessed'      => $this->input->post('edit-hydro_monitoring_D'),
+            'monitoring_shpfile'      => $this->input->post('edit-shp_monitoring_site_text'),
+            'monitoring_map'      => $this->input->post('edit-old_picturemonitoringsite')];
 
         $query = $this->pamain_model->inserthydroprameterss($postDataImage);
 
@@ -18150,21 +18298,35 @@ public function insertvegetativecover()
             <button type="button" class="btn btn-danger removeEditHydroParameters" id="<?php echo $cc->id_hydrology_para ?>" data-id="<?php echo $cc->id_hydrology_para ?>" style="position: absolute;right: 25px">Remove</button>
             <fieldset>
                 <div class="col-xs-12">
+                    <?php echo '<img src="../../../bmb_assets2/upload/hydro_monitoring_station_map/'.(!empty($cc->monitoring_map)?$cc->monitoring_map:"nophoto.jpg").'" style="max-height: 300px; max-width: 300px; width: 300px; height: 300px"></img>'; ?>
+                </div>
+                <div class="col-xs-12">
+                    <i class="cap-icon ci-paperclip"></i><a target='_blank' href="<?php echo base_url('bmb_assets2/upload/hydro_monitoring_station_shp/').$cc->monitoring_shpfile ?>"><?php echo $cc->monitoring_shpfile ?></a>
+                </div>
+                <div class="col-xs-12">
                     <div class="col-xs-4 col-lg-4">Sub Water Classification : </div>
-                    <div class="col-xs-4 col-lg-4"><?php echo $cc->waterClass; ?></div>
+                    <div class="col-xs-8 col-lg-8"><?php echo $cc->waterClass; ?></div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="col-xs-4 col-lg-4">Date water monitoring assessment : </div>
+                    <div class="col-xs-8 col-lg-8"><?php echo (!empty($cc->hydro_dateM_assessed)?$cc->hydro_dateM_assessed." ":"").(!empty($cc->hydro_dateD_assessed)?$cc->hydro_dateD_assessed.", ":"").(!empty($cc->hydro_date_assessed)?$cc->hydro_date_assessed:""); ?></div>
                 </div>
                 <div class="col-xs-12">
                     <div class="col-xs-4 col-lg-4">Parameter : </div>
-                    <div class="col-xs-4 col-lg-4"><?php echo $cc->hydro_parameter; ?></div>
+                    <div class="col-xs-8 col-lg-8"><?php echo $cc->hydro_parameter; ?></div>
                 </div>
                 <div class="col-xs-12">
                     <div class="col-xs-4 col-lg-4">Status : </div>
-                    <div class="col-xs-4 col-lg-4"><?php echo $cc->status_waterquality; ?></div>
+                    <div class="col-xs-8 col-lg-8"><?php echo $cc->status_waterquality; ?></div>
                 </div>
                 <div class="col-xs-12">
-                    <div class="col-xs-4 col-lg-4">Year assessed : </div>
-                    <div class="col-xs-4 col-lg-4"><?php echo $cc->hydro_date_assessed; ?></div>
+                    <div class="col-xs-4 col-lg-4">Monitoring Report : </div>
+                    <div class="col-xs-8 col-lg-8"><i class="cap-icon ci-paperclip"></i><a target='_blank' href="<?php echo base_url('bmb_assets2/upload/hydro_water_monitoring_report/').$cc->monitoring_file ?>"><?php echo $cc->monitoring_file ?></a></div>
                 </div>
+                <div class="col-xs-12">
+                    <div class="col-xs-4 col-lg-4">Remarks : </div>
+                    <div class="col-xs-8 col-lg-8"><?php echo $cc->monitoring_remarks; ?></div>
+                </div>                        
             </fieldset>
             </div>
         <?php endforeach;
@@ -21920,6 +22082,56 @@ public function insertvegetativecover()
         }
     }
 
+    public function hydromonitoringShpFile()
+    {
+        if(isset($_FILES["shp_monitoringsite"]["name"]))
+           {
+            $config['upload_path'] = 'bmb_assets2/upload/hydro_monitoring_station_shp';
+            $config['allowed_types'] = 'rar|zip';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if(!$this->upload->do_upload('shp_monitoringsite'))
+            {
+                echo $this->upload->display_errors();
+            }
+            else
+            {
+                $data = $this->upload->data();
+                $this->load->library('image_lib', $config);
+                $this->image_lib->initialize($config);
+                // $this->image_lib->resize();
+                    $filenames = $data['file_name'];
+                    $output['status'] = $filenames;
+                    echo json_encode($output);
+            }
+        }
+    }
+
+    public function hydromonitoringShpFileEdit()
+    {
+        if(isset($_FILES["edit-shp_monitoringsite"]["name"]))
+           {
+            $config['upload_path'] = 'bmb_assets2/upload/hydro_monitoring_station_shp';
+            $config['allowed_types'] = 'rar|zip';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if(!$this->upload->do_upload('edit-shp_monitoringsite'))
+            {
+                echo $this->upload->display_errors();
+            }
+            else
+            {
+                $data = $this->upload->data();
+                $this->load->library('image_lib', $config);
+                $this->image_lib->initialize($config);
+                // $this->image_lib->resize();
+                    $filenames = $data['file_name'];
+                    $output['status'] = $filenames;
+                    echo json_encode($output);
+            }
+        }
+    }
+
     public function marineinfluriversShpFile()
     {
         if(isset($_FILES["shp_influerivers"]["name"]))
@@ -25158,6 +25370,7 @@ public function insertvegetativecover()
                          'ip_recognize' => $this->input->post('edit-ip_recognize')==null ? 0 : 1,
                          'ip_inside_pa' => $this->input->post('edit-ip_inside_pa')==null ? 0 : 1,
                          'ip_outside_pa' => $this->input->post('edit-ip_outside_pa')==null ? 0 : 1,
+                         'ip_titled_land' => $this->input->post('edit-ip_titled_land')==null?0:1,
                          'ipsiccs' => $this->input->post("edit-select_iccsips"),
                          'seams_sex_head' => $this->input->post("edit_seams_sex"),
                          'seams_male' => str_replace(',','',$this->input->post("edit_seams_male")),
@@ -25249,6 +25462,7 @@ public function insertvegetativecover()
                     <input type="hidden" id="seams_chk1<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_recognize ?>" />
                     <input type="hidden" id="seams_chk2<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_inside_pa ?>" />
                     <input type="hidden" id="seams_chk3<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_outside_pa ?>" />
+                    <input type="hidden" id="seams_chk4<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_titled_land ?>" />
                 </td>
             </tr>
 

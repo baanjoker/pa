@@ -4045,7 +4045,14 @@ class Pamain_Model extends CI_Model
               "hydro_parasubwclass_id" => $rel_data1[$x11]['hydro_parasubwclass_id'],
               "hydro_parameter" => $rel_data1[$x11]['hydro_parameter'],
               "hydro_para_status" => $rel_data1[$x11]['hydro_para_status'],
-              "hydro_date_assessed" => $rel_data1[$x11]['hydro_date_assessed']);
+              "hydro_date_assessed" => $rel_data1[$x11]['hydro_date_assessed'],
+              "monitoring_file" => $rel_data1[$x11]['monitoring_file'],
+              "monitoring_remarks" => $rel_data1[$x11]['monitoring_remarks'],
+              "hydro_dateM_assessed" => $rel_data1[$x11]['hydro_dateM_assessed'],
+              "hydro_dateD_assessed" => $rel_data1[$x11]['hydro_dateD_assessed'],
+              "monitoring_shpfile" => $rel_data1[$x11]['monitoring_shpfile'],
+              "monitoring_map" => $rel_data1[$x11]['monitoring_map'],
+              );
             }
         }
         try{
@@ -9347,7 +9354,7 @@ public function pabstatus()
     }
 
     public function getAllImageHydrologyWaterParam($code2){
-        $this->db->select('group_concat("Sub Water Classification : ",waterClass,"<br>Parameter : ",hydro_parameter,"<br>Status : ",status_waterquality,"<br>Year assessed : ",hydro_date_assessed separator "<br><br> ") as hydrodet,id_hydrology_para');        
+        // $this->db->select('group_concat("Sub Water Classification : ",waterClass,"<br>Parameter : ",hydro_parameter,"<br>Status : ",status_waterquality,"<br>Year assessed : ",hydro_date_assessed separator "<br><br> ") as hydrodet,id_hydrology_para');        
         $this->db->join('tblhydrology_waterclass','tblpahydrology_para_details.hydro_parawclass_id = tblhydrology_waterclass.id_waterClass','left')
                  ->join('tblhydrology_waterclass_sub','tblpahydrology_para_details.hydro_parasubwclass_id = tblhydrology_waterclass_sub.id_waterClassSub','left')
                  ->join('tblhydrology_waterstatus','tblpahydrology_para_details.hydro_para_status = tblhydrology_waterstatus.id_waterquality_status','left')

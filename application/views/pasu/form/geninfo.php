@@ -263,7 +263,7 @@
                             <fieldset>
                             <div class="col-xs-12 col-lg-12">
                                 <label>Upload copy of Republic Act<i>(*.pdf,*.csv, maximum size of 50MB)</i></label>
-                                <input type='file' name="legis_congressenact" id="legis_congressenact" onchange="readURLlegiscongressenact(this);"/>
+                                <input type='file' name="legis_congressenact" id="legis_congressenact" onchange="readURLhydrowatermonitoringrepos(this);"/>
                                 <input id="legis_congressenact_span" name="legis_congressenact_span" type="hidden" />
                                 <div id="loadinglegis_congressenact"></div>
                             </div>
@@ -493,7 +493,8 @@
                 </div>
                 <div class="col-xs-12 col-lg-12">
                     <fieldset>
-                        <label>Upload shapefile of influencing rivers <i>(*.zip  format, maximum size of 200MB)</i></label>
+                        <em style="font-weight: 700">Upload shapefile of influencing rivers <i>(*.zip  format, maximum size of 200MB)</i></em>
+                        <label></label>
                         <input type='file' name="shp_influerivers" id="shp_influerivers" onchange="readURLshapemarineinflurivers(this);" />
                         <input type="hidden" name="shp_influerivers_txt" id="shp_influerivers_txt">
                         <div id="fetch_shp_influerivers_shpfile"></div>

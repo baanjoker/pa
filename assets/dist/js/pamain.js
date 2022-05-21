@@ -9423,7 +9423,21 @@ $(function(){
     var strstatus = status.options[status.selectedIndex].text;
     var idStatus      = $("#waterqualitystatus").val();
 
-    var yearassess      = $("#hydroyearassess").val();
+    var monthassess      = $("#hydro_monitoring_M").val();
+    var dayassess      = $("#hydro_monitoring_D").val();
+    var yearassess      = $("#hydro_monitoring_Y").val();
+
+    var monitoring      = $("#waterquality_span").val();
+    var shapefile      = $("#shp_monitoring_site_text").val();
+    var mapimage      = $("#old_picturemonitoringsite").val();
+
+    var pics = "";
+    if(mapimage==""){
+      pics = "nophoto.jpg";
+    }else{
+      pics = mapimage;
+    }
+    var remarks      = $("#hydro_monitoring_remarks").val();
 
     if ($("#waterclasssubid")[0].selectedIndex <= 0) {
       swal("Select water classification",'','warning');
@@ -9444,17 +9458,41 @@ $(function(){
             "<td class='hide'>"+para+"</td>"+
             "<td class='hide'>"+idStatus+"</td>"+
             "<td class='hide'>"+yearassess+"</td>"+
-            "<td> Water classification : "+strwclass+"("+strwclass_sub+")<br>"+
-                 "Water quality parameter : "+para+"<br>"+
-                 "Status : "+strstatus+"<br>"+
+            "<td class='hide'>"+monitoring+"</td>"+
+            "<td class='hide'>"+remarks+"</td>"+
+            "<td class='hide'>"+monthassess+"</td>"+
+            "<td class='hide'>"+dayassess+"</td>"+
+            "<td class='hide'>"+shapefile+"</td>"+
+            "<td class='hide'>"+mapimage+"</td>"+
+            "<td>"+
+                 // "<img src="+BASE_URL+'bmb_assets2/upload/watershed/nophoto.jpg"+" style='width:100px;height:100px'></img>"+
+                 "<img style='width:100px;height:100px' src="+BASE_URL+"bmb_assets2/upload/hydro_monitoring_station_map/"+pics+"></img><br>"+
+                 "<b>Shapefile : </b>"+'<a href="'+BASE_URL+'bmb_assets2/upload/hydro_monitoring_station_shp/'+shapefile+'">'+shapefile+'</a>'+"<br>"+
+                 "<b>Water classification : </b>"+strwclass+"("+strwclass_sub+")<br>"+
+                 "<b>Water quality parameter : </b>"+para+"<br>"+
+                 "<b>Status : </b>"+strstatus+"<br>"+
+                 "<b>Monitoring Report file : </b>"+'<a href="'+BASE_URL+'bmb_assets2/upload/hydro_water_monitoring_report/'+monitoring+'">'+monitoring+'</a>'+"<br>"+
                  "<button type='button' name='remove' data-row='row style='float:right' class='btn btn-danger btn-xs remove' onclick='deleteRowThreat(this)'><i class='glyphicon glyphicon-remove'></i></button></td>"+
           "</tr>"
     );
     }
     document.getElementById("parameterwater").value='';
+    document.getElementById("old_picturemonitoringsite").value='';
+    document.getElementById("waterquality_span").value='';
+    document.getElementById("shp_monitoring_site_text").value='';
+    document.getElementById("pic_monitoringsiteimg").value='';
+    document.getElementById("waterquality_file").value='';
+    document.getElementById("shp_monitoringsite").value='';
+    document.getElementById("fetch_monitoringsite_pics").innerHTML='';
+    document.getElementById("load_waterqualityfile").innerHTML='';
+    document.getElementById("fetch_monitoring_site_shpfile").innerHTML='';
     $("#waterqualitystatus")[0].selectedIndex = 0;
     $("#hydroyearassess")[0].selectedIndex = 0;
     $("#waterclasssubid")[0].selectedIndex = 0;
+    $("#hydro_monitoring_M")[0].selectedIndex = 0;
+    $("#hydro_monitoring_D")[0].selectedIndex = 0;
+    $("#hydro_monitoring_Y")[0].selectedIndex = 0;
+    $("#hydro_monitoring_remarks")[0].selectedIndex = 0;
   });
 
 $(function(){
@@ -9469,6 +9507,12 @@ $(function(){
         "hydro_parameter" : $(tr).find("td:eq(4)").text(),
         "hydro_para_status" : $(tr).find("td:eq(5)").text(),
         "hydro_date_assessed" : $(tr).find("td:eq(6)").text(),
+        "monitoring_file" : $(tr).find("td:eq(7)").text(),
+        "monitoring_remarks" : $(tr).find("td:eq(8)").text(),
+        "hydro_dateM_assessed" : $(tr).find("td:eq(9)").text(),
+        "hydro_dateD_assessed" : $(tr).find("td:eq(10)").text(),
+        "monitoring_shpfile" : $(tr).find("td:eq(11)").text(),
+        "monitoring_map" : $(tr).find("td:eq(12)").text(),
       }
       tablehydr.push(push);
     });
@@ -15813,6 +15857,14 @@ $(function(){
                   $("#seams_sex")[0].selectedIndex = 0;
                   $("#seams_date_months")[0].selectedIndex = 0;
                   $("#seams_date_years")[0].selectedIndex = 0;
+
+                  document.getElementById("tenure_migrantyns").checked=false;
+                  document.getElementById("ip_recognize").checked=false;
+                  document.getElementById("ip_inside_pa").checked=false;
+                  document.getElementById("ip_outside_pa").checked=false;
+                  document.getElementById("ip_titled_land").checked=false;
+                  document.getElementById("whf").checked=false;
+
                   fetchdemo();
                   }else if(response.error){
                       swal('',response.statusError,"error");
@@ -25520,12 +25572,12 @@ $('#img_hydro').change(function(){
     beforeSend:function()
     {
      // $('#loadingspinhydro').html("<label class='text-success'>Uploading...</label>");
-     $('#loadingspinhydro').html("<div id='loaderss' class='loader'></div>");
+     $('#fetch_images_hydro').html("<div id='loaderss' class='loader'></div>");
     },
     success:function(data)
     {
      // $('#messagemain').html(data.status);
-     $('#loadingspinhydro').innerHTML(data);
+     $('#fetch_images_hydro').innerHTML(data);
      $('#img_hydro').val('');
      getTabImageHydrology();
     }
@@ -42859,6 +42911,7 @@ function editdemos(elem){
   var chk1 = $('#seams_chk1'+ct).val();
   var chk2 = $('#seams_chk2'+ct).val();
   var chk3 = $('#seams_chk3'+ct).val();
+  var chk4 = $('#seams_chk4'+ct).val();
   var tm = $('#seams_tm'+ct).val();
   var ip = $('#seams_ip'+ct).val();
   var shp = $('#seams_shp'+ct).val()
@@ -42917,6 +42970,12 @@ function editdemos(elem){
               document.getElementById("edit-ip_outside_pa").value = '1';
             }else{
               document.getElementById("edit-ip_outside_pa").checked = false;
+            }
+            if (chk4==1) {
+              document.getElementById("edit-ip_titled_land").checked = true;
+              document.getElementById("edit-ip_titled_land").value = '1';
+            }else{
+              document.getElementById("edit-ip_titled_land").checked = false;
             }
       };
     }
@@ -71743,4 +71802,319 @@ $("#addestimatepopulation2").click(function(){
             "</td>"+
           "</tr>"
     );
+});
+
+function readURLhydrowatermonitoringrepos(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      var formdata = new FormData();
+      formdata.append('waterquality_file', document.getElementById('waterquality_file').files[0]);
+      }
+      var other_data = $('#regFormMain').serializeArray();
+        $.each(other_data,function(key,input){
+          formdata.append(input.name,input.value);
       });
+      var file_details    =   document.getElementById("waterquality_file").files[0];
+      var extension       =   file_details['name'].split(/\.(?=[^\.]+$)/);
+      var allowed_extension   =   ["csv","pdf"];
+      var check_for_valid_ext =   allowed_extension.indexOf(extension[1]);
+      if(file_details['size'] > 1677721600)
+      {
+        swal('Please upload a file less than 200 MB','','warning');
+        document.getElementById('waterquality_file').value="";
+        return false;
+      }
+      else if(check_for_valid_ext == -1)
+      {
+        swal('upload valid image file(*.csv, *.pdf)','','warning');
+        document.getElementById('waterquality_file').value="";
+        return false;
+      }
+      else
+      {
+        $.ajax({
+            url : BASE_URL + 'pasu/pamain/hydrowaterqualitymonreport',
+            method: 'POST',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: formdata,
+            dataType: "JSON",
+            beforeSend:function()
+            {
+             $('#load_waterqualityfile').html("<div id='loaderss' class='loader'></div>");
+            },
+            success:function(response){
+                document.getElementById('waterquality_span').value =  response.status;
+                $('#load_waterqualityfile').html('<div class="col-md-12"><a href="'+BASE_URL+'bmb_assets2/upload/hydro_water_monitoring_report/'+response.status+'">'+response.status+'</a></div>');
+                }
+           });
+      }
+  }
+
+  function readURLhydrowatermonitoringreposEdit(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      var formdata = new FormData();
+      formdata.append('edit-waterquality_file', document.getElementById('edit-waterquality_file').files[0]);
+      }
+      var other_data = $('#regFormMain').serializeArray();
+        $.each(other_data,function(key,input){
+          formdata.append(input.name,input.value);
+      });
+      var file_details    =   document.getElementById("edit-waterquality_file").files[0];
+      var extension       =   file_details['name'].split(/\.(?=[^\.]+$)/);
+      var allowed_extension   =   ["csv","pdf"];
+      var check_for_valid_ext =   allowed_extension.indexOf(extension[1]);
+      if(file_details['size'] > 1677721600)
+      {
+        swal('Please upload a file less than 200 MB','','warning');
+        document.getElementById('edit-waterquality_file').value="";
+        return false;
+      }
+      else if(check_for_valid_ext == -1)
+      {
+        swal('upload valid image file(*.csv, *.pdf)','','warning');
+        document.getElementById('edit-waterquality_file').value="";
+        return false;
+      }
+      else
+      {
+        $.ajax({
+            url : BASE_URL + 'pasu/pamain/hydrowaterqualitymonreportEdit',
+            method: 'POST',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: formdata,
+            dataType: "JSON",
+            beforeSend:function()
+            {
+             $('#edit-load_waterqualityfile').html("<div id='loaderss' class='loader'></div>");
+            },
+            success:function(response){
+                document.getElementById('edit-waterquality_span').value =  response.status;
+                $('#edit-load_waterqualityfile').html('<div class="col-md-12"><a href="'+BASE_URL+'bmb_assets2/upload/hydro_water_monitoring_report/'+response.status+'">'+response.status+'</a></div>');
+                }
+           });
+      }
+  }
+
+  $('#pic_monitoringsiteimg').change(function(){
+  var files = $('#pic_monitoringsiteimg')[0].files;
+  var error = '';
+  var form_data = new FormData();
+
+    var other_data = $('#regFormMain').serializeArray();
+    $.each(other_data,function(key,input){
+        form_data.append(input.name,input.value);
+    });
+
+  for(var count = 0; count<files.length; count++)
+  {
+   var name = files[count].name;
+   var extension = name.split('.').pop().toLowerCase();
+   if(jQuery.inArray(extension, ['png','jpg','jpeg']) == -1)
+   {
+    error += "Invalid " + count + " Image File"
+   }
+   else
+   {
+    form_data.append("pic_monitoringsiteimg[]", files[count]);
+   }
+  }
+  var file_details    =   document.getElementById("pic_monitoringsiteimg").files[0];
+  var extension       =   file_details['name'].split(/\.(?=[^\.]+$)/);
+  var allowed_extension   =   ["png", "jpg", "jpeg"];
+  var check_for_valid_ext =   allowed_extension.indexOf(extension[1]);
+  if(file_details['size'] > 200097152)
+  {
+    swal('Please upload a file less than 200 MB','','warning');
+    document.getElementById('pic_monitoringsiteimg').value="";
+    return false;
+  }
+  else if(check_for_valid_ext == -1)
+  {
+    swal('upload valid image file(*.png, *.jpg, *.jpeg)','','warning');
+    document.getElementById('pic_monitoringsiteimg').value="";
+    return false;
+  }
+  else
+  {
+
+   $.ajax({
+    url:BASE_URL+'pasu/pamain/upload_hydro_monitoringsite_pics', //base_url() return http://localhost/tutorial/codeigniter/
+    method:"POST",
+    data:form_data,
+    contentType:false,
+    cache:false,
+    processData:false,
+    beforeSend:function()
+    {
+     $('#fetch_monitoringsite_pics').html("<div id='loaderinlandpics1111' class='loader'></div>");
+    },
+    success:function(response)
+    {
+    swal('Successfully Uploaded','','success');
+    document.getElementById('loaderinlandpics1111').style.display= "none";
+    $('#fetch_monitoringsite_pics').html('<div class="col-md-12"><img style="width:500px;height:400px" src='+BASE_URL+'bmb_assets2/upload/hydro_monitoring_station_map/'+response.replace(/['"]+/g, '')+' class="img-responsive img-thumbnail img-gallery"></div>')
+    document.getElementById('old_picturemonitoringsite').value =  response.replace(/"/g, '');
+
+    }
+   })
+  }
+ });
+
+  $('#edit-pic_monitoringsiteimg').change(function(){
+  var files = $('#edit-pic_monitoringsiteimg')[0].files;
+  var error = '';
+  var form_data = new FormData();
+
+    var other_data = $('#HydroForm').serializeArray();
+    $.each(other_data,function(key,input){
+        form_data.append(input.name,input.value);
+    });
+
+  for(var count = 0; count<files.length; count++)
+  {
+   var name = files[count].name;
+   var extension = name.split('.').pop().toLowerCase();
+   if(jQuery.inArray(extension, ['png','jpg','jpeg']) == -1)
+   {
+    error += "Invalid " + count + " Image File"
+   }
+   else
+   {
+    form_data.append("edit-pic_monitoringsiteimg[]", files[count]);
+   }
+  }
+  var file_details    =   document.getElementById("edit-pic_monitoringsiteimg").files[0];
+  var extension       =   file_details['name'].split(/\.(?=[^\.]+$)/);
+  var allowed_extension   =   ["png", "jpg", "jpeg"];
+  var check_for_valid_ext =   allowed_extension.indexOf(extension[1]);
+  if(file_details['size'] > 200097152)
+  {
+    swal('Please upload a file less than 200 MB','','warning');
+    document.getElementById('edit-pic_monitoringsiteimg').value="";
+    return false;
+  }
+  else if(check_for_valid_ext == -1)
+  {
+    swal('upload valid image file(*.png, *.jpg, *.jpeg)','','warning');
+    document.getElementById('edit-pic_monitoringsiteimg').value="";
+    return false;
+  }
+  else
+  {
+
+   $.ajax({
+    url:BASE_URL+'pasu/pamain/upload_hydro_monitoringsite_picsEdit', //base_url() return http://localhost/tutorial/codeigniter/
+    method:"POST",
+    data:form_data,
+    contentType:false,
+    cache:false,
+    processData:false,
+    beforeSend:function()
+    {
+     $('#edit-fetch_monitoringsite_pics').html("<div id='edit-loaderinlandpics1111' class='loader'></div>");
+    },
+    success:function(response)
+    {
+    swal('Successfully Uploaded','','success');
+    document.getElementById('edit-loaderinlandpics1111').style.display= "none";
+    $('#edit-fetch_monitoringsite_pics').html('<div class="col-md-12"><img style="width:500px;height:400px" src='+BASE_URL+'bmb_assets2/upload/hydro_monitoring_station_map/'+response.replace(/['"]+/g, '')+' class="img-responsive img-thumbnail img-gallery"></div>')
+    document.getElementById('edit-old_picturemonitoringsite').value =  response.replace(/"/g, '');
+
+    }
+   })
+  }
+ });
+
+
+  function readURLshapehydromonitoring(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      var formdata = new FormData();
+      formdata.append('shp_monitoringsite', document.getElementById('shp_monitoringsite').files[0]);
+      }
+      var file_details    =   document.getElementById("shp_monitoringsite").files[0];
+      var extension       =   file_details['name'].split(/\.(?=[^\.]+$)/);
+      var allowed_extension   =   ["zip","rar"];
+      var check_for_valid_ext =   allowed_extension.indexOf(extension[1]);
+      if(file_details['size'] > 1677721600)
+      {
+        swal('Please upload a file less than 200 MB','','warning');
+        document.getElementById('shp_monitoringsite').value="";
+        return false;
+      }
+      else if(check_for_valid_ext == -1)
+      {
+        swal('upload valid image file(*.zip, *.rar)','','warning');
+        document.getElementById('shp_monitoringsite').value="";
+        return false;
+      }
+      else
+      {
+        $.ajax({
+            url : BASE_URL + 'pasu/pamain/hydromonitoringShpFile',
+            method: 'POST',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: formdata,
+            dataType: "JSON",
+            beforeSend:function()
+            {
+             $('#fetch_monitoring_site_shpfile').html("<div id='loaderss' class='loader'></div>");
+            },
+            success:function(response){
+                $('#fetch_monitoring_site_shpfile').html('<div class="col-md-12"><a target="_blank" href="'+BASE_URL+'bmb_assets2/upload/hydro_monitoring_station_shp/'+response.status+'">'+response.status+'</a></div>');
+                document.getElementById('shp_monitoring_site_text').value =  response.status;
+                }
+           });
+      }
+  }
+
+   function readURLshapehydromonitoringEdit(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      var formdata = new FormData();
+      formdata.append('edit-shp_monitoringsite', document.getElementById('edit-shp_monitoringsite').files[0]);
+      }
+      var file_details    =   document.getElementById("edit-shp_monitoringsite").files[0];
+      var extension       =   file_details['name'].split(/\.(?=[^\.]+$)/);
+      var allowed_extension   =   ["zip","rar"];
+      var check_for_valid_ext =   allowed_extension.indexOf(extension[1]);
+      if(file_details['size'] > 1677721600)
+      {
+        swal('Please upload a file less than 200 MB','','warning');
+        document.getElementById('edit-shp_monitoringsite').value="";
+        return false;
+      }
+      else if(check_for_valid_ext == -1)
+      {
+        swal('upload valid image file(*.zip, *.rar)','','warning');
+        document.getElementById('edit-shp_monitoringsite').value="";
+        return false;
+      }
+      else
+      {
+        $.ajax({
+            url : BASE_URL + 'pasu/pamain/hydromonitoringShpFileEdit',
+            method: 'POST',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: formdata,
+            dataType: "JSON",
+            beforeSend:function()
+            {
+             $('#edit-fetch_monitoring_site_shpfile').html("<div id='loaderss' class='loader'></div>");
+            },
+            success:function(response){
+                $('#edit-fetch_monitoring_site_shpfile').html('<div class="col-md-12"><a target="_blank" href="'+BASE_URL+'bmb_assets2/upload/hydro_monitoring_station_shp/'+response.status+'">'+response.status+'</a></div>');
+                document.getElementById('edit-shp_monitoring_site_text').value =  response.status;
+                }
+           });
+      }
+  }

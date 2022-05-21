@@ -329,27 +329,77 @@
             </div>
         </div>        
         <div class="col-xs-12 col-lg-12" id="parameterdivs" style="display: none;">            
-            <div class="col-xs-12 tooltip"> 
-                <ul><li>
-                    <?= form_label("Parameters of water quality",'','for="parameterwater"').form_textarea('parameterwater','','id="parameterwater"') ?>
-                    <span class="tooltiptext">Parameters of water quality</span>
-                </li></ul>
-            </div>
-            <div class="col-xs-12 tooltip"> 
-                <ul><li>
-                    <?php echo form_label('Status').form_dropdown('waterqualitystatus',$waterqualitystatus,'','id="waterqualitystatus"') ?>
-                    <span class="tooltiptext">Select status of water quality</span>
-                </li></ul>
-            </div>            
-        </div>  
-        <div class="col-xs-12" id="hydroyearassessdiv">
-            <div class="col-xs-6 col-lg-6 tooltip">
-                <ul><li>
-                    <?= form_label('Year assessed', '','for="hydroyearassess"').form_dropdown('hydroyearassess', $yearListed,'','id="hydroyearassess"'); ?>
-                    <span class="tooltiptext">Select year assessed</span>
-                </li></ul>
-            </div>
-        </div> 
+            <fieldset>
+                <legend>Water Quality</legend>
+                <div class="col-xs-12">                                        
+                    <div class="col-xs-12 col-lg-12">                                        
+                        <div id="fetch_monitoringsite_pics"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="col-xs-12 col-lg-12 tooltip">
+                    <fieldset>
+                        <label>Upload map images of monitoring site<i>(*.png, *.jpeg, *.jpg format, maximum size of 50MB)</i></label>
+                        <input type='file' name="pic_monitoringsiteimg" id="pic_monitoringsiteimg" />
+                        <input type="hidden" name="old_picturemonitoringsite" id="old_picturemonitoringsite">
+                        <span class="tooltiptext">Individual map of wetlands within the PA</span>
+                    </fieldset>
+                </div>
+                <div class="col-xs-12 tooltip"> 
+                    <ul><li>
+                        <?= form_label("Parameters of water quality",'','for="parameterwater"').form_textarea('parameterwater','','id="parameterwater"') ?>
+                        <span class="tooltiptext">Parameters of water quality</span>
+                    </li></ul>
+                </div>
+                <div class="col-xs-12 tooltip"> 
+                    <ul><li>
+                        <?php echo form_label('Status').form_dropdown('waterqualitystatus',$waterqualitystatus,'','id="waterqualitystatus"') ?>
+                        <span class="tooltiptext">Select status of water quality</span>
+                    </li></ul>
+                </div>
+                <div class="col-xs-12 col-lg-12">
+                    <fieldset>
+                        <legend>Monitoring Report</legend>         
+                        <div class="col-xs-4 col-lg-4">
+                            <ul><li>
+                                <?= form_label('Date of water monitoring assessment').form_dropdown('hydro_monitoring_M',$monthListed,'','id="hydro_monitoring_M"') ?>
+                            </li></ul>
+                        </div>
+                        <div class="col-xs-4 col-lg-4">
+                            <ul><li>
+                                <?= form_label('&nbsp;').form_dropdown('hydro_monitoring_D',$dayList,'','id="hydro_monitoring_D"') ?>
+                            </li></ul>
+                        </div>
+                        <div class="col-xs-4 col-lg-4">
+                            <ul><li>
+                                <?= form_label('&nbsp;').form_dropdown('hydro_monitoring_Y',$yearListed,'','id="hydro_monitoring_Y"') ?>
+                            </li></ul>
+                        </div>
+                        <div class="col-xs-12 col-lg-12">
+                            <ul><li>
+                                <?= form_label('Remarks').form_textarea('hydro_monitoring_remarks','','id="hydro_monitoring_remarks"') ?>                                
+                            </li></ul>
+                        </div>
+                        <div class="col-xs-12 col-lg-12 tooltip">
+                            <fieldset>
+                                <label>Upload copy of water quality monitoring report<i>(*.pdf,*.csv, maximum size of 50MB)</i></label>
+                                <input type='file' name="waterquality_file" id="waterquality_file" onchange="readURLhydrowatermonitoringrepos(this);"/>
+                                <input id="waterquality_span" name="waterquality_span" type="hidden" />
+                                <div id="load_waterqualityfile"></div>
+                            </fieldset>
+                        </div>
+                        <div class="col-xs-12 col-lg-12 tooltip">
+                            <fieldset>
+                                <label>Upload Shapefile of monitoring site <i>(*.zip  format, maximum size of 200MB)</i></label>
+                                <input type='file' name="shp_monitoringsite" id="shp_monitoringsite" onchange="readURLshapehydromonitoring(this);" />
+                                <input type="hidden" name="shp_monitoring_site_text" id="shp_monitoring_site_text">
+                                <div id="fetch_monitoring_site_shpfile"></div>
+                            </fieldset>
+                        </div>
+                    </fieldset>
+                </div>            
+            </fieldset>         
+        </div>
         <div class="col-xs-12 col-lg-12" id="parameterdivs2" style="display: none;">
             <div class="col-xs-12 col-lg-12">
                 <a type="text" class="btn btn-warning" id="addwaterquality">Add Parameter Water Quality</a>
@@ -362,7 +412,15 @@
                     <hr>
                 </div>
             </div>
-        </div>  
+        </div>
+        <div class="col-xs-12" id="hydroyearassessdiv">
+            <div class="col-xs-6 col-lg-6 tooltip">
+                <ul><li>
+                    <?= form_label('Year assessed', '','for="hydroyearassess"').form_dropdown('hydroyearassess', $yearListed,'','id="hydroyearassess"'); ?>
+                    <span class="tooltiptext">Select year assessed</span>
+                </li></ul>
+            </div>
+        </div>        
         <hr>
         <div class="col-xs-12 col-lg-12 tooltip">
             <a type="text" class="btn btn-primary" id="addimageHydro">Add to table</a>
@@ -1234,18 +1292,84 @@
                             </li></ul>                                
                         </div>
                     </div>
-                    <div class="col-xs-12 col-lg-12" id="parameterdivsEdit" style="display: none;">            
-                        <div class="col-xs-12 tooltip"> 
-                            <ul><li>
-                                <?= form_label("Parameters of water quality",'','for="edit-parameterwater"').form_textarea('edit-parameterwater','','id="edit-parameterwater"') ?>
-                                <span class="tooltiptext">Parameters of water quality</span>
-                            </li></ul>
+                    <div class="col-xs-12 col-lg-12" id="parameterdivsEdit" style="display: none;"> 
+                        <fieldset>
+                            <legend>Water Quality</legend>
+                            <div class="col-xs-12">                                        
+                                <div class="col-xs-12 col-lg-12">                                        
+                                    <div id="edit-fetch_monitoringsite_pics"></div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="col-xs-12 col-lg-12 tooltip">
+                                <fieldset>
+                                    <label>Upload map images of monitoring site<i>(*.png, *.jpeg, *.jpg format, maximum size of 50MB)</i></label>
+                                    <input type='file' name="edit-pic_monitoringsiteimg" id="edit-pic_monitoringsiteimg" />
+                                    <input type="hidden" name="edit-old_picturemonitoringsite" id="edit-old_picturemonitoringsite">
+                                    <span class="tooltiptext">Individual map of wetlands within the PA</span>
+                                </fieldset>
+                            </div>
+                            <div class="col-xs-12 tooltip"> 
+                                <ul><li>
+                                    <?= form_label("Parameters of water quality",'','for="edit-parameterwater"').form_textarea('edit-parameterwater','','id="edit-parameterwater"') ?>
+                                    <span class="tooltiptext">Parameters of water quality</span>
+                                </li></ul>
+                            </div>
+                            <div class="col-xs-12 tooltip"> 
+                                <ul><li>
+                                    <?php echo form_label('Status').form_dropdown('edit-waterqualitystatus',$waterqualitystatus,'','id="edit-waterqualitystatus"') ?>
+                                    <span class="tooltiptext">Select status of water quality</span>
+                                </li></ul>
+                            </div>
+                            <div class="col-xs-12 col-lg-12">
+                                <fieldset>
+                                    <legend>Monitoring Report</legend>         
+                                    <div class="col-xs-4 col-lg-4">
+                                        <ul><li>
+                                            <?= form_label('Date of water monitoring assessment').form_dropdown('edit-hydro_monitoring_M',$monthListed,'','id="edit-hydro_monitoring_M"') ?>
+                                        </li></ul>
+                                    </div>
+                                    <div class="col-xs-4 col-lg-4">
+                                        <ul><li>
+                                            <?= form_label('&nbsp;').form_dropdown('edit-hydro_monitoring_D',$dayList,'','id="edit-hydro_monitoring_D"') ?>
+                                        </li></ul>
+                                    </div>
+                                    <div class="col-xs-4 col-lg-4">
+                                        <ul><li>
+                                            <?= form_label('&nbsp;').form_dropdown('edit-hydro_monitoring_Y',$yearListed,'','id="edit-hydro_monitoring_Y"') ?>
+                                        </li></ul>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-12">
+                                        <ul><li>
+                                            <?= form_label('Remarks').form_textarea('edit-hydro_monitoring_remarks','','id="edit-hydro_monitoring_remarks"') ?>                                
+                                        </li></ul>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-12 tooltip">
+                                        <fieldset>
+                                            <label>Upload copy of water quality monitoring report<i>(*.pdf,*.csv, maximum size of 50MB)</i></label>
+                                            <input type='file' name="edit-waterquality_file" id="edit-waterquality_file" onchange="readURLhydrowatermonitoringreposEdit(this);"/>
+                                            <input id="edit-waterquality_span" name="edit-waterquality_span" type="hidden" />
+                                            <div id="edit-load_waterqualityfile"></div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-12 tooltip">
+                                        <fieldset>
+                                            <label>Upload Shapefile of monitoring site <i>(*.zip  format, maximum size of 200MB)</i></label>
+                                            <input type='file' name="edit-shp_monitoringsite" id="edit-shp_monitoringsite" onchange="readURLshapehydromonitoringEdit(this);" />
+                                            <input type="hidden" name="edit-shp_monitoring_site_text" id="edit-shp_monitoring_site_text">
+                                            <div id="edit-fetch_monitoring_site_shpfile"></div>
+                                        </fieldset>
+                                    </div>
+                                </fieldset>
+                            </div>            
+                        </fieldset>             
+                    </div>                    
+                    <div class="col-xs-12 col-lg-12" id="parameterdivs2Edit" style="display: none;">            
+                        <div class="col-xs-12 col-lg-12">
+                            <a type="text" class="btn btn-warning" id="addwaterqualityEdit">Add Parameter Water Quality</a>
                         </div>
-                        <div class="col-xs-12 tooltip"> 
-                            <ul><li>
-                                <?php echo form_label('Status').form_dropdown('edit-waterqualitystatus',$waterqualitystatus,'','id="edit-waterqualitystatus"') ?>
-                                <span class="tooltiptext">Select status of water quality</span>
-                            </li></ul>
+                        <div class="col-xs-12 col-lg-12">
+                            <div id="editparameterdata_div"></div>
                         </div>
                     </div>
                     <div class="col-xs-12" id="hydroyearassessdivEdit">
@@ -1256,15 +1380,6 @@
                             </li></ul>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-lg-12" id="parameterdivs2Edit" style="display: none;">            
-                        <div class="col-xs-12 col-lg-12">
-                            <a type="text" class="btn btn-warning" id="addwaterqualityEdit">Add Parameter Water Quality</a>
-                        </div>
-                        <div class="col-xs-12 col-lg-12">
-                            <div id="editparameterdata_div"></div>
-                        </div>
-                    </div>
-                    
                     <div class="col-xs-12 col-lg-12">
                         <div>
                             <label>Date Created : </label><span id="date_create_div_hydro"></span>

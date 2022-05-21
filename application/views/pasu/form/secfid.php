@@ -4538,6 +4538,9 @@
                         <div class="col-xs-12 col-lg-3 tooltip">
                             <?= form_checkbox('ip_outside_pa','','','id="ip_outside_pa"').form_label('Outside Protected Area','','for="ip_outside_pa"') ?>
                         </div> 
+                        <div class="col-xs-12 col-lg-3 tooltip">
+                            <?= form_checkbox('ip_titled_land','','','id="ip_titled_land"').form_label('Titled Lands','','for="ip_titled_land"') ?>
+                        </div> 
                     </fieldset>                 
                 </div>                
                 <div class="col-xs-12">                                    
@@ -5572,6 +5575,9 @@
                             <div class="col-xs-12 col-lg-3 ">
                                 <?= form_checkbox('edit-ip_outside_pa','','','id="edit-ip_outside_pa"').form_label('Outside Protected Area','','for="edit-ip_outside_pa"') ?>
                             </div>
+                            <div class="col-xs-12 col-lg-3 tooltip">
+                            <?= form_checkbox('edit-ip_titled_land','','','id="edit-ip_titled_land"').form_label('Titled Lands','','for="edit-ip_titled_land"') ?>
+                        </div>
                         </fieldset>
                     </div>
                     <div class="col-xs-12">
@@ -5767,10 +5773,14 @@
                                     <legend>Sex Disaggregated Data</legend>
                                     <div class="col-xs-12 col-lg-12">
                                         <div class="col-xs-6 col-lg-6">
-                                            <?= form_label('Male').form_input('ta_male','','id="ta_male" class="number-separator"') ?>
+                                            <ul><li>
+                                                <?= form_label('Male').form_input('ta_male','','id="ta_male" class="number-separator"') ?>
+                                            </li></ul>
                                         </div>
                                         <div class="col-xs-6 col-lg-6">
-                                            <?= form_label('Female').form_input('ta_female','','id="ta_female" class="number-separator"') ?>
+                                            <ul><li>
+                                                <?= form_label('Female').form_input('ta_female','','id="ta_female" class="number-separator"') ?>
+                                            </li></ul>
                                         </div>
                                     </div>
                                 </fieldset>
