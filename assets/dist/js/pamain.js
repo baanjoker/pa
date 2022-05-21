@@ -13995,6 +13995,20 @@ $(function(){
     var chk5 = document.getElementById("chk_seagrass2").value;
     var chk6 = document.getElementById("chk_mangrove2").value;
 
+    var tablepopulation2 = [];
+    $("#tbodyestimatepopulation2 tr").each(function(row,tr){
+        var push = {
+          "generatedcode" : $(tr).find("td:eq(0)").text(),
+          "species_codegen" : $(tr).find("td:eq(1)").text(),
+          "fdateM" : $(tr).find("td:eq(2)").text(),
+          "fdateD" : $(tr).find("td:eq(3)").text(),
+          "fdateY" : $(tr).find("td:eq(4)").text(),
+          "populationcount" : $(tr).find("td:eq(5)").text(),
+          "populationremarks" : $(tr).find("td:eq(6)").text(),
+          "activity_title" : $(tr).find("td:eq(7)").text(),
+        }
+      tablepopulation2.push(push);
+    });
 
     $.ajax({
         type: 'POST',
@@ -14019,10 +14033,11 @@ $(function(){
                     swal("You already added this species");
                 }else{
                     addedProductCodes.push(td_productCode);
+                    var sample_data = $('#regFormMain').serialize() + '&' + $.param({"tablepopulation2" : tablepopulation2});
                     $.ajax({
                       url : BASE_URL + 'pasu/pamain/insertPABiologicalFF2',
                       type: 'POST',
-                      data: $('#regFormMain').serialize(),
+                      data: sample_data,
                       dataType: "JSON",
                       success:function(response){
                          var files = $('#files_species2')[0].files;
@@ -14072,7 +14087,7 @@ $(function(){
                           swal('','Successfully added',"success");
                           // document.getElementById("select2-searchBoxs-container").innerText='Select';
                           document.getElementById('gencodespecies').value = makespeciescode(8);
-                          document.getElementById("popcount2").value='';
+                          document.getElementById("populationcount2").value='';
                           document.getElementById('chk_forest2').checked=false;
                           document.getElementById('chk_inland2').checked=false;
                           document.getElementById('chk_cave2').checked=false;
@@ -14082,6 +14097,7 @@ $(function(){
                           document.getElementById('chk_tidal2').checked=false;
                           document.getElementById('chk_coastalwetland2').checked=false;
                           document.getElementById('chk_grassland2').checked=false;
+                          $("#tbodyestimatepopulation2 tr").remove();
                           }else if(response.error){
                               swal('',response.statusError,"error");
                           }
@@ -14270,7 +14286,7 @@ function editfaunafloraOnly(elem){
              document.getElementById("uploadimagespecies").innerHTML = this.cells[13].innerHTML;
              document.getElementById("ffb-gencode-species").value = this.cells[14].innerHTML;
              document.getElementById("edit-locanamespecies").value = this.cells[15].innerHTML;
-             document.getElementById("edit-populationcount").value = this.cells[16].innerHTML;
+             // document.getElementById("edit-populationcount").value = this.cells[16].innerHTML;
              document.getElementById("edit-reference_photo_ff").value = this.cells[17].innerHTML;
              // document.getElementById("resi_stat").value = this.cells[19].innerHTML;
              if (chk1 == 1) {
@@ -14309,10 +14325,21 @@ function editfaunafloraOnly(elem){
               document.getElementById("edit-chk_grassland").checked = chk9;
               document.getElementById("edit-chk_grassland").value = chk9;
              }
+
+             var gencode = this.cells[14].innerHTML;
+             $.ajax({
+                type: 'POST',
+                data : {codegens:gencode},
+                url: BASE_URL + 'pasu/pamain/fetchSpeciesPopulations',
+                success:function(response){
+                    $('#tbldisplaypopcount').html(response);
+                }
+            });
         };
     }
     $('#ffb-id').val(elem.value);
     $('#edit-residency_conserv').val(resstat);
+      // $( "#tblspeciespopulation1" ).load( "biofeat.php #tblspeciespopulation1" );
     // $('#edit-chk_forest').val(chk1);
     $("#modal-edit-ffb").modal("toggle");
     $('#modal-edit-ffb').on('hidden.bs.modal', function(){
@@ -71628,6 +71655,7 @@ $(document).on('click', '.removebiologicalpops', function(){
            });
            // $('#modal-edit-mgmtplan').modal('hide');
             getTabBiological();
+            getTabBiologicalflora();
             var gencode = $('#ffb-gencode-species').val();
              $.ajax({
                 type: 'POST',
@@ -71671,7 +71699,48 @@ $("#addestimatepopulationEdit").click(function(){
                     }
                 });
                 getTabBiological();
+                getTabBiologicalflora();
               }
           });
         }
+      });
+
+$("#addestimatepopulation2").click(function(){
+    var code    =   document.getElementById("codegen").value;
+    var code2    =   document.getElementById("gencodespecies").value;
+
+    var mon = document.getElementById("fdateM2");
+    var strmon = mon.options[mon.selectedIndex].text;
+    var iDmon      = $("#fdateM2").val();
+
+    var year = document.getElementById("fdateY2");
+    var stryear = year.options[year.selectedIndex].text;
+    var iDyear      = $("#fdateY2").val();
+
+    var idDay      = $("#fdateD2").val();
+    var number      = $("#populationcount2").val();
+    var remarks      = $("#populationremarks2").val();
+    var activity      = $("#populationactivity2").val();
+
+    // if ($("#ipafotherincomesourcefee").val()=="") {
+    // swal("Specify other amount",'','warning');
+    //      return
+    // }else{
+      $("#tblestimatepopulation2 tbody:last-child").append(
+          "<tr style='text-align: left'>"+
+            "<td class='hide'>"+code+"</td>"+
+            "<td class='hide'>"+code2+"</td>"+
+            "<td class='hide'>"+iDmon+"</td>"+
+            "<td class='hide'>"+idDay+"</td>"+
+            "<td class='hide'>"+iDyear+"</td>"+
+            "<td class='hide'>"+number+"</td>"+
+            "<td class='hide'>"+remarks+"</td>"+
+            "<td class='hide'>"+activity+"</td>"+
+           "<td>"+"<button type='button' name='remove' data-row='row style='float:right' class='btn btn-danger btn-xs remove' onclick='deleteRowThreat(this)'><i class='glyphicon glyphicon-remove'></i></button><br>"+
+            "Date Assessed : "+strmon+" "+stryear+"<br>"+
+            "Estimate population : "+number+
+            "<br>Remarks : "+remarks+
+            "</td>"+
+          "</tr>"
+    );
       });

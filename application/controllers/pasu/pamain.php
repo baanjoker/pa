@@ -2792,7 +2792,7 @@ public function insertPABiologicalFF()
             'chk_mudflats' => $this->input->post('chk_tidal')==null ? 0 : 1,
             'chk_coastalwetland' => $this->input->post('chk_coastalwetland')==null ? 0 : 1,
             'chk_grassland' => $this->input->post('chk_grassland')==null ? 0 : 1,
-            'estimate_population' => $this->input->post('populationcount'),
+            // 'estimate_population' => $this->input->post('populationcount'),
             'localname' => $this->input->post('locanamespecies'),
             'photo_references' => $this->input->post('reference_photo_ff'),
             'species_codegen' => $this->input->post('gencodespecies'),
@@ -2810,6 +2810,7 @@ public function insertPABiologicalFF()
 
 public function insertPABiologicalFF2()
 {
+        $rel_data1 = $this->input->post('tablepopulation2');
         $output = array();
         $data['paloacations'] = (object)$postData = [
             'generatedcode' => $this->input->post('gencode',true),
@@ -2825,10 +2826,10 @@ public function insertPABiologicalFF2()
             'chk_grassland' => $this->input->post('chk_grassland2')==null ? 0 : 1,
             'localname' => $this->input->post('locanamespecies2'),
             'photo_references' => $this->input->post('reference_photo_ff2'),
-            'estimate_population' => $this->input->post('populationcount2'),
+            // 'estimate_population' => $this->input->post('populationcount2'),
             'species_codegen' => $this->input->post('gencodespecies'),
         ];
-                $query = $this->pamain_model->createPAbiologicalFF($postData);
+                $query = $this->pamain_model->createPAbiologicalFF2($postData,$rel_data1);
                 // }
                 if($query){
                 $output['message'] = 'Add';
@@ -8924,8 +8925,7 @@ public function insertvegetativecover()
                         (($row->chk_coastalwetland==1)?"<i class='glyphicon glyphicon-ok'></i>Coastal Wetland":" ").
                         (($row->chk_grassland==1)?"<i class='glyphicon glyphicon-ok'></i>Grassland":" "); ?>
                         <?php
-                            foreach ($data_population as $pop) {
-                                echo "<div class='table-responsive large-tables'>
+                            echo "<div class='table-responsive large-tables'>
                                         <table class='temp-content-table'>
                                             <thead>
                                                 <tr>
@@ -8938,17 +8938,18 @@ public function insertvegetativecover()
                                                     <th>Remarks</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>".(!empty($pop->fdateM)?$pop->fdateM." ":"").(!empty($pop->fdateD)?$pop->fdateD.", ":"").(!empty($pop->fdateY)?$pop->fdateY:"")."</td>
-                                                    <td>".($pop->activity_title)."</td>
-                                                    <td>".number_format($pop->populationcount,2)."</td>
-                                                    <td>".($pop->populationremarks)."</td>
-                                                </tr>
-                                            </tbody>
+                                            <tbody>";
+                            foreach ($data_population as $pop) {
+                                echo "<tr>
+                                        <td>".(!empty($pop->fdateM)?$pop->fdateM." ":"").(!empty($pop->fdateD)?$pop->fdateD.", ":"").(!empty($pop->fdateY)?$pop->fdateY:"")."</td>
+                                        <td>".($pop->activity_title)."</td>
+                                        <td>".number_format($pop->populationcount,2)."</td>
+                                        <td>".($pop->populationremarks)."</td>
+                                      </tr>";
+                            }
+                            echo "</tbody>
                                         </table>
                                       </div>";
-                            }
                         ?>
                         <br><button type="button" value="<?php echo $row->id_pabiological;?>" class="btn btnbtn btn-info btn-xs" onclick="editfaunaflora(this);">Edit</button>
                         <button type="button" class="btn btnbtn btn-danger btn-xs removebiological" data-id="<?php echo $row->species_codegen ?>" title="Remove">Remove</button></div></div>                        
@@ -8983,6 +8984,7 @@ public function insertvegetativecover()
         foreach($data as $row){
             $id_species = $row->species_codegen;
             $data_species = $this->pamain_model->getAllbiologicalImgespecies($id_species);
+            $data_population = $this->pamain_model->getAllbiologicalspeciesPopulation($id_species);
             ?>
             <tr id="<?php echo $row->id_pabiological; ?>" class="text-center trow">
                 <td class="hidden"><?php echo $row->description; ?></td>
@@ -9028,7 +9030,7 @@ public function insertvegetativecover()
                         '<br><b>Scientific Name : </b><i>'.$row->scientificName_genus.'</i>'.
                         '<br><b>Local Name : </b>'.$row->localname.
                         '<br><b>Residency Status : </b>'.$row->residency_desc.
-                        '<br><b>Estimated Population : </b>'.$row->estimate_population.
+                        // '<br><b>Estimated Population : </b>'.$row->estimate_population.
                         '<br><b>Habitats/Ecosystem Discovered : </b>'.
                         (($row->chk_forest==1)?"<i class='glyphicon glyphicon-ok'></i>Forest":" ").
                         (($row->chk_inland==1)?"<i class='glyphicon glyphicon-ok'></i>Inland Wetland":" ").
@@ -9039,7 +9041,33 @@ public function insertvegetativecover()
                         (($row->chk_mudflats==1)?"<i class='glyphicon glyphicon-ok'></i>Tidal flats/Mudflats":" ").
                         (($row->chk_coastalwetland==1)?"<i class='glyphicon glyphicon-ok'></i>Coastal Wetland":" ").
                         (($row->chk_grassland==1)?"<i class='glyphicon glyphicon-ok'></i>Grassland":" "); ?>
-
+                        <?php
+                            echo "<div class='table-responsive large-tables'>
+                                        <table class='temp-content-table'>
+                                            <thead>
+                                                <tr>
+                                                    <th colspan='4'>Estimate Population</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Date Conducted</th>
+                                                    <th>Activity</th>
+                                                    <th>Estimate Population</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>";
+                            foreach ($data_population as $pop) {
+                                echo "<tr>
+                                        <td>".(!empty($pop->fdateM)?$pop->fdateM." ":"").(!empty($pop->fdateD)?$pop->fdateD.", ":"").(!empty($pop->fdateY)?$pop->fdateY:"")."</td>
+                                        <td>".($pop->activity_title)."</td>
+                                        <td>".number_format($pop->populationcount,2)."</td>
+                                        <td>".($pop->populationremarks)."</td>
+                                      </tr>";
+                            }
+                            echo "</tbody>
+                                        </table>
+                                      </div>";
+                        ?>
                         <br><button type="button" value="<?php echo $row->id_pabiological;?>" class="btn btnbtn btn-info btn-xs" onclick="editfaunafloraOnly(this);">Edit</button>
                         <button type="button" class="btn btnbtn btn-danger btn-xs removebiologicalflora" data-id="<?php echo $row->species_codegen ?>" title="Remove">Remove</button></div></div>
                     <?php

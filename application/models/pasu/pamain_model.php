@@ -4337,6 +4337,38 @@ class Pamain_Model extends CI_Model
             }
     }
 
+    public function createPAbiologicalFF2($data,$rel_data1){
+         // $this->db->insert('tblpamainbiological',$data);
+         // return $this->db->insert_id();
+        if (!empty($rel_data1)) {
+            for($x11 = 0; $x11 < count($rel_data1); $x11++){
+            $datas[] = array(
+              "generatedcode" => $rel_data1[$x11]["generatedcode"],
+              "species_codegen" => $rel_data1[$x11]["species_codegen"],
+              "fdateM" => $rel_data1[$x11]['fdateM'],
+              "fdateD" => $rel_data1[$x11]['fdateD'],
+              "fdateY" => $rel_data1[$x11]['fdateY'],
+              "populationcount" => str_replace(',','',$rel_data1[$x11]['populationcount']),
+              "populationremarks" => $rel_data1[$x11]['populationremarks'],
+              "activity_title" => $rel_data1[$x11]['activity_title']);
+            }
+        }
+        try{
+            if (!empty($rel_data1)) {
+                for($x =0; $x<count($rel_data1); $x++){
+                    $this->db->insert('tblpamainbiological_population',$datas[$x]);
+                }
+            }
+
+            $this->db->insert('tblpamainbiological',$data);
+            return "success";
+            }
+                catch(Exception $e)
+            {
+                return "failed";
+            }
+    }
+
     public function createPAbtrcertifi($data = []){
          $this->db->insert('tblipafincomecertificate',$data);
          return $this->db->insert_id();
