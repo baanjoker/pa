@@ -4541,6 +4541,17 @@
                         <div class="col-xs-12 col-lg-3 tooltip">
                             <?= form_checkbox('ip_titled_land','','','id="ip_titled_land"').form_label('Titled Lands','','for="ip_titled_land"') ?>
                         </div> 
+                        <div class="col-xs-12 col-lg-3 tooltip">
+                            <?= form_checkbox('ip_and','','','id="ip_and"').form_label('Alienable and Disposable','','for="ip_and"') ?>
+                            <div class="col-lg-12 col-xs-12" id="ipanddivs">
+                                <div class="col-lg-12 col-xs-12">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= form_checkbox('ip_andwititle','','','id="ip_andwititle"').form_label('Within Titled Land','','for="ip_andwititle"') ?>
+                                </div>
+                                <div class="col-lg-12 col-xs-12">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= form_checkbox('ip_andostitle','','','id="ip_andostitle"').form_label('Outside Titled Land','','for="ip_andostitle"') ?>                                
+                                </div>
+                            </div>
+                        </div> 
                     </fieldset>                 
                 </div>                
                 <div class="col-xs-12">                                    
@@ -5563,21 +5574,32 @@
                     </div>
                     <div class="col-xs-12 col-lg-12">
                         <fieldset>
-                            <div class="col-xs-12 col-lg-3 ">
+                            <div class="col-xs-12 col-lg-3 tooltip">
                                 <?= form_checkbox('edit-tenure_migrantyns','','','id="edit-tenure_migrantyns"').form_label('Tenured Migrant','','for="edit-tenure_migrantyns"') ?>
                             </div>
-                            <div class="col-xs-12 col-lg-3 ">
+                            <div class="col-xs-12 col-lg-3 tooltip">
                                 <?= form_checkbox('edit-ip_recognize','','','id="edit-ip_recognize"').form_label('IP is recognized by NCIP','','for="edit-ip_recognize"') ?>
                             </div>
-                            <div class="col-xs-12 col-lg-3 ">
+                            <div class="col-xs-12 col-lg-3 tooltip">
                                 <?= form_checkbox('edit-ip_inside_pa','','','id="edit-ip_inside_pa"').form_label('Inside Protected Area','','for="edit-ip_inside_pa"') ?>
                             </div>
-                            <div class="col-xs-12 col-lg-3 ">
+                            <div class="col-xs-12 col-lg-3 tooltip">
                                 <?= form_checkbox('edit-ip_outside_pa','','','id="edit-ip_outside_pa"').form_label('Outside Protected Area','','for="edit-ip_outside_pa"') ?>
                             </div>
                             <div class="col-xs-12 col-lg-3 tooltip">
-                            <?= form_checkbox('edit-ip_titled_land','','','id="edit-ip_titled_land"').form_label('Titled Lands','','for="edit-ip_titled_land"') ?>
-                        </div>
+                                <?= form_checkbox('edit-ip_titled_land','','','id="edit-ip_titled_land"').form_label('Titled Lands','','for="edit-ip_titled_land"') ?>
+                            </div>
+                            <div class="col-xs-12 col-lg-3 tooltip">
+                                <?= form_checkbox('edit-ip_and','','','id="edit-ip_and"').form_label('Alienable and Disposable','','for="edit-ip_and"') ?>
+                                <div class="col-lg-12 col-xs-12" id="edit-ipanddivs">
+                                    <div class="col-lg-12 col-xs-12">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= form_checkbox('edit-ip_andwititle','','','id="edit-ip_andwititle"').form_label('Within Titled Land','','for="edit-ip_andwititle"') ?>
+                                    </div>
+                                    <div class="col-lg-12 col-xs-12">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= form_checkbox('edit-ip_andostitle','','','id="edit-ip_andostitle"').form_label('Outside Titled Land','','for="edit-ip_andostitle"') ?>                                
+                                    </div>
+                                </div>
+                            </div> 
                         </fieldset>
                     </div>
                     <div class="col-xs-12">
@@ -5721,7 +5743,7 @@
                     </div>
                     <div class="col-xs-12">
                         <ul><li>
-                            <?= form_label('Remarks','', 'for="seams_remarks"').form_textarea('edit_seams_remarks','','placeholder="Remarks" id="edit_seams_remarks"');?>
+                            <?= form_label('Remarks','', 'for="edit_seams_remarks"').form_textarea('edit_seams_remarks','','placeholder="Remarks" id="edit_seams_remarks"');?>
                         </li></ul>
                     </div>
                     <div class="col-xs-12 " style="margin-top:10px">

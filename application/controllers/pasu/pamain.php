@@ -1824,8 +1824,11 @@ public function ecoplan_img()
             'tenured_migrant' => $this->input->post('tenure_migrantyns')==null?0:1,
             'ip_recognize' => $this->input->post('ip_recognize')==null?0:1,
             'ip_inside_pa' => $this->input->post('ip_inside_pa')==null?0:1,
-            'ip_outside_pa' => $this->input->post('ip_outside_pa')==null?0:1,
-            'ip_titled_land' => $this->input->post('ip_titled_land')==null?0:1,
+            'ip_outside_pa' => $this->input->post('ip_outside_pa')==null?0:1,            
+            'ip_titled_land' => $this->input->post('ip_andostitle')==null?0:1,
+            'ip_andotl' => $this->input->post('ip_titled_land')==null?0:1,
+            'ip_and' => $this->input->post('ip_and')==null?0:1,
+            'ip_andwtl' => $this->input->post('ip_andwititle')==null?0:1,
             'ipsiccs' => $this->input->post('select_iccsips'),
             'x_long' => $this->input->post('ddlatoutputdemo'),
             'y_lat' => $this->input->post('ddlongoutputdemo'),
@@ -25371,6 +25374,9 @@ public function upload_hydro_monitoringsite_picsEdit()
                          'ip_inside_pa' => $this->input->post('edit-ip_inside_pa')==null ? 0 : 1,
                          'ip_outside_pa' => $this->input->post('edit-ip_outside_pa')==null ? 0 : 1,
                          'ip_titled_land' => $this->input->post('edit-ip_titled_land')==null?0:1,
+                         'ip_andotl' => $this->input->post('edit-ip_titled_land')==null?0:1,
+                         'ip_and' => $this->input->post('edit-ip_and')==null?0:1,
+                         'ip_andwtl' => $this->input->post('edit-ip_andwititle')==null?0:1,
                          'ipsiccs' => $this->input->post("edit-select_iccsips"),
                          'seams_sex_head' => $this->input->post("edit_seams_sex"),
                          'seams_male' => str_replace(',','',$this->input->post("edit_seams_male")),
@@ -25463,6 +25469,9 @@ public function upload_hydro_monitoringsite_picsEdit()
                     <input type="hidden" id="seams_chk2<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_inside_pa ?>" />
                     <input type="hidden" id="seams_chk3<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_outside_pa ?>" />
                     <input type="hidden" id="seams_chk4<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_titled_land ?>" />
+                    <input type="hidden" id="seams_chk5<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_and ?>" />
+                    <input type="hidden" id="seams_chk6<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_andwtl ?>" />
+                    <input type="hidden" id="seams_chk7<?php echo $row->id_seams_demo;?>" value="<?php echo $row->ip_andotl ?>" />
                 </td>
             </tr>
 

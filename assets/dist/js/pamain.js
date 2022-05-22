@@ -4026,6 +4026,29 @@ function Calculatedemograph() {
   }
 }
 
+$(document).ready(function(){
+  document.getElementById('ipanddivs').style.display = "none";
+  document.getElementById('edit-ipanddivs').style.display = "none";
+})
+
+$("#ip_and").click(function(){
+  var chk = document.getElementById('ip_and');
+  if (chk.checked == true) {
+    document.getElementById('ipanddivs').style.display = "block";
+  } else {
+    document.getElementById('ipanddivs').style.display = "none";
+  }
+});
+
+$("#edit-ip_and").click(function(){
+  var chk = document.getElementById('edit-ip_and');
+  if (chk.checked == true) {
+    document.getElementById('edit-ipanddivs').style.display = "block";
+  } else {
+    document.getElementById('edit-ipanddivs').style.display = "none";
+  }
+});
+
 function CalculatedemographEdit() {
   var a, b, c;
   a = parseFloat(document.getElementById("edit_seams_farmlot").value.replace(/,/g, ""));
@@ -15863,6 +15886,9 @@ $(function(){
                   document.getElementById("ip_inside_pa").checked=false;
                   document.getElementById("ip_outside_pa").checked=false;
                   document.getElementById("ip_titled_land").checked=false;
+                  document.getElementById("ip_and").checked=false;
+                  document.getElementById("ip_andwititle").checked=false;
+                  document.getElementById("ip_andostitle").checked=false;
                   document.getElementById("whf").checked=false;
 
                   fetchdemo();
@@ -42915,6 +42941,9 @@ function editdemos(elem){
   var tm = $('#seams_tm'+ct).val();
   var ip = $('#seams_ip'+ct).val();
   var shp = $('#seams_shp'+ct).val()
+  var chk5 = $('#seams_chk5'+ct).val();
+  var chk6 = $('#seams_chk6'+ct).val();
+  var chk7 = $('#seams_chk7'+ct).val();
   var t_rows = document.getElementById(elem.value);
     for(var i = 1; i < table.rows.length; i++)
     {
@@ -42976,6 +43005,27 @@ function editdemos(elem){
               document.getElementById("edit-ip_titled_land").value = '1';
             }else{
               document.getElementById("edit-ip_titled_land").checked = false;
+            }
+
+            if (chk5==1) {
+              document.getElementById("edit-ip_and").checked = true;
+              document.getElementById("edit-ip_and").value = '1';
+              document.getElementById("edit-ipanddivs").style.display = "block";
+              if (chk6==1) {
+                document.getElementById("edit-ip_andwititle").checked = true;
+                document.getElementById("edit-ip_andwititle").value = '1';
+              }else{
+                document.getElementById("edit-ip_andwititle").checked = false;
+              }
+              if (chk7==1) {
+                document.getElementById("edit-ip_andostitle").checked = true;
+                document.getElementById("edit-ip_andostitle").value = '1';
+              }else{
+                document.getElementById("edit-ip_andostitle").checked = false;
+              }
+            }else{
+              document.getElementById("edit-ip_and").checked = false;
+              document.getElementById("edit-ipanddivs").style.display = "none";
             }
       };
     }

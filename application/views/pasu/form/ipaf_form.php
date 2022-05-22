@@ -818,8 +818,8 @@
             <div id="certificatetab" class="tabcontentipaf22" style="display:none">
                 <div class="tab-third">
                     <a class="tablinkipaf3 active" onclick="tabipaf3(event, 'certi1')">Monthly</a>
-                    <a class="tablinkipaf3" onclick="tabipaf3(event, 'certi2')">Weekly</a>
                     <a class="tablinkipaf3" onclick="tabipaf3(event, 'certi3')">Daily</a>
+                    <a class="tablinkipaf3" onclick="tabipaf3(event, 'certi2')">Custom</a>
                 </div>
                 <div id="certi1" class="tabcontentipaf3" style="display:block">
                     <fieldset>
