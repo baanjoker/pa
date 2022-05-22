@@ -1,3 +1,7 @@
+ $(window).on('load', function() {
+        $('#myModalUpdates').modal('show');
+    });
+
  $(function () {
     var $select2 = $('.select2').select2({
       containerCssClass: "wrap"
@@ -4025,11 +4029,6 @@ function Calculatedemograph() {
     document.getElementById("seams_occupied").value = numberWithCommas(parseFloat(a + b + c).toFixed(3));
   }
 }
-
-$(document).ready(function(){
-  document.getElementById('ipanddivs').style.display = "none";
-  document.getElementById('edit-ipanddivs').style.display = "none";
-})
 
 $("#ip_and").click(function(){
   var chk = document.getElementById('ip_and');
