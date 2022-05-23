@@ -8521,7 +8521,7 @@ public function insertvegetativecover()
                                 Remove
                             </button>
                                 <fieldset>
-                                    <?php echo "Status : ".$dd->sub_nip_description."<br>Category : ".(!empty($dd->nipid_category)?$dd->categoryName:"")."<br>Legal basis : ".$dd->LegisDesc." no. ".$dd->legal_basis_no."<br>Date Issued : ".(!empty($dd->legal_basis_month)?$dd->month:"")." ".(!empty($dd->legal_basis_day)?$dd->legal_basis_day.", ":"")." ".(!empty($dd->legal_basis_year)?$dd->legal_basis_year:""); ?>
+                                    <?php echo "Status : ".$dd->sub_nip_description."<br>Category : ".(!empty($dd->nipid_category)?$dd->categoryName:"")."<br>Legal basis : ".$dd->LegisDesc." no. ".$dd->legal_basis_no."<br>Area : ".(number_format($dd->legal_basis_area,2))."<br>Date Issued : ".(!empty($dd->legal_basis_month)?$dd->month:"")." ".(!empty($dd->legal_basis_day)?$dd->legal_basis_day.", ":"")." ".(!empty($dd->legal_basis_year)?$dd->legal_basis_year:""); ?>
                                 </fieldset>
                             </div>
                         <?php endforeach; ?>
@@ -8579,7 +8579,7 @@ public function insertvegetativecover()
 								Remove
 							</button>
 							<fieldset>
-									<?php echo "Status : ".$dd->sub_nip_description."<br>".(!empty($dd->nipid_category)?$dd->categoryName:"")."Legal basis : ".$dd->LegisDesc." no. ".$dd->legal_basis_no."<br>Dated : ".(!empty($dd->legal_basis_month)?$dd->month:"")." ".(!empty($dd->legal_basis_day)?$dd->legal_basis_day:"")." ".(!empty($dd->legal_basis_year)?$dd->legal_basis_year:""); ?>
+									<?php echo "Status : ".$dd->sub_nip_description."<br>Category : ".(!empty($dd->nipid_category)?$dd->categoryName:"")."<br>Legal basis : ".$dd->LegisDesc." no. ".$dd->legal_basis_no."<br>Area : ".(number_format($dd->legal_basis_area,2))."<br>Date Issued : ".(!empty($dd->legal_basis_month)?$dd->month:"")." ".(!empty($dd->legal_basis_day)?$dd->legal_basis_day.", ":"")." ".(!empty($dd->legal_basis_year)?$dd->legal_basis_year:""); ?>
 							</fieldset>
 					</div>
         <?php endforeach;
@@ -48502,7 +48502,7 @@ public function wetlandlandfiless()
             'nipid_category'      => $this->input->post('edit-previouscat'),
             'legal_basis_id'      => $this->input->post('edit-history-legis_id'),
 						'legal_basis_no'      => $this->input->post('edit-history-legisno'),
-						'legal_basis_area'      => $this->input->post('edit-history-legis_area'),
+						'legal_basis_area'      => str_replace(',','',$this->input->post('edit-history-legis_area')),
 						'legal_basis_month'      => $this->input->post('edit-history-date_month'),
 						'legal_basis_day'      => $this->input->post('edit-history-date_day'),
 						'legal_basis_year'      => $this->input->post('edit-history-date_year')

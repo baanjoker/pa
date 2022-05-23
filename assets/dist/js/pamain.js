@@ -2,11 +2,11 @@
         $('#myModalUpdates').modal('show');
     });
 
- $(function () {
-    var $select2 = $('.select2').select2({
-      containerCssClass: "wrap"
-    })
-  })
+ // $(function () {
+ //    var $select2 = $('.select2').select2({
+ //      containerCssClass: "wrap"
+ //    })
+ //  })
 
 // ==================== LOGS FILE ===============================//
 
@@ -68935,10 +68935,10 @@ $("#addactualincome").click(function(){
               });
               fetchactualincome();
               $("#tbodydonateform tr").remove();
-              $("#phyquarterincome")[0].selectedIndex = 0;
-              $("#phyquartermonth")[0].selectedIndex = 0;
-              $("#phyquarteryear")[0].selectedIndex = 0;
-              $("#phyquarteday")[0].selectedIndex = 0;
+              // $("#phyquarterincome")[0].selectedIndex = 0;
+              // $("#phyquartermonth")[0].selectedIndex = 0;
+              // $("#phyquarteryear")[0].selectedIndex = 0;
+              // $("#phyquarteday")[0].selectedIndex = 0;
               document.getElementById("ipafentrancefee").value='';
               document.getElementById("ipaffacilityfee").value='';
               document.getElementById("ipafrecreationalfee").value='';
@@ -70216,7 +70216,8 @@ $("#addhistoryinitailcomp").click(function(){
             "<td>"+"<button type='button' name='remove' data-row='row style='float:right' class='btn btn-danger btn-xs remove' onclick='deleteRowThreat(this)'><i class='glyphicon glyphicon-remove'></i></button><br>"+
             "Status : "+strnip+"<br>"+
             "Category : "+strcat+"<br>"+
-            "Legal basis : "+strlegid+" No."+number+
+            "Legal basis : "+strlegid+" No."+number+"<br>"+
+            "Area : "+area+
             "<br>Dated : "+strmonth+" "+strday+" "+stryear+" "+
             "</td>"+
           "</tr>"

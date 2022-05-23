@@ -35,7 +35,7 @@ body {
   padding: 1em 1em 1em 1.5em;
   border-left-width: 6px;
   border-left-style: solid;
-  border-radius: 3px;
+  border-radius: 10px;
   position: relative;
   line-height: 1.5;
 }
@@ -44,8 +44,8 @@ body {
 }
 .message:before {
   color: white;
-  width: 1.5em;
-  height: 1.5em;
+  width: 2.5em;
+  height: 2em;
   position: absolute;
   /*top: 1em;*/
   /*left: -3px;*/
@@ -91,7 +91,8 @@ body {
 }
 .message--success:before {
   background-color: darkolivegreen;
-  content: "✔";
+  /*content: "✔";*/
+  content:"New";
 }
 
 /*END Dashboard Update*/

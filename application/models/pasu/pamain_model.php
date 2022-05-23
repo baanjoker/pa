@@ -4395,8 +4395,8 @@ class Pamain_Model extends CI_Model
               "nipid_status" => $rel_data1[$x11]['nipid_status'],
               "nipid_category" => $rel_data1[$x11]['nipid_category'],
               "legal_basis_id" => $rel_data1[$x11]['legal_basis_id'],
-              "legal_basis_no" => str_replace(',','',$rel_data1[$x11]['legal_basis_no']),
-              "legal_basis_area" => $rel_data1[$x11]['legal_basis_area'],
+              "legal_basis_no" => $rel_data1[$x11]['legal_basis_no'],
+              "legal_basis_area" => str_replace(',','',$rel_data1[$x11]['legal_basis_area']),
               "legal_basis_month" => $rel_data1[$x11]['legal_basis_month'],
               "legal_basis_day" => $rel_data1[$x11]['legal_basis_day'],
               "legal_basis_year" => $rel_data1[$x11]['legal_basis_year']);

@@ -161,8 +161,10 @@ class Testpdf extends CI_Controller
                     foreach ($legalstatusNew as $legstat) {    
                         $coded=$legstat->legal_generatedcode;
                         $history = $this->pamain_report->legalstatusHistory($coded);
-
-                        $table->rowStyle('border:TBLR;border-color:#a1a1a1');
+                         $table->rowStyle('border:TBLR;border-color:#a1a1a1;bgcolor:#f2ffcc');
+                            $table->easyCell(iconv("UTF-8", '','Legal Basis'),'align:C;font-color:#000;colspan:4;font-style:B');                            
+                        $table->printRow();
+                        $table->rowStyle('border:TBLR;border-color:#a1a1a1;bgcolor:#f2ffcc');
                             $table->easyCell(iconv("UTF-8", '',(!empty($legstat->nipsub_id)?$legstat->description:"").(!empty($legstat->nip_id)?"\n".$legstat->nipDesc:"")),'align:L');
                             $table->easyCell(iconv("UTF-8", '',($legstat->pa_category_id==11)?$legstat->pa_category_other:$legstat->categoryName),'align:L');
                             $table->easyCell(iconv("UTF-8", '',(!empty($legstat->legis_id)?$legstat->LegisDesc."\n".$legstat->month." ".$legstat->date_year:"")),'align:L');
@@ -178,13 +180,7 @@ class Testpdf extends CI_Controller
                             $table->easyCell(iconv("UTF-8", '',$his->sub_nip_description),'align:L');
                             $table->easyCell(iconv("UTF-8", '',($his->nipid_status==1?$his->categoryName:"")),'align:L');
                             $table->easyCell(iconv("UTF-8", '',$his->LegisDesc." No. ".$his->legal_basis_no),'align:L');
-                        // if (!empty($his->legal_basis_day)): 
-                        //     $table->easyCell(iconv("UTF-8", '',$his->month." ".$his->legal_basis_day.", ".$his->legal_basis_year),'align:L');
-                        // else:
-                        //     $table->easyCell(iconv("UTF-8", '',$his->month." ".$his->legal_basis_year),'align:L');
-                        // endif;
                             $table->easyCell(iconv("UTF-8", '',number_format($his->legal_basis_area,2)." has."),'align:R');
-
                         $table->printRow();  
                             
                         }
