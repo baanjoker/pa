@@ -1,5 +1,5 @@
 <div class="form-style-6">
-    <h2>GENERAL INFORMATION</h2>
+    <h2>GENERAL INFORMATIONS</h2>
 </div>
 <fieldset>
     <legend>Protected Area Image</legend>
