@@ -15117,7 +15117,7 @@ public function pabstatus()
         $this->db->where('income_donate_month',$months);
         $this->db->where('income_donate_year',$years);
         $this->db->where('income_donation',1);
-        $this->db->group_by('income_donate_month');
+        // $this->db->group_by('income_donate_month');
         // ->order_by('tbldatemonth.id_month','ASC')
         // ->order_by('LENGTH(tbldatemonth.id_month)','ASC');
         $query = $this->db->get('tblipafsourceincome_donation');
@@ -15131,7 +15131,7 @@ public function pabstatus()
         $this->db->where('generatedcode',$codegens);
         $this->db->where('otherincome_other_month',$months);
         $this->db->where('otherincome_other_year',$years);
-        $this->db->group_by('otherincome_other_month');
+        // $this->db->group_by('otherincome_other_month');
         // ->order_by('tbldatemonth.id_month','ASC')
         // ->order_by('LENGTH(tbldatemonth.id_month)','ASC');
         $query = $this->db->get('tblipafsourceincomeother_others');
@@ -15140,12 +15140,12 @@ public function pabstatus()
 
     public function getbyMonthSumOIFee($codegens,$months,$years)
     {
-        $this->db->select('SUM(income_others_amount) as OIsum1,month');
-        $this->db->join('tbldatemonth','tblipafsourceincome_others.income_other_month = tbldatemonth.id_month','LEFT');
+        $this->db->select('SUM(income_others_amount) as OIsum1');
+        // $this->db->join('tbldatemonth','tblipafsourceincome_others.income_other_month = tbldatemonth.id_month','LEFT');
         $this->db->where('generatedcode',$codegens);
         $this->db->where('income_other_month',$months);
         $this->db->where('income_other_year',$years);
-        $this->db->group_by('income_other_month');
+        // $this->db->group_by(array("income_other_month", "income_other_year","income_gencode"));
         // ->order_by('tbldatemonth.id_month','ASC')
         // ->order_by('LENGTH(tbldatemonth.id_month)','ASC');
         $query = $this->db->get('tblipafsourceincome_others');

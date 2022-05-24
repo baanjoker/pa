@@ -5,21 +5,21 @@
 class PAMAIN extends CI_Controller
 {
 
-	function __construct()
-	{
-		parent::__construct();
+    function __construct()
+    {
+        parent::__construct();
         $this->load->library('image_lib');// Message: Undefined property: MY_Upload::$load
         $this->load->library('googlemap');
-		$this->load->model([
-			'pasu/pamain_model',
+        $this->load->model([
+            'pasu/pamain_model',
             'pasu/dashboard_model'
-		]);
+        ]);
 
 
-		if ($this->session->userdata('isLogIn') == FALSE || $this->session->userdata('user_role') !=3)
+        if ($this->session->userdata('isLogIn') == FALSE || $this->session->userdata('user_role') !=3)
         redirect('login');
 
-	}
+    }
 
 
     public function list(){
@@ -5468,42 +5468,42 @@ public function insertvegetativecover()
             //  unlink('bmb_assets2/upload/map_image/'.$sql->filename);
         }
 
-	public function index()
-	{
+    public function index()
+    {
 
-		$data['page_title'] = 'Create Protected Area';
+        $data['page_title'] = 'Create Protected Area';
         $data['map'] = $this->googlemap->create_map();
-		$data['pamain'] = (object)$postData = [
+        $data['pamain'] = (object)$postData = [
             'pa_name'       => $this->input->post('pa_name',true),
             'formerpaname'  => $this->input->post('formerpa_name',true),
             'landmark'              => $this->input->post('landmark',true),
-			'pamb_approve' 	=> $this->input->post('pambcheck')==null ? 0 : 1,
-			'id_main'		=> $this->input->post('id_main',true),
-			'pasu_id'		=> $this->input->post('pasu_id',true),
-			'generatedcode'	=> $this->input->post('gencode',true),
+            'pamb_approve'  => $this->input->post('pambcheck')==null ? 0 : 1,
+            'id_main'       => $this->input->post('id_main',true),
+            'pasu_id'       => $this->input->post('pasu_id',true),
+            'generatedcode' => $this->input->post('gencode',true),
             'area'          => $this->input->post('area',true),
             'terrestrial'   => $this->input->post('terrestrial',true),
             'buffer'        => $this->input->post('buffer',true),
             'marine_area'   => $this->input->post('marine',true),
-			'nip_id'		=> $this->input->post('terrestrial',true),
+            'nip_id'        => $this->input->post('terrestrial',true),
             'nipsub_id'     => $this->input->post('paclasssub',true),
-			'pacategory_id'	=> $this->input->post('pacategory_id',true),
+            'pacategory_id' => $this->input->post('pacategory_id',true),
             'other_category'         => $this->input->post('other_category',true),
-			'cpabi_id'		=> $this->input->post('cpabi_id',true),
-			'tbz_id'		=> $this->input->post('tbz_id',true),
-			'pamb_month'	=> $this->input->post('pamb_month',true),
-			'pamb_day'		=> $this->input->post('pamb_day',true),
-			'pamb_year'		=> $this->input->post('pamb_year',true),
-			'nipas_mapstd'	=> $this->input->post('nipas_mapstd',true),
-			'nipas_pasa'	=> $this->input->post('nipas_pasa',true),
-			'nipas_ipap'	=> $this->input->post('nipas_ipap',true),
-			'nipas_delineation'	=> $this->input->post('nipas_delineation',true),
-			'nipas_proclaimed'	=> $this->input->post('nipas_proclaimed',true),
-			'nipas_legislated'	=> $this->input->post('nipas_legislated',true),
-			'nipas_demarcation'	=> $this->input->post('nipas_demarcation',true),
-			'nipas_pamp'	=> $this->input->post('nipas_pamp',true),
+            'cpabi_id'      => $this->input->post('cpabi_id',true),
+            'tbz_id'        => $this->input->post('tbz_id',true),
+            'pamb_month'    => $this->input->post('pamb_month',true),
+            'pamb_day'      => $this->input->post('pamb_day',true),
+            'pamb_year'     => $this->input->post('pamb_year',true),
+            'nipas_mapstd'  => $this->input->post('nipas_mapstd',true),
+            'nipas_pasa'    => $this->input->post('nipas_pasa',true),
+            'nipas_ipap'    => $this->input->post('nipas_ipap',true),
+            'nipas_delineation' => $this->input->post('nipas_delineation',true),
+            'nipas_proclaimed'  => $this->input->post('nipas_proclaimed',true),
+            'nipas_legislated'  => $this->input->post('nipas_legislated',true),
+            'nipas_demarcation' => $this->input->post('nipas_demarcation',true),
+            'nipas_pamp'    => $this->input->post('nipas_pamp',true),
             'nipas_ipaf'    => $this->input->post('nipas_ipaf',true),
-			'nipas_sapa'	=> $this->input->post('nipas_sapa',true),
+            'nipas_sapa'    => $this->input->post('nipas_sapa',true),
             'geographic_long1'    => $this->input->post('geographic_long1',true),
             'geographic_long2'    => $this->input->post('geographic_long2',true),
             'geographic_lat1'    => $this->input->post('geographic_lat1',true),
@@ -5590,16 +5590,16 @@ public function insertvegetativecover()
             'wdpaid' => $this->input->post('wdpaid',true),
             'desig_type' => $this->input->post('desig_type',true),
 
-		];
-		$user_id = $this->session->userdata('user_id');
-		$data['read'] = $this->dashboard_model->read_by_id($user_id);
+        ];
+        $user_id = $this->session->userdata('user_id');
+        $data['read'] = $this->dashboard_model->read_by_id($user_id);
         $data['classList']      = $this->pamain_model->classList();
-		$data['classListsub']		= $this->pamain_model->classListsub();
-		$data['categoryList']	= $this->pamain_model->categoryList();
-		$data['cpabiList']		= $this->pamain_model->cpabiList($UserRegions);
+        $data['classListsub']       = $this->pamain_model->classListsub();
+        $data['categoryList']   = $this->pamain_model->categoryList();
+        $data['cpabiList']      = $this->pamain_model->cpabiList($UserRegions);
         $data['zoneList']       = $this->pamain_model->zoneList();
         $data['zoneListm']       = $this->pamain_model->zoneListm();
-		$data['monthList']		= $this->pamain_model->monthList();
+        $data['monthList']      = $this->pamain_model->monthList();
         $data['monthListed']      = $this->pamain_model->monthListed();
         $data['progsourceoffund']      = $this->pamain_model->progsourceoffund();
         $data['progtypeoffund']      = $this->pamain_model->progtypeoffund();
@@ -5608,11 +5608,11 @@ public function insertvegetativecover()
         $data['programsector']      = $this->pamain_model->programsector();
         $data['citationlist']      = $this->pamain_model->citationlist();
         $data['lhpostatus']      = $this->pamain_model->lhpostatus();
-		$data['yearList']		= $this->pamain_model->yearList();
-		$data['dayList']		= $this->pamain_model->dayList();
+        $data['yearList']       = $this->pamain_model->yearList();
+        $data['dayList']        = $this->pamain_model->dayList();
         $data['appointment']    = $this->pamain_model->appointment();
         $UserRegions = $this->session->userdata('region');
-		$data['regionList']	= $this->pamain_model->regionList($UserRegions);
+        $data['regionList'] = $this->pamain_model->regionList($UserRegions);
         $data['region_demoList'] = $this->pamain_model->region_demoList($UserRegions);
         $data['appointment_status']    = $this->pamain_model->appointment_status();
         $data['sapa_devt']    = $this->pamain_model->sapa_devtlist();
@@ -5794,8 +5794,8 @@ public function insertvegetativecover()
         $data['tenurelist'] = $this->pamain_model->tenurelist();
         $data['landcover'] = $this->pamain_model->landcover();
         $data['content'] = $this->load->view('pasu/FormMain',$data,TRUE);
-		$this->load->view('pasu/main_wrapper',$data);
-	}
+        $this->load->view('pasu/main_wrapper',$data);
+    }
 
     public function upload()
     {
@@ -7748,8 +7748,8 @@ public function insertvegetativecover()
         echo json_encode($data);
     }
 
-	public function getProv()
- 		{
+    public function getProv()
+        {
        $regid = $this->input->post('regid');
             if (!empty($regid)) {
             $query = $this->db->select('*')
@@ -8103,7 +8103,7 @@ public function insertvegetativecover()
     }
 
     public function getMunicipal()
- 		{
+        {
        $provid = $this->input->post('provid');
 
             if (!empty($provid)) {
@@ -8252,12 +8252,12 @@ public function insertvegetativecover()
     public function save_location(){
 
 
-    	$rel_data = $this->input->post('data_table');
+        $rel_data = $this->input->post('data_table');
 
-    	$status=$this->pamain_model->save_loc($rel_data);
+        $status=$this->pamain_model->save_loc($rel_data);
 
-    	$this->output->set_content_type('application/json');
-    	echo json_encode(array('status' => $status));
+        $this->output->set_content_type('application/json');
+        echo json_encode(array('status' => $status));
     }
 
     public function getnipsub()
@@ -8526,7 +8526,7 @@ public function insertvegetativecover()
                             </div>
                         <?php endforeach; ?>
                     </td>
-										<td class="hidden"><?php echo $row->legal_generatedcode?> </td>
+                                        <td class="hidden"><?php echo $row->legal_generatedcode?> </td>
 
                     <input type="hidden" id="legids<?php echo $row->id_palegis;?>" value="<?php echo $row->nip_id ?>" />
                     <input type="hidden" id="sublegids<?php echo $row->id_palegis;?>" value="<?php echo $row->nipsub_id ?>" />
@@ -8569,19 +8569,19 @@ public function insertvegetativecover()
         }
     }
 
-		public function refreshinitialcomphistory()
+        public function refreshinitialcomphistory()
     {
         $codes = $this->input->post('codegens');
         $donation = $this->pamain_model->getallinitialcomphistory($codes);
         foreach($donation as $dd):;                    ?>
-					<div id="divdevelopmentedit<?php echo $dd->id_legishistory?>" class="showdata">
-							<button type="button" class="btn btnbtn btn-danger btn-xs removehistoryinitialcomp" id="<?php echo $dd->id_legishistory ?>" data-id="<?php echo $dd->id_legishistory ?>" style="position: absolute;right: 25px">
-								Remove
-							</button>
-							<fieldset>
-									<?php echo "Status : ".$dd->sub_nip_description."<br>Category : ".(!empty($dd->nipid_category)?$dd->categoryName:"")."<br>Legal basis : ".$dd->LegisDesc." no. ".$dd->legal_basis_no."<br>Area : ".(number_format($dd->legal_basis_area,2))."<br>Date Issued : ".(!empty($dd->legal_basis_month)?$dd->month:"")." ".(!empty($dd->legal_basis_day)?$dd->legal_basis_day.", ":"")." ".(!empty($dd->legal_basis_year)?$dd->legal_basis_year:""); ?>
-							</fieldset>
-					</div>
+                    <div id="divdevelopmentedit<?php echo $dd->id_legishistory?>" class="showdata">
+                            <button type="button" class="btn btnbtn btn-danger btn-xs removehistoryinitialcomp" id="<?php echo $dd->id_legishistory ?>" data-id="<?php echo $dd->id_legishistory ?>" style="position: absolute;right: 25px">
+                                Remove
+                            </button>
+                            <fieldset>                                  
+                                    <?php echo "Status : ".$dd->sub_nip_description."<br>Category : ".(!empty($dd->nipid_category)?$dd->categoryName:"")."<br>Legal basis : ".$dd->LegisDesc." no. ".$dd->legal_basis_no."<br>Area : ".(number_format($dd->legal_basis_area,2))."<br>Date Issued : ".(!empty($dd->legal_basis_month)?$dd->month:"")." ".(!empty($dd->legal_basis_day)?$dd->legal_basis_day.", ":"")." ".(!empty($dd->legal_basis_year)?$dd->legal_basis_year:""); ?>
+                            </fieldset>
+                    </div>
         <?php endforeach;
     }
 
@@ -20819,7 +20819,7 @@ public function upload_hydro_monitoringsite_picsEdit()
       echo json_encode($output);
     }
 
-		public function deleteinitialcomphistory($id = null)
+        public function deleteinitialcomphistory($id = null)
     {
     $sql = "DELETE FROM tblpamainlegislation_history WHERE id_legishistory = '$id'";
     if ($this->db->query($sql)) {
@@ -21688,29 +21688,29 @@ public function upload_hydro_monitoringsite_picsEdit()
                     <?php echo "<br><b>Location : </b>".(!empty($row->threat_region)?$row->regionName:"").(!empty($row->threat_province)?", ".$row->provinceName:"").(!empty($row->threat_municipality)?", ".$row->municipalName:"").(!empty($row->threat_barangay)?", ".$row->barangayName:"")."<br>"; ?>
                     <?php $pctr=0;foreach($datathreat as $cc):$pctr+=1;
                     ?>
-						<?php
-			                 if ($cc->threat_long_degree_x == 1):
-			                     $long = "East";
-			                 elseif($cc->threat_long_degree_x == 2):
-			                     $long = "West";
-			                 else:
-			                     $long = "";
-			                 endif;
-			                 if ($cc->threat_lat_degree_x == 1):
-			                     $lat = "North";
-			                 elseif($cc->threat_lat_degree_x == 2):
-			                     $lat = "South";
-			                 else:
-			                     $lat = "";
-			                 endif;
-			            ?>
+                        <?php
+                             if ($cc->threat_long_degree_x == 1):
+                                 $long = "East";
+                             elseif($cc->threat_long_degree_x == 2):
+                                 $long = "West";
+                             else:
+                                 $long = "";
+                             endif;
+                             if ($cc->threat_lat_degree_x == 1):
+                                 $lat = "North";
+                             elseif($cc->threat_lat_degree_x == 2):
+                                 $lat = "South";
+                             else:
+                                 $lat = "";
+                             endif;
+                        ?>
                         <div class="col-xs-12 container-boxes">
                             <div class="row-boxes">
                             <b>Nature of threat : </b> <?php echo $cc->natural_threats_desc; ?><br>
                             <b>Category : </b> <?php echo $cc->threats_category_desc; ?><br>
                             <b>Threats : </b> <?php echo $cc->sub_cat_desc; ?><br>
-							<b><?php echo "Longitude : ".$long." ".(!empty($cc->threat_long_degree_x)?$cc->threat_long_degree_x."° ":"").(!empty($cc->threat_long_minute_x)?$cc->threat_long_minute_x."' ":"").(!empty($cc->threat_long_second_x)?$cc->threat_long_second_x."'' ":"")."<br>".
-																					"Latitude : ".$lat." ".(!empty($cc->threat_lat_degree_x)?$cc->threat_lat_degree_x."° ":"").(!empty($cc->threat_lat_minute_x)?$cc->threat_lat_minute_x."' ":"").(!empty($cc->threat_lat_second_x)?$cc->threat_lat_second_x."'' ":"") ?></b>
+                            <b><?php echo "Longitude : ".$long." ".(!empty($cc->threat_long_degree_x)?$cc->threat_long_degree_x."° ":"").(!empty($cc->threat_long_minute_x)?$cc->threat_long_minute_x."' ":"").(!empty($cc->threat_long_second_x)?$cc->threat_long_second_x."'' ":"")."<br>".
+                                                                                    "Latitude : ".$lat." ".(!empty($cc->threat_lat_degree_x)?$cc->threat_lat_degree_x."° ":"").(!empty($cc->threat_lat_minute_x)?$cc->threat_lat_minute_x."' ":"").(!empty($cc->threat_lat_second_x)?$cc->threat_lat_second_x."'' ":"") ?></b>
                             </div>
                         </div>
                     <?php endforeach;?>
@@ -21749,22 +21749,22 @@ public function upload_hydro_monitoringsite_picsEdit()
                 <td class="hidden">
                     <?php $pctr=0;foreach($datathreat as $cc):$pctr+=1;
                     ?>
-										<?php
-			                 if ($cc->threat_long_direction_x == 1):
-			                     $longs = "East";
-			                 elseif($cc->threat_long_direction_x == 2):
-			                     $longs = "West";
-			                 else:
-			                     $longs = "";
-			                 endif;
-			                 if ($cc->threat_lat_direction_x == 1):
-			                     $lats = "North";
-			                 elseif($cc->threat_lat_direction_x == 2):
-			                     $lats = "South";
-			                 else:
-			                     $lats = "";
-			                 endif;
-			              ?>
+                                        <?php
+                             if ($cc->threat_long_direction_x == 1):
+                                 $longs = "East";
+                             elseif($cc->threat_long_direction_x == 2):
+                                 $longs = "West";
+                             else:
+                                 $longs = "";
+                             endif;
+                             if ($cc->threat_lat_direction_x == 1):
+                                 $lats = "North";
+                             elseif($cc->threat_lat_direction_x == 2):
+                                 $lats = "South";
+                             else:
+                                 $lats = "";
+                             endif;
+                          ?>
                     <div id="divdevelopmentedit<?php echo $cc->id_multi_threat?>" class="showdata">
                     <!-- <fieldset>  -->
                         <!-- <div class="col-xs-12"> -->
@@ -21772,9 +21772,9 @@ public function upload_hydro_monitoringsite_picsEdit()
                                 <div class="row-boxes">
                                     <b>Nature of threat : </b> <?php echo $cc->natural_threats_desc; ?><br>
                                     <b>Category : </b> <?php echo $cc->threats_category_desc; ?><br>
-									<b>Threats : </b> <?php echo $cc->sub_cat_desc; ?><br>
-									<b><?php echo "Longitude : ".$longs." ".(!empty($cc->threat_long_degree_x)?$cc->threat_long_degree_x."° ":"").(!empty($cc->threat_long_minute_x)?$cc->threat_long_minute_x."' ":"").(!empty($cc->threat_long_second_x)?$cc->threat_long_second_x."'' ":"")."<br>".
-																									"Latitude : ".$lats." ".(!empty($cc->threat_lat_degree_x)?$cc->threat_lat_degree_x."° ":"").(!empty($cc->threat_lat_minute_x)?$cc->threat_lat_minute_x."' ":"").(!empty($cc->threat_lat_second_x)?$cc->threat_lat_second_x."'' ":"") ?></b>
+                                    <b>Threats : </b> <?php echo $cc->sub_cat_desc; ?><br>
+                                    <b><?php echo "Longitude : ".$longs." ".(!empty($cc->threat_long_degree_x)?$cc->threat_long_degree_x."° ":"").(!empty($cc->threat_long_minute_x)?$cc->threat_long_minute_x."' ":"").(!empty($cc->threat_long_second_x)?$cc->threat_long_second_x."'' ":"")."<br>".
+                                                                                                    "Latitude : ".$lats." ".(!empty($cc->threat_lat_degree_x)?$cc->threat_lat_degree_x."° ":"").(!empty($cc->threat_lat_minute_x)?$cc->threat_lat_minute_x."' ":"").(!empty($cc->threat_lat_second_x)?$cc->threat_lat_second_x."'' ":"") ?></b>
                                     <br><button type="button" class="btn btn-danger btn-xs removethreatlist" id="<?php echo $cc->id_multi_threat ?>" data-id="<?php echo $cc->id_multi_threat ?>">Remove</button> <br><br>
                                 </div>
                             </div>
@@ -47514,6 +47514,7 @@ public function wetlandlandfiless()
                     $months = $rowM->income_date_month;
                     $years = $rowM->income_date_year;
                     $day = $rowM->income_date_day;
+                    $co = $rowM->income_gencode;
                     $dataSumEFbyMonth = $this->pamain_model->getbyMonthSumEntranceFee($codegens,$months,$years);
                     $dataSumFUFbyMonth = $this->pamain_model->getbyMonthSumFacilityUserFee($codegens,$months,$years);
                     $dataSumRFbyMonth = $this->pamain_model->getbyMonthSumRecreationalFee($codegens,$months,$years);
@@ -48493,7 +48494,7 @@ public function wetlandlandfiless()
         echo json_encode($output);
     }
 
-		public function addinitialcomphistoryEdit()
+        public function addinitialcomphistoryEdit()
     {
         $data['mainproj'] = (object)$postDataImage = [
             'generatedcode'    => $this->input->post('legis-gencode',true),
@@ -48501,11 +48502,11 @@ public function wetlandlandfiless()
             'nipid_status'    => $this->input->post('edit-nipsub_id',true),
             'nipid_category'      => $this->input->post('edit-previouscat'),
             'legal_basis_id'      => $this->input->post('edit-history-legis_id'),
-						'legal_basis_no'      => $this->input->post('edit-history-legisno'),
-						'legal_basis_area'      => str_replace(',','',$this->input->post('edit-history-legis_area')),
-						'legal_basis_month'      => $this->input->post('edit-history-date_month'),
-						'legal_basis_day'      => $this->input->post('edit-history-date_day'),
-						'legal_basis_year'      => $this->input->post('edit-history-date_year')
+                        'legal_basis_no'      => $this->input->post('edit-history-legisno'),
+                        'legal_basis_area'      => str_replace(',','',$this->input->post('edit-history-legis_area')),
+                        'legal_basis_month'      => $this->input->post('edit-history-date_month'),
+                        'legal_basis_day'      => $this->input->post('edit-history-date_day'),
+                        'legal_basis_year'      => $this->input->post('edit-history-date_year')
         ];
 
         $query = $this->pamain_model->insertinitialcompHistory($postDataImage);

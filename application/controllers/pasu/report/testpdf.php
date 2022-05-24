@@ -3151,21 +3151,29 @@ class Testpdf extends CI_Controller
                     $table=new easyTable($pdf, '{190}', 'width:100; border-color:#ffff00; font-size:12; border:0;font-style:B;font-color:#fff');                       
                         $table->rowStyle('border:;border-color:#a1a1a1;bgcolor:#ffd480;font-color:#000');
                         $table->easyCell("FACILITY");
-                            foreach ($facilMap as $facility) {
-                                $table->easyCell("",'img:bmb_assets2/upload/facility_map/'.(!empty($facility->facility_map)?$facility->facility_map:"nophoto.jpg").', w280,h250;');
-                            }
                         $table->printRow();
                     $table->endTable();
                 }
+                $table=new easyTable($pdf, '{190}', 'width:100; border-color:#ffff00; font-size:12; border:0;font-style:B;font-color:#fff');                       
+
+                            // foreach ($facilMap as $facility) {
+                       
+                            foreach ($facilMap as $facility) {                                 
+                                        $table->rowStyle('border:;border-color:#a1a1a1;bgcolor:#009879;font-color:#000');
+                                        $table->easyCell('Map image show','img:bmb_assets2/upload/facility_map/'.($countMapfacility >= 0?$facq->image_facility:"nophoto.jpg").',w280,h250;');
+                                        $table->printRow();
+                            }
+                    $table->endTable();
                 if (!empty($count_facility)) {
                     $table=new easyTable($pdf, '{190}', 'width:100; border-color:#ffff00; font-size:12; border:0;');
                         $table->rowStyle('border:;border-color:#a1a1a1;');
                         if ($count_facility <=0) {
-                            $table->easyCell('','img:bmb_assets2/upload/facilities_img/nophoto.jpg');                        
+                            // $table->easyCell('','img:bmb_assets2/upload/facilities_img/nophoto.jpg');                        
                         }else{
                             foreach ($query_facility as $facq) {
-                                $codesa=$facq->facilitycode;
-                                $table->easyCell('','img:bmb_assets2/upload/facilities_img/'.(!empty($facq->image_facility)?$facq->image_facility:"nophoto.jpg"),'w280,h250;');                        
+                                $codesa=$facq->facilitycode;                                
+                                $table->rowStyle('border:B;border-color:#a1a1a1;');
+                                $table->easyCell('','img:bmb_assets2/upload/facilities_img/'.(!empty($facq->image_facility)?$facq->image_facility:"nophoto.jpg").',w280,h250;');
                                 $table->printRow();
                                 $table->easyCell(iconv("UTF-8", '','<s "font-color:#234fa7;font-style:B">'.($facq->title_facility==8?$facq->facility_others:$facq->facility_descs).'</s>'),'align:L');
                                 $table->printRow();   
@@ -3219,7 +3227,7 @@ class Testpdf extends CI_Controller
                         $table->endTable(10);
                     }           
                 }
-                    $pdf->AddPage('P','A4',0);            
+                    // $pdf->AddPage('P','A4',0);            
             }
 
             ###########################################################
@@ -3540,7 +3548,7 @@ class Testpdf extends CI_Controller
         $research = $this->pamain_report->query_all_research($gencode);
     if ($chk_program == 1 || $chk_project == 1 || $chk_research == 1 || $chk_prgActivity == 1 || $chk_prgProject == 1 || $chk_prgResearch == 1){
         if (!empty($program) || !empty($project) || !empty($research)) {            
-            $pdf->AddPage('P','A4',0);
+            // $pdf->AddPage('P','A4',0);
             $table=new easyTable($pdf, '{190}', 'width:100; border-color:#ffff00; font-size:12; border:1;');
             $table->rowStyle('border:;border-color:#a1a1a1;');
             $table->easyCell('PROGRAMS, PROJECTS, AND RESEARCHES', 'font-size:18;colspan:2;font-style:B');
